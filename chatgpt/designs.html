@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Contact | Chassidy Doest</title>
+  <title>ABOUT ME</title>
   <script type="module" src="https://unpkg.com/@splinetool/viewer@1.9.96/build/spline-viewer.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -72,7 +72,7 @@
 
     /* Geen active styling op hamburger */
 
-    .floating-nav {
+    nav {
       position: fixed;
       top: 20px;
       left: 50%;
@@ -88,14 +88,34 @@
       box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
     }
 
-    .floating-nav a {
+    nav a {
       color: white;
       text-decoration: none;
       font-weight: 500;
       font-size: 1rem;
+      transition: all 0.3s ease;
+      position: relative;
       cursor: pointer;
       user-select: none;
-      /* Geen hover effecten */
+    }
+
+    nav a::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -4px;
+      width: 0%;
+      height: 2px;
+      background-color: #4f46e5;
+      transition: width 0.3s ease;
+    }
+
+    nav a:hover::after {
+      width: 100%;
+    }
+
+    nav a:hover {
+      color: #c3bfff;
     }
 
    
@@ -187,10 +207,10 @@
     </button>
 
     <nav class="floating-nav">
-      <a href="index.html" data-text="Home">Home</a>
-      <a href="about.html" data-text="About me">About me</a>
-      <a href="projects.html" data-text="Projects">Projects</a>
-      <a href="contact.html" data-text="Contact">Contact</a>
+     <a href="index.html" data-text="HOME">HOME</a>
+      <a href="about.html" data-text="ABOUT ME">ABOUT ME</a>
+      <a href="designs.html" data-text="DESIGNS">DESIGNS</a>
+      <a href="contact.html" data-text="CONTACT">CONTACT</a>
     </nav>
   </header>
 
