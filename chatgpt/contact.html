@@ -261,9 +261,43 @@
         width: 970px;
       }
     }
+    /* === Loading overlay styles === */
+    .loading-overlay {
+      position: fixed;
+      inset: 0;
+      background-color: #252525;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      transition: opacity 1s ease;
+    }
+
+    .loading {
+      width: 75px;
+      height: 75px;
+      background-color: #ffffff;
+      animation: logoSpin 6s infinite;
+      clip-path: polygon(
+        0% 0%, 0 100%, 44% 100%, 44% 58%, 67% 58%, 68% 13%, 85% 13%, 
+        76% 100%, 100% 100%, 100% 0, 54% 0%, 54% 38%, 32% 38%, 32% 87%, 13% 87%, 24% 0);
+    }
+
+    @keyframes logoSpin {
+      0%, 100% {
+        transform: rotate(0deg);
+      }
+      50% {
+        transform: rotate(180deg);
+      }
+    }
   </style>
 </head>
 <body>
+    <!-- ✅ Loading overlay -->
+  <div class="loading-overlay" id="loadingOverlay">
+    <div class="loading"></div>
+  </div>
   <header>
     <div class="logo">
       <img src="Ch.png" alt="Logo Chassidy Doest" />
@@ -316,20 +350,55 @@
   </section>
 
   <script>
-    const hamburger = document.querySelector('.hamburger');
-    const nav = document.querySelector('nav');
-    const navLinksAll = document.querySelectorAll('nav a');
+    document.addEventListener("DOMContentLoaded", () => {
+      const hamburger = document.querySelector('.hamburger');
+      const nav = document.querySelector('nav');
+      const navLinks = document.querySelectorAll('nav a');
+      const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
-    hamburger.addEventListener('click', () => {
-      nav.classList.toggle('active');
-      hamburger.classList.toggle('active'); // blijft voor toggling, maar zonder stijl
+      hamburger.addEventListener('click', () => {
+        nav.classList.toggle('active');
+        hamburger.classList.toggle('active');
+      });
+
+      navLinks.forEach(link => {
+        link.addEventListener('click', () => {
+          nav.classList.remove('active');
+          hamburger.classList.remove('active');
+        });
+
+        link.addEventListener('mouseenter', () => {
+          let iteration = 0;
+          const originalText = link.dataset.text;
+          const interval = setInterval(() => {
+            link.textContent = originalText
+              .split("")
+              .map((char, index) => {
+                if (index < iteration) return originalText[index];
+                return letters[Math.floor(Math.random() * letters.length)];
+              })
+              .join("");
+
+            if (iteration >= originalText.length) clearInterval(interval);
+            iteration += 1 / 2;
+          }, 30);
+        });
+
+        link.addEventListener('mouseleave', () => {
+          setTimeout(() => {
+            link.textContent = link.dataset.text;
+          }, 500);
+        });
+      });
     });
 
-    navLinksAll.forEach(link => {
-      link.addEventListener('click', () => {
-        nav.classList.remove('active');
-        hamburger.classList.remove('active');
-      });
+    // ✅ Hide loading overlay when page is fully loaded
+    window.addEventListener('load', () => {
+      const loadingOverlay = document.getElementById('loadingOverlay');
+      loadingOverlay.style.opacity = 0;
+      setTimeout(() => {
+        loadingOverlay.style.display = 'none';
+      }, 500);
     });
   </script>
 </body>
