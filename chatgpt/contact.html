@@ -34,6 +34,12 @@
       font-weight: bold;
     }
 
+    .logo img {
+      height: 140px;
+      width: auto;
+      display: block;
+    }
+
     .hamburger {
       display: none;
       flex-direction: column;
@@ -66,11 +72,6 @@
     .hamburger.active span:nth-child(3) {
       transform: rotate(-45deg) translate(6px, -6px);
     }
-.logo img {
-  height: 140px;
-  width: auto;
-  display: block;
-}
 
     .floating-nav {
       position: fixed;
@@ -125,10 +126,24 @@
       overflow: hidden;
     }
 
-    spline-viewer {
+    .spline-desktop {
       width: 100%;
       height: 100%;
       pointer-events: none;
+      display: block;
+    }
+
+    .hero-image-mobile {
+      display: none;
+      width: 100%;
+      height: 100%;
+    }
+
+    .hero-image-mobile img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
     }
 
     .hero-text {
@@ -207,13 +222,21 @@
       background: #3730a3;
     }
 
-    @media (max-width: 768px) {
+    .black-square {
+      position: absolute;
+      top: 95%;
+      right: 0;
+      transform: translateY(-50%);
+      width: 170px;
+      height: 90px;
+      background-color: black;
+      z-index: 10;
+    }
+    @media (max-width: 1200px) {
       .hamburger {
         display: flex;
       }
-      spline-viewer {
-        transform: translateX(-500px);
-      }
+
       nav {
         flex-direction: column;
         justify-content: center;
@@ -241,29 +264,30 @@
         font-size: 2rem;
         margin: 1.5rem 0;
       }
-       .black-square {
-        opacity: 0%;
+
+      .spline-desktop {
+        display: none;
+      }
+
+      .hero-image-mobile {
+        display: block;
+        
+        object-fit: cover;
+      }
+      .black-square {
+       position: absolute;
+       top: 5%;
+       width: 970px;
+      }
     }
-   .black-square {
-  position: absolute;
-  top: 95%;        /* 70% vanaf de bovenkant, dus wat naar beneden */
-  right: 0;        /* helemaal rechts */
-  transform: translateY(-50%);
-  width: 170px;    /* breder */
-  height: 90px;
-  background-color: black;
-  z-index: 10;
-}
-
-
   </style>
 </head>
 <body>
 
   <header>
-   <div class="logo">
-  <img src="ch.png" alt="Logo Chassidy Doest" />
-</div>
+    <div class="logo">
+      <img src="ch.png" alt="Logo Chassidy Doest" />
+    </div>
 
     <button class="hamburger" aria-label="Menu">
       <span></span>
@@ -279,13 +303,12 @@
     </nav>
   </header>
 
-
-
-
-
   <section class="hero">
     <div class="black-square"></div>
-    <spline-viewer url="https://prod.spline.design/KEmBvfJj5Pz3P-sk/scene.splinecode"></spline-viewer>
+    <spline-viewer class="spline-desktop" url="https://prod.spline.design/KEmBvfJj5Pz3P-sk/scene.splinecode"></spline-viewer>
+    <div class="hero-image-mobile">
+      <img src="wereldbol.png" alt="Hero afbeelding mobiel" />
+    </div>
     <div class="hero-text">Contact us</div>
   </section>
 
