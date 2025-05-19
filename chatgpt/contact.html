@@ -5,9 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Contact | Chassidy Doest</title>
   <script type="module" src="https://unpkg.com/@splinetool/viewer@1.9.96/build/spline-viewer.js"></script>
- <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Lexend+Mega:wght@100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Lexend+Mega:wght@100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet" />
   <style>
     * {
       margin: 0;
@@ -20,9 +20,9 @@
       color: #fff;
       line-height: 1.6;
       font-family: "Montserrat", sans-serif;
-  font-optical-sizing: auto;
-  font-weight: weight;
-  font-style: normal;
+      font-optical-sizing: auto;
+      font-weight: weight;
+      font-style: normal;
     }
 
     header {
@@ -56,6 +56,9 @@
       border: none;
       cursor: pointer;
       z-index: 101;
+      position: fixed;
+      top: 30px;
+      right: 30px;
     }
 
     .hamburger span {
@@ -67,18 +70,8 @@
       transition: all 0.3s ease;
     }
 
-    .hamburger.active span:nth-child(1) {
-      transform: rotate(45deg) translate(5px, 5px);
-    }
+    /* Geen active styling op hamburger */
 
-    .hamburger.active span:nth-child(2) {
-      opacity: 0;
-    }
-
-    .hamburger.active span:nth-child(3) {
-      transform: rotate(-45deg) translate(6px, -6px);
-    }
- 
     .floating-nav {
       position: fixed;
       top: 20px;
@@ -100,29 +93,9 @@
       text-decoration: none;
       font-weight: 500;
       font-size: 1rem;
-      transition: all 0.3s ease;
-      position: relative;
       cursor: pointer;
       user-select: none;
-    }
-
-    .floating-nav a::after {
-      content: '';
-      position: absolute;
-      left: 0;
-      bottom: -4px;
-      width: 0%;
-      height: 2px;
-      background-color: #4f46e5;
-      transition: width 0.3s ease;
-    }
-
-    .floating-nav a:hover::after {
-      width: 100%;
-    }
-
-    .floating-nav a:hover {
-      color: #c3bfff;
+      /* Geen hover effecten */
     }
 
     .hero {
@@ -267,8 +240,6 @@
         left: 5%;
         width: 400px;
         height: 800px;
-       
-
       }
 
       nav a {
@@ -282,20 +253,17 @@
 
       .hero-image-mobile {
         display: block;
-        
         object-fit: cover;
       }
       .black-square {
-       position: absolute;
-       top: 5%;
-       width: 970px;
+        position: absolute;
+        top: 5%;
+        width: 970px;
       }
     }
   </style>
 </head>
 <body>
-
-  
   <header>
     <div class="logo">
       <img src="Ch.png" alt="Logo Chassidy Doest" />
@@ -331,17 +299,15 @@
     <div>Europe</div>
     <div>Oceania</div>
     <div>Africa</div>
-    
   </section>
 
   <section class="contact-form">
     <h2>Send us a message</h2>
 
     <form 
-    action="https://formspree.io/f/mldbvdlp" 
-    method="POST"
+      action="https://formspree.io/f/mldbvdlp" 
+      method="POST"
     >
-      
       <input type="text" name="name" placeholder="Your Name" required />
       <input type="email" name="email" placeholder="E-mail" required />
       <textarea name="message" rows="5" placeholder="Your Message..." required></textarea>
@@ -350,45 +316,13 @@
   </section>
 
   <script>
-    const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-    const navLinks = document.querySelectorAll('.floating-nav a');
-
-    navLinks.forEach(link => {
-      link.addEventListener('mouseenter', () => {
-        let iteration = 0;
-        const originalText = link.dataset.text;
-        const interval = setInterval(() => {
-          link.textContent = originalText
-            .split("")
-            .map((char, index) => {
-              if (index < iteration) {
-                return originalText[index];
-              }
-              return letters[Math.floor(Math.random() * letters.length)];
-            })
-            .join("");
-          
-          if (iteration >= originalText.length) {
-            clearInterval(interval);
-          }
-          iteration += 1 / 2;
-        }, 30);
-      });
-
-      link.addEventListener('mouseleave', () => {
-        setTimeout(() => {
-          link.textContent = link.dataset.text;
-        }, 500);
-      });
-    });
-
     const hamburger = document.querySelector('.hamburger');
     const nav = document.querySelector('nav');
     const navLinksAll = document.querySelectorAll('nav a');
 
     hamburger.addEventListener('click', () => {
       nav.classList.toggle('active');
-      hamburger.classList.toggle('active');
+      hamburger.classList.toggle('active'); // blijft voor toggling, maar zonder stijl
     });
 
     navLinksAll.forEach(link => {
@@ -398,6 +332,5 @@
       });
     });
   </script>
-
 </body>
 </html>

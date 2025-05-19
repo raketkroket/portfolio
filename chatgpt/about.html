@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Navbar Component</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #0D0D0D;
+      color: white;
+    }
+
+    header {
+      position: relative;
+      width: 100%;
+    }
+
+    .logo img {
+      height: 140px;
+      width: auto;
+      position: fixed;
+      top: 10px;
+      left: 20px;
+      z-index: 102;
+    }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 25px;
+      height: 20px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      z-index: 101;
+      position: fixed;
+      top: 30px;
+      right: 30px;
+    }
+
+    .hamburger span {
+      display: block;
+      height: 3px;
+      width: 100%;
+      background-color: white;
+      border-radius: 3px;
+      transition: all 0.3s ease;
+    }
+
+    .hamburger.active span:nth-child(1) {
+      transform: rotate(45deg) translate(5px, 5px);
+    }
+
+    .hamburger.active span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .hamburger.active span:nth-child(3) {
+      transform: rotate(-45deg) translate(6px, -6px);
+    }
+
+    nav {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(30, 30, 30, 0.85);
+      backdrop-filter: blur(10px);
+      border: 1px solid #444;
+      border-radius: 999px;
+      padding: 0.6rem 2rem;
+      display: flex;
+      gap: 2rem;
+      z-index: 1000;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      position: relative;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    nav a::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -4px;
+      width: 0%;
+      height: 2px;
+      background-color: #4f46e5;
+      transition: width 0.3s ease;
+    }
+
+    nav a:hover::after {
+      width: 100%;
+    }
+
+    nav a:hover {
+      color: #c3bfff;
+    }
+
+    @media (max-width: 800px) {
+      .hamburger {
+        display: flex;
+      }
+
+      nav {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        position: fixed;
+        top: 0;
+        right: 0;
+        height: 100vh;
+        width: 100%;
+        background: rgba(0, 0, 0, 0.9);
+        transform: translateY(-100%);
+        opacity: 0;
+        transition: all 0.4s ease;
+        pointer-events: none;
+      }
+
+      nav.active {
+        transform: translateY(0);
+        opacity: 1;
+        pointer-events: auto;
+        z-index: 100;
+        left: 5%;
+        width: 400px;
+        height: 800px;
+      }
+
+      nav a {
+        font-size: 3rem;
+        margin: 1.5rem 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <nav>
+      <a href="index.html" data-text="Home">Home</a>
+      <a href="about.html" data-text="About me">About me</a>
+      <a href="projects.html" data-text="Projects">Projects</a>
+      <a href="contact.html" data-text="Contact">Contact</a>
+    </nav>
+
+    <div class="logo">
+      <img src="Ch.png" alt="Logo Chassidy Doest" />
+    </div>
+
+    <button class="hamburger" aria-label="Menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </header>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const hamburger = document.querySelector('.hamburger');
+      const nav = document.querySelector('nav');
+      const navLinks = document.querySelectorAll('nav a');
+      const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+      hamburger.addEventListener('click', () => {
+        nav.classList.toggle('active');
+        hamburger.classList.toggle('active');
+      });
+
+      navLinks.forEach(link => {
+        link.addEventListener('click', () => {
+          nav.classList.remove('active');
+          hamburger.classList.remove('active');
+        });
+
+        link.addEventListener('mouseenter', () => {
+          let iteration = 0;
+          const originalText = link.dataset.text;
+          const interval = setInterval(() => {
+            link.textContent = originalText
+              .split("")
+              .map((char, index) => {
+                if (index < iteration) return originalText[index];
+                return letters[Math.floor(Math.random() * letters.length)];
+              })
+              .join("");
+
+            if (iteration >= originalText.length) clearInterval(interval);
+            iteration += 1 / 2;
+          }, 30);
+        });
+
+        link.addEventListener('mouseleave', () => {
+          setTimeout(() => {
+            link.textContent = link.dataset.text;
+          }, 500);
+        });
+      });
+    });
+  </script>
+
+</body>
+</html>
