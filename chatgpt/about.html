@@ -7,43 +7,40 @@
   <script type="module" src="https://unpkg.com/@splinetool/viewer@1.9.96/build/spline-viewer.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Lexend+Mega:wght@100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cormorant+Garamond&display=swap" rel="stylesheet">
   <style>
-    * {
+     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
 
     body {
-      background-color: #0D0D0D;
-      color: #fff;
-      line-height: 1.6;
-      font-family: "Montserrat", sans-serif;
-      font-optical-sizing: auto;
-      font-weight: weight;
-      font-style: normal;
+      height: 100vh;
+        background: rgb(54, 54, 54);
+        font-family: 'Cormorant Garamond', serif;
+        color: rgb(141, 141, 141);
+        text-transform: uppercase;
+        overflow: hidden;
     }
 
     header {
-      position: absolute;
-      top: 0;
-      width: 100%;
-      padding: 1rem 2rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      z-index: 100;
-    }
-
-    .logo {
-      font-weight: bold;
+       position: fixed;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        padding: 0 5%;
+        height: 7em;
+        z-index: 10;
+        font-family: 'Bebas Neue', sans-serif;
+        font-size: clamp(0.66rem, 2vw, 1rem);
+        letter-spacing: 0.5em;
     }
 
     .logo img {
       height: 140px;
-      width: auto;
-      display: block;
+      margin: 1rem;
     }
 
     .hamburger {
@@ -52,10 +49,10 @@
       justify-content: space-between;
       width: 25px;
       height: 20px;
-      background: none;
+      background-color: #909090;
       border: none;
       cursor: pointer;
-      z-index: 101;
+      z-index: 10001;
       position: fixed;
       top: 30px;
       right: 30px;
@@ -65,19 +62,29 @@
       display: block;
       height: 3px;
       width: 100%;
-      background-color: white;
+      background-color: #000;
       border-radius: 3px;
       transition: all 0.3s ease;
     }
 
-    /* Geen active styling op hamburger */
+    .hamburger.active span:nth-child(1) {
+      transform: rotate(45deg) translate(5px, 5px);
+    }
 
-    .floating-nav {
+    .hamburger.active span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .hamburger.active span:nth-child(3) {
+      transform: rotate(-45deg) translate(6px, -6px);
+    }
+
+    nav {
       position: fixed;
       top: 20px;
       left: 50%;
       transform: translateX(-50%);
-      background: rgba(30, 30, 30, 0.85);
+      background: rgba(180, 180, 181, 0.85);
       backdrop-filter: blur(10px);
       border: 1px solid #444;
       border-radius: 999px;
@@ -88,16 +95,35 @@
       box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
     }
 
-    .floating-nav a {
+    nav a {
       color: white;
       text-decoration: none;
       font-weight: 500;
       font-size: 1rem;
+      transition: all 0.3s ease;
+      position: relative;
       cursor: pointer;
       user-select: none;
-      /* Geen hover effecten */
     }
 
+    nav a::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -4px;
+      width: 0%;
+      height: 2px;
+      background-color: #0800a2;
+      transition: width 0.3s ease;
+    }
+
+    nav a:hover::after {
+      width: 100%;
+    }
+
+    nav a:hover {
+      color: #1100ff;
+    }
    
   
     @media (max-width: 800px) {
