@@ -190,7 +190,31 @@
         height: auto;
         padding: 5%;
       }
+ .scroll-indicator {
+  position: fixed;
+  top: 50%;
+  right: 40px; /* pas aan voor meer of minder naar links */
+  transform: translateY(-50%); /* zodat het in het midden staat */
+  width: 8px;
+  height: 100px; /* lengte van de bar */
+  background: white;
+  border-radius: 10px;
+  overflow: hidden;
+  z-index: 1000;
+  
+}
 
+.scroll-indicator::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: #003cff;
+  height: var(--scroll, 0%);
+  transition: height 0.2s ease-out;
+  
+}
       .floating-nav {
         flex-direction: column;
         justify-content: center;
@@ -259,17 +283,30 @@
 
  .scroll-indicator {
   position: fixed;
-  top: 0;
-  right: 0;
+  top: 50%;
+  right: 40px; /* pas aan voor meer of minder naar links */
+  transform: translateY(-50%); /* zodat het in het midden staat */
   width: 8px;
-  height: 100%;
-  background: rgb(97, 97, 97);
-  transform: scaleY(0);
-  transform-origin: top;
+  height: 100px; /* lengte van de bar */
+  background: white;
+  border-radius: 10px;
+  overflow: hidden;
   z-index: 1000;
-  right: 20px; /* schuift 'm 20px naar links */
-
+  
 }
+
+.scroll-indicator::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: #003cff;
+  height: var(--scroll, 0%);
+  transition: height 0.2s ease-out;
+  
+}
+
 
 
 
@@ -349,6 +386,12 @@
   <script>
 
 
+window.addEventListener("scroll", () => {
+  const scrollTop = window.scrollY;
+  const docHeight = document.body.scrollHeight - window.innerHeight;
+  const scrollPercent = (scrollTop / docHeight) * 100;
+  document.querySelector(".scroll-indicator").style.setProperty('--scroll', scrollPercent + '%');
+});
 
 gsap.registerPlugin(ScrollTrigger)
 
