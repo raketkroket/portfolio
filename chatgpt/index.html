@@ -242,22 +242,31 @@
         margin: 1rem 0;
       }
     }
-#customCursor {
+  .cursor, .cursor-follower {
   position: fixed;
   top: 0;
   left: 0;
-  width: 20px;
-  height: 20px;
-  border: 2px solid #555;
-  border-radius: 50%;
   pointer-events: none;
-  transform: translate(-50%, -50%) scale(1);
-  transition: transform 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
-  mix-blend-mode: difference;  /* Makes it stand out on light/dark backgrounds */
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: background-color 0.3s ease;
   z-index: 10000;
-  background: transparent;
 }
 
+.cursor {
+  width: 8px;
+  height: 8px;
+  background-color: black;
+  mix-blend-mode: difference; /* makes it visible on both light and dark */
+}
+
+.cursor-follower {
+  width: 30px;
+  height: 30px;
+  border: 2px solid black;
+  opacity: 0.4;
+  transition: opacity 0.3s ease;
+}
 
 
     /* === Loading overlay styles === */
@@ -300,6 +309,7 @@
   position: absolute;
   top: 0;
   left: 0;
+  
   width: 100%;
   background: #003cff;
   height: var(--scroll, 0%);
@@ -377,8 +387,9 @@
     <h1 class="text">CLICK HERE<span><a href="https://tiktok.com/@eerlijkste1" target="_blank">LET'S CONNECT</a></span></h1>
   </div>
 
-<!-- Custom cursor element -->
-<div id="customCursor"></div>
+
+<div class="cursor"></div>
+<div class="cursor-follower"></div>
 
 
   <script src="https://unpkg.com/gsap@3/dist/gsap.min.js"></script>
@@ -469,27 +480,34 @@ window.addEventListener('load', () => {
     loadingOverlay.style.display = 'none';
   }, 500);
 });
-const cursor = document.getElementById('customCursor');
+const cursor = document.querySelector('.cursor');
+const follower = document.querySelector('.cursor-follower');
+
+let mouseX = 0, mouseY = 0;
+let followerX = 0, followerY = 0;
 
 document.addEventListener('mousemove', e => {
-  // Move the custom cursor element to follow the real cursor position
-  cursor.style.left = e.clientX + 'px';
-  cursor.style.top = e.clientY + 'px';
+  mouseX = e.clientX;
+  mouseY = e.clientY;
+
+  // Move small cursor directly
+  cursor.style.left = mouseX + 'px';
+  cursor.style.top = mouseY + 'px';
 });
 
-// Optional: enlarge and color the cursor when hovering over specific elements
-const hoverTargets = document.querySelectorAll('nav#mainNav a, .hamburger');
+// Smooth trailing effect for follower
+function animate() {
+  followerX += (mouseX - followerX) * 0.1;
+  followerY += (mouseY - followerY) * 0.1;
 
-hoverTargets.forEach(el => {
-  el.addEventListener('mouseenter', () => {
-    // Scale up cursor and change color/border
-    gsap.to(cursor, { scale: 2.5, borderColor: '#111', backgroundColor: '#111', duration: 0.25 });
-  });
-  el.addEventListener('mouseleave', () => {
-    // Reset cursor scale and color
-    gsap.to(cursor, { scale: 1, borderColor: '#555', backgroundColor: 'transparent', duration: 0.25 });
-  });
-});
+  follower.style.left = followerX + 'px';
+  follower.style.top = followerY + 'px';
+
+  requestAnimationFrame(animate);
+}
+
+animate();
+
 
 </script> </body> </html> ```
 

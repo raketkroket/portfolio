@@ -297,6 +297,31 @@
   opacity: 0.4;
   transition: opacity 0.3s ease;
 }
+.scroll-indicator {
+  position: fixed;
+  top: 50%;
+  right: 40px; /* pas aan voor meer of minder naar links */
+  transform: translateY(-50%); /* zodat het in het midden staat */
+  width: 8px;
+  height: 100px; /* lengte van de bar */
+  background: white;
+  border-radius: 10px;
+  overflow: hidden;
+  z-index: 1000;
+  
+}
+
+.scroll-indicator::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: #003cff;
+  height: var(--scroll, 0%);
+  transition: height 0.2s ease-out;
+  
+}
 
     </style>
   </head>
@@ -326,6 +351,11 @@
 
   <div class="cursor"></div>
 <div class="cursor-follower"></div>
+
+
+ <div class="scroll-indicator"></div>
+
+
 
   <script>
     document.addEventListener("DOMContentLoaded", () => {
@@ -377,6 +407,50 @@
       setTimeout(() => {
         loadingOverlay.style.display = 'none';
       }, 500);
+    });
+
+
+
+    
+window.addEventListener("scroll", () => {
+  const scrollTop = window.scrollY;
+  const docHeight = document.body.scrollHeight - window.innerHeight;
+  const scrollPercent = (scrollTop / docHeight) * 100;
+  document.querySelector(".scroll-indicator").style.setProperty('--scroll', scrollPercent + '%');
+});
+
+gsap.registerPlugin(ScrollTrigger)
+
+gsap.to(".scroll-indicator", {
+  scaleY: 1,
+  scrollTrigger: {
+    scrub: true,
+    trigger: "body",
+    start: "top top",
+    end: "bottom bottom"
+  },
+  ease: "none",
+  transformOrigin: "top"
+})
+
+
+
+
+    gsap.registerPlugin(ScrollTrigger);
+
+    const textElements = gsap.utils.toArray('.text');
+
+    textElements.forEach(text => {
+      gsap.to(text, {
+        backgroundSize: '100%',
+        ease: 'none',
+        scrollTrigger: {
+          trigger: text,
+          start: 'center 80%',
+          end: 'center 20%',
+          scrub: true,
+        },
+      });
     });
   </script>
 </body>
