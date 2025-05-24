@@ -290,31 +290,28 @@
         76% 100%, 100% 100%, 100% 0, 54% 0%, 54% 38%, 32% 38%, 32% 87%, 13% 87%, 24% 0);
     }
 
- .scroll-indicator {
-  position: fixed;
-  top: 50%;
-  right: 40px; /* pas aan voor meer of minder naar links */
-  transform: translateY(-50%); /* zodat het in het midden staat */
-  width: 8px;
-  height: 100px; /* lengte van de bar */
-  background: white;
-  border-radius: 10px;
-  overflow: hidden;
-  z-index: 1000;
-  
+#style-7::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	background-color: #858585;
+	border-radius: 10px;
 }
 
-.scroll-indicator::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  
-  width: 100%;
-  background: #003cff;
-  height: var(--scroll, 0%);
-  transition: height 0.2s ease-out;
-  
+#style-7::-webkit-scrollbar
+{
+	width: 10px;
+	background-color: #797979;
+}
+
+#style-7::-webkit-scrollbar-thumb
+{
+	border-radius: 10px;
+	background-image: -webkit-gradient(linear,
+									   left bottom,
+									   left top,
+									   color-stop(0.44, rgb(122,153,217)),
+									   color-stop(0.72, rgb(73,125,189)),
+									   color-stop(0.86, rgb(28,58,148)));
 }
 
 
@@ -358,8 +355,9 @@
   </div>
   
 
-
- <div class="scroll-indicator"></div>
+<div class="scrollbar" id="style-7">
+      <div class="force-overflow"></div>
+    </div>
 
 
   <header>

@@ -17,7 +17,7 @@
 
     body {
       height: 100vh;
-        background: rgb(54, 54, 54);
+        background: rgb(255, 255, 255);
         font-family: 'Cormorant Garamond', serif;
         color: rgb(141, 141, 141);
         text-transform: uppercase;
@@ -49,7 +49,7 @@
       justify-content: space-between;
       width: 25px;
       height: 20px;
-      background-color: #ffffff;
+      background-color: #909090;
       border: none;
       cursor: pointer;
       z-index: 10001;
@@ -62,7 +62,7 @@
       display: block;
       height: 3px;
       width: 100%;
-      background-color: #a0a0a0;
+      background-color: #000;
       border-radius: 3px;
       transition: all 0.3s ease;
     }
@@ -161,9 +161,7 @@
         font-size: 3rem;
         margin: 1.5rem 0;
       }
- .logo {
-  height: 900px;
- }
+
       
     }
     /* === Loading overlay styles === */
@@ -187,7 +185,17 @@
         0% 0%, 0 100%, 44% 100%, 44% 58%, 67% 58%, 68% 13%, 85% 13%, 
         76% 100%, 100% 100%, 100% 0, 54% 0%, 54% 38%, 32% 38%, 32% 87%, 13% 87%, 24% 0);
     }
-    .cursor, .cursor-follower {
+
+    @keyframes logoSpin {
+      0%, 100% {
+        transform: rotate(0deg);
+      }
+      50% {
+        transform: rotate(180deg);
+      }
+    }
+
+      .cursor, .cursor-follower {
   position: fixed;
   top: 0;
   left: 0;
@@ -212,41 +220,6 @@
   opacity: 0.4;
   transition: opacity 0.3s ease;
 }
-.scroll-indicator {
-  position: fixed;
-  top: 50%;
-  right: 40px; /* pas aan voor meer of minder naar links */
-  transform: translateY(-50%); /* zodat het in het midden staat */
-  width: 8px;
-  height: 100px; /* lengte van de bar */
-  background:rgb(54, 54, 54);
-  border-radius: 10px;
-  overflow: hidden;
-  z-index: 1000;
-  
-}
-
-.scroll-indicator::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  background: #003cff;
-  height: var(--scroll, 0%);
-  transition: height 0.2s ease-out;
-  
-}
-
-
-    @keyframes logoSpin {
-      0%, 100% {
-        transform: rotate(0deg);
-      }
-      50% {
-        transform: rotate(180deg);
-      }
-    }
   </style>
 </head>
 <body>
@@ -270,13 +243,11 @@
       <a href="about.html" data-text="ABOUT ME">ABOUT ME</a>
       <a href="designs.html" data-text="DESIGNS">DESIGNS</a>
       <a href="contact.html" data-text="CONTACT">CONTACT</a>
-     
-
+      
     </nav>
 
-
-
-<div class="cursor"></div>
+    
+  <div class="cursor"></div>
 <div class="cursor-follower"></div>
 
 
@@ -285,56 +256,6 @@
   </header>
 
   <script>
-
-
-
-
-window.addEventListener("scroll", () => {
-  const scrollTop = window.scrollY;
-  const docHeight = document.body.scrollHeight - window.innerHeight;
-  const scrollPercent = (scrollTop / docHeight) * 100;
-  document.querySelector(".scroll-indicator").style.setProperty('--scroll', scrollPercent + '%');
-});
-
-gsap.registerPlugin(ScrollTrigger)
-
-gsap.to(".scroll-indicator", {
-  scaleY: 1,
-  scrollTrigger: {
-    scrub: true,
-    trigger: "body",
-    start: "top top",
-    end: "bottom bottom"
-  },
-  ease: "none",
-  transformOrigin: "top"
-})
-
-
-
-
-    gsap.registerPlugin(ScrollTrigger);
-
-    const textElements = gsap.utils.toArray('.text');
-
-    textElements.forEach(text => {
-      gsap.to(text, {
-        backgroundSize: '100%',
-        ease: 'none',
-        scrollTrigger: {
-          trigger: text,
-          start: 'center 80%',
-          end: 'center 20%',
-          scrub: true,
-        },
-      });
-    });
-
-
-
-
-
-
     document.addEventListener("DOMContentLoaded", () => {
       const hamburger = document.querySelector('.hamburger');
       const nav = document.querySelector('nav');
@@ -385,7 +306,9 @@ gsap.to(".scroll-indicator", {
         loadingOverlay.style.display = 'none';
       }, 500);
     });
-    const cursor = document.querySelector('.cursor');
+
+    
+const cursor = document.querySelector('.cursor');
 const follower = document.querySelector('.cursor-follower');
 
 let mouseX = 0, mouseY = 0;
@@ -412,7 +335,6 @@ function animate() {
 }
 
 animate();
-
   </script>
 </body>
 </html>
