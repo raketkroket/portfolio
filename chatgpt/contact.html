@@ -457,26 +457,22 @@ gsap.to(".scroll-indicator", {
 </html>
 
     <section class="contact">
-      <div class="outer">
-        <div class="inner">
-          <div class="bg">
-            <div class="contact-content">
-              <h2 class="section-heading">Contact me</h2>
-              <form class="contact-form">
-                <form
-  action="https://formspree.io/f/mldbvdlp"
-  method="POST"
->
-                <input type="text" placeholder="Your name" required />
-                <input type="email" placeholder="Your email" required />
-                <textarea placeholder="Your message" rows="5" required></textarea>
-                <button type="submit">Send</button>
-              </form>
-            </div>
-          </div>
+  <div class="outer">
+    <div class="inner">
+      <div class="bg">
+        <div class="contact-content">
+          <h2 class="section-heading">Contact me</h2>
+          <form class="contact-form" action="https://formspree.io/f/mldbvdlp" method="POST">
+            <input type="text" name="name" placeholder="Your name" required />
+            <input type="email" name="email" placeholder="Your email" required />
+            <textarea name="message" placeholder="Your message" rows="5" required></textarea>
+            <button type="submit">Send</button>
+          </form>
         </div>
       </div>
-    </section>
+    </div>
+  </div>
+</section>
 
     <script src="https://unpkg.com/gsap@3/dist/gsap.min.js"></script>
     <script src="https://unpkg.com/gsap@3/dist/Observer.min.js"></script>
