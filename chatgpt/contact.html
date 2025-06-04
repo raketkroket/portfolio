@@ -30,15 +30,10 @@
         width: 100%;
         padding: 0 5%;
         height: 7em;
-        z-index: 10;
+        z-index: 1001;
         font-family: 'Bebas Neue', sans-serif;
         font-size: clamp(0.66rem, 2vw, 1rem);
         letter-spacing: 0.5em;
-      }
-
-      header {
-        position: relative;
-        z-index: 1001;
       }
 
       .logo img {
@@ -52,7 +47,7 @@
         justify-content: space-between;
         width: 25px;
         height: 20px;
-        background-color: #ffffff;
+        background-color: transparent;
         border: none;
         cursor: pointer;
         z-index: 10001;
@@ -223,6 +218,23 @@
         align-items: center;
         justify-content: center;
         flex-direction: column;
+        overflow: hidden;
+      }
+
+      .bg::before {
+        content: '';
+        position: absolute;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(circle, rgba(255,255,255,0.05) 2%, transparent 2.5%);
+        background-size: 20px 20px;
+        animation: driftBackground 20s linear infinite;
+        opacity: 0.3;
+      }
+
+      @keyframes driftBackground {
+        0% { transform: translate(0, 0); }
+        100% { transform: translate(-50%, -50%); }
       }
 
       h2.section-heading {
@@ -243,11 +255,13 @@
         max-width: 600px;
         width: 100%;
         text-align: center;
+        position: relative;
+        z-index: 2;
       }
 
       .envelope {
         position: relative;
-        background: #f5f5f5;
+        background: #f5f5f5 url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAAG0lEQVQYV2NkYGD4z8DAwMgABXAGNgGwSgwVAFbmAgXQdTBAQAAAABJRU5ErkJggg==') repeat;
         border: 1px solid #d0d0d0;
         border-radius: 10px;
         padding: 2em;
@@ -269,18 +283,24 @@
         background: linear-gradient(180deg, #e0e0e0 0%, #f5f5f5 100%);
         clip-path: polygon(0 100%, 50% 0, 100% 100%);
         z-index: 1;
+        transform-origin: top;
       }
 
       .contact-form {
         display: flex;
         flex-direction: column;
-        gap: 1.2em;
+        gap: 1.5em;
         position: relative;
         z-index: 2;
       }
 
+      .form-group {
+        position: relative;
+      }
+
       .contact-form input,
       .contact-form textarea {
+        width: 100%;
         padding: 0.75em;
         border: none;
         border-radius: 0.5em;
@@ -288,13 +308,40 @@
         background-color: #ffffff;
         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1) inset;
         transition: transform 0.2s ease, box-shadow 0.2s ease;
+        animation: pulseGlow 2s infinite ease-in-out;
+      }
+
+      @keyframes pulseGlow {
+        0%, 100% { box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1) inset; }
+        50% { box-shadow: 0 2px 10px rgba(6, 10, 255, 0.2) inset, 0 0 5px rgba(6, 10, 255, 0.2); }
       }
 
       .contact-form input:focus,
       .contact-form textarea:focus {
         outline: none;
-        transform: translateY(-2px);
+        transform: scale(1.02);
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15) inset;
+        animation: none;
+      }
+
+      .contact-form label {
+        position: absolute;
+        top: 0.75em;
+        left: 0.75em;
+        font-size: 1rem;
+        color: rgb(91, 91, 91);
+        transition: all 0.2s ease;
+        pointer-events: none;
+      }
+
+      .contact-form input:focus + label,
+      .contact-form input:not(:placeholder-shown) + label,
+      .contact-form textarea:focus + label,
+      .contact-form textarea:not(:placeholder-shown) + label {
+        top: -0.5em;
+        left: 0.5em;
+        font-size: 0.8rem;
+        color: #060aff;
       }
 
       .contact-form button {
@@ -322,11 +369,14 @@
         width: 100%;
         text-align: center;
         padding: 2em;
-        background: #f5f5f5;
+        background: #f5f5f5 url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAAG0lEQVQYV2NkYGD4z8DAwMgABXAGNgGwSgwVAFbmAgXQdTBAQAAAABJRU5ErkJggg==') repeat;
         border: 1px solid #d0d0d0;
         border-radius: 10px;
         box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
         transform: perspective(1000px) rotateX(5deg);
+        transition: transform 0.3s ease;
+        position: relative;
+        overflow: hidden;
       }
 
       .thank-you h2 {
@@ -340,6 +390,25 @@
       .thank-you p {
         font-size: 1.2rem;
         color: rgb(91, 91, 91);
+        margin-bottom: 1rem;
+      }
+
+      .thank-you .checkmark {
+        width: 50px;
+        height: 50px;
+        background: #060aff;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 1rem;
+      }
+
+      .thank-you .checkmark::after {
+        content: '\2713';
+        color: #ffffff;
+        font-size: 1.5rem;
+        font-weight: bold;
       }
 
       .thank-you button {
@@ -358,6 +427,15 @@
       .thank-you button:hover {
         background: #060aff;
         transform: translateY(-2px);
+      }
+
+      .confetti {
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        background: #060aff;
+        border-radius: 50%;
+        opacity: 0;
       }
 
       .cursor, .cursor-follower {
@@ -414,10 +492,25 @@
         .envelope, .thank-you {
           max-width: 90%;
           padding: 1.5em;
+          transform: perspective(800px) rotateX(3deg);
         }
         .envelope::before {
           top: -15px;
           height: 15px;
+        }
+        .contact-form label {
+          font-size: 0.9rem;
+        }
+        .contact-form input:focus + label,
+        .contact-form input:not(:placeholder-shown) + label,
+        .contact-form textarea:focus + label,
+        .contact-form textarea:not(:placeholder-shown) + label {
+          font-size: 0.7rem;
+          top: -0.6em;
+        }
+        .contact-form input,
+        .contact-form textarea {
+          animation-duration: 3s;
         }
       }
     </style>
@@ -430,13 +523,11 @@
       <div class="logo">
         <img src="Ch.png" alt="Logo Chassidy Doest" />
       </div>
-
       <button class="hamburger" aria-label="Menu">
         <span></span>
         <span></span>
         <span></span>
       </button>
-
       <nav class="floating-nav">
         <a href="main.html" data-text="HOME">HOME</a>
         <a href="about.html" data-text="ABOUT ME">ABOUT ME</a>
@@ -457,16 +548,26 @@
               <h2 class="section-heading">Contact me</h2>
               <div class="envelope">
                 <form class="contact-form" action="https://formspree.io/f/mldbvdlp" method="POST">
-                  <input type="text" name="name" placeholder="Your name" required />
-                  <input type="email" name="email" placeholder="Your email" required />
-                  <textarea name="message" placeholder="Your message" rows="5" required></textarea>
+                  <div class="form-group">
+                    <input type="text" name="name" placeholder=" " required />
+                    <label>Your name</label>
+                  </div>
+                  <div class="form-group">
+                    <input type="email" name="email" placeholder=" " required />
+                    <label>Your email</label>
+                  </div>
+                  <div class="form-group">
+                    <textarea name="message" placeholder=" " rows="5" required></textarea>
+                    <label>Your message</label>
+                  </div>
                   <button type="submit">Send</button>
                 </form>
               </div>
               <div class="thank-you" style="display: none;">
+                <div class="checkmark"></div>
                 <h2>Thank You</h2>
                 <p>Your message has been sent successfully!</p>
-                <button onclick="document.querySelector('.thank-you').style.display='none';document.querySelector('.contact-form').style.display='block';">Back to Form</button>
+                <button onclick="document.querySelector('.thank-you').style.display='none';document.querySelector('.envelope').style.display='block';">Back to Form</button>
               </div>
             </div>
           </div>
@@ -483,6 +584,9 @@
         const nav = document.querySelector('nav');
         const navLinks = document.querySelectorAll('nav a');
         const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        const envelope = document.querySelector('.envelope');
+        const thankYou = document.querySelector('.thank-you');
+        const form = document.querySelector('.contact-form');
 
         hamburger.addEventListener('click', () => {
           nav.classList.toggle('active');
@@ -519,11 +623,52 @@
           });
         });
 
-        // Form submission handling
-        const form = document.querySelector('.contact-form');
-        const thankYou = document.querySelector('.thank-you');
-        const envelope = document.querySelector('.envelope');
+        // Envelope entry animation
+        gsap.fromTo(envelope, 
+          { yPercent: 100, rotateX: 20, autoAlpha: 0 },
+          { yPercent: 0, rotateX: 5, autoAlpha: 1, duration: 1.2, ease: 'power2.out' }
+        );
 
+        // Envelope flap animation
+        gsap.to('.envelope::before', {
+          transform: 'rotateX(-100deg)',
+          duration: 1,
+          ease: 'back.out(1.4)',
+          delay: 0.5,
+          onComplete: () => envelope.classList.add('flap-open')
+        });
+
+        // Interactive hover tilt effect
+        envelope.addEventListener('mousemove', (e) => {
+          const rect = envelope.getBoundingClientRect();
+          const x = (e.clientX - rect.left) / rect.width - 0.5;
+          const y = (e.clientY - rect.top) / rect.height - 0.5;
+          gsap.to(envelope, {
+            transform: `perspective(1000px) rotateX(${5 - y * 10}deg) rotateY(${x * 10}deg)`,
+            duration: 0.3,
+            ease: 'power2.out'
+          });
+          gsap.to('.envelope::before', {
+            transform: `rotateX(-100deg) translateZ(${Math.abs(x * 10)}px)`,
+            duration: 0.3,
+            ease: 'power2.out'
+          });
+        });
+
+        envelope.addEventListener('mouseleave', () => {
+          gsap.to(envelope, {
+            transform: 'perspective(1000px) rotateX(5deg) rotateY(0deg)',
+            duration: 0.5,
+            ease: 'power2.out'
+          });
+          gsap.to('.envelope::before', {
+            transform: 'rotateX(-100deg)',
+            duration: 0.5,
+            ease: 'power2.out'
+          });
+        });
+
+        // Form submission handling
         form.addEventListener('submit', async (e) => {
           e.preventDefault(); // Prevent default form submission
 
@@ -538,18 +683,71 @@
             });
 
             if (response.ok) {
-              envelope.style.display = 'none'; // Hide the envelope with form
+              envelope.style.display = 'none'; // Hide the envelope
               thankYou.style.display = 'flex'; // Show the thank-you screen
               gsap.fromTo(thankYou, 
                 { autoAlpha: 0, yPercent: 50 }, 
                 { autoAlpha: 1, yPercent: 0, duration: 0.5 }
-              ); // Animate thank-you screen
+              );
+              gsap.fromTo('.checkmark', 
+                { scale: 0, autoAlpha: 0 }, 
+                { scale: 1, autoAlpha: 1, duration: 0.7, ease: 'back.out(2)' }
+              );
+              gsap.fromTo('.thank-you h2', 
+                { autoAlpha: 0, y: 20 }, 
+                { autoAlpha: 1, y: 0, duration: 0.5, delay: 0.2 }
+              );
+              gsap.fromTo('.thank-you p', 
+                { autoAlpha: 0, y: 20 }, 
+                { autoAlpha: 1, y: 0, duration: 0.5, delay: 0.4 }
+              );
+
+              // Confetti animation
+              for (let i = 0; i < 20; i++) {
+                const confetti = document.createElement('div');
+                confetti.classList.add('confetti');
+                confetti.style.left = `${Math.random() * 100}%`;
+                confetti.style.background = `hsl(${Math.random() * 360}, 70%, 50%)`;
+                thankYou.appendChild(confetti);
+                gsap.fromTo(confetti, 
+                  { y: -50, autoAlpha: 1, scale: Math.random() * 0.5 + 0.5 },
+                  { 
+                    y: 300, 
+                    autoAlpha: 0, 
+                    rotation: Math.random() * 360, 
+                    duration: 1 + Math.random(), 
+                    ease: 'power1.out',
+                    delay: Math.random() * 0.5,
+                    onComplete: () => confetti.remove()
+                  }
+                );
+              }
             } else {
               alert('There was an error submitting the form. Please try again.');
             }
           } catch (error) {
             alert('There was an error submitting the form. Please try again.');
           }
+        });
+
+        // Thank-you hover tilt effect
+        thankYou.addEventListener('mousemove', (e) => {
+          const rect = thankYou.getBoundingClientRect();
+          const x = (e.clientX - rect.left) / rect.width - 0.5;
+          const y = (e.clientY - rect.top) / rect.height - 0.5;
+          gsap.to(thankYou, {
+            transform: `perspective(1000px) rotateX(${5 - y * 10}deg) rotateY(${x * 10}deg)`,
+            duration: 0.3,
+            ease: 'power2.out'
+          });
+        });
+
+        thankYou.addEventListener('mouseleave', () => {
+          gsap.to(thankYou, {
+            transform: 'perspective(1000px) rotateX(5deg) rotateY(0deg)',
+            duration: 0.5,
+            ease: 'power2.out'
+          });
         });
       });
 
