@@ -35,171 +35,169 @@
         font-size: clamp(0.66rem, 2vw, 1rem);
         letter-spacing: 0.5em;
       }
- 
- 
-    header {
-      position: relative;
-      z-index: 1001;
-    }
 
-    .logo img {
-      height: 140px;
-      margin: 1rem;
-    }
+      header {
+        position: relative;
+        z-index: 1001;
+      }
 
-    .hamburger {
-      display: none;
-      flex-direction: column;
-      justify-content: space-between;
-      width: 25px;
-      height: 20px;
-      background-color: #ffffff;
-      border: none;
-      cursor: pointer;
-      z-index: 10001;
-      position: fixed;
-      top: 30px;
-      right: 30px;
-    }
+      .logo img {
+        height: 140px;
+        margin: 1rem;
+      }
 
-    .hamburger span {
-      display: block;
-      height: 3px;
-      width: 100%;
-      background-color: #a0a0a0;
-      border-radius: 3px;
-      transition: all 0.3s ease;
-    }
-
-    .hamburger.active span:nth-child(1) {
-      transform: rotate(45deg) translate(5px, 5px);
-    }
-
-    .hamburger.active span:nth-child(2) {
-      opacity: 0;
-    }
-
-    .hamburger.active span:nth-child(3) {
-      transform: rotate(-45deg) translate(6px, -6px);
-    }
-
-    nav {
-      position: fixed;
-      top: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: rgba(180, 180, 181, 0.85);
-      backdrop-filter: blur(10px);
-      border: 1px solid #444;
-      border-radius: 999px;
-      padding: 0.6rem 2rem;
-      display: flex;
-      gap: 2rem;
-      z-index: 1000;
-      box-shadow: 0 4px 20px rgba(201, 201, 201, 0.4);
-    }
-
-    nav a {
-      color: white;
-      text-decoration: none;
-      font-weight: 500;
-      font-size: 1rem;
-      transition: all 0.3s ease;
-      position: relative;
-      cursor: pointer;
-      user-select: none;
-    }
-
-    nav a::after {
-      content: '';
-      position: absolute;
-      left: 0;
-      bottom: -4px;
-      width: 0%;
-      height: 2px;
-      background-color: #0800a2;
-      transition: width 0.3s ease;
-    }
-
-    nav a:hover::after {
-      width: 100%;
-    }
-
-    nav a:hover {
-      color: #1100ff;
-    }
-   
-  
-    @media (max-width: 800px) {
       .hamburger {
-        display: flex;
+        display: none;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 25px;
+        height: 20px;
+        background-color: #ffffff;
+        border: none;
+        cursor: pointer;
+        z-index: 10001;
+        position: fixed;
+        top: 30px;
+        right: 30px;
+      }
+
+      .hamburger span {
+        display: block;
+        height: 3px;
+        width: 100%;
+        background-color: #a0a0a0;
+        border-radius: 3px;
+        transition: all 0.3s ease;
+      }
+
+      .hamburger.active span:nth-child(1) {
+        transform: rotate(45deg) translate(5px, 5px);
+      }
+
+      .hamburger.active span:nth-child(2) {
+        opacity: 0;
+      }
+
+      .hamburger.active span:nth-child(3) {
+        transform: rotate(-45deg) translate(6px, -6px);
       }
 
       nav {
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
         position: fixed;
-        top: 0;
-        right: 0;
-        height: 100vh;
-        width: 100%;
-        background: rgba(0, 0, 0, 0.9);
-        transform: translateY(-100%);
-        opacity: 0;
-        transition: all 0.4s ease;
-        pointer-events: none;
-      }
-
-      nav.active {
-        transform: translateY(0);
-        opacity: 1;
-        pointer-events: auto;
-        z-index: 100;
-        left: 5%;
-        width: 400px;
-        height: 800px;
+        top: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: rgba(180, 180, 181, 0.85);
+        backdrop-filter: blur(10px);
+        border: 1px solid #444;
+        border-radius: 999px;
+        padding: 0.6rem 2rem;
+        display: flex;
+        gap: 2rem;
+        z-index: 1000;
+        box-shadow: 0 4px 20px rgba(201, 201, 201, 0.4);
       }
 
       nav a {
-        font-size: 3rem;
-        margin: 1.5rem 0;
+        color: white;
+        text-decoration: none;
+        font-weight: 500;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        position: relative;
+        cursor: pointer;
+        user-select: none;
       }
- .logo {
-  height: 900px;
- }
-      
-    }
-    /* === Loading overlay styles === */
-    .loading-overlay {
-      position: fixed;
-      inset: 0;
-      background-color: #252525;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 9999;
-      transition: opacity 1s ease;
-    }
 
-    .loading {
-      width: 75px;
-      height: 75px;
-      background-color: #ffffff;
-      animation: logoSpin 6s infinite;
-      clip-path: polygon(
-        0% 0%, 0 100%, 44% 100%, 44% 58%, 67% 58%, 68% 13%, 85% 13%, 
-        76% 100%, 100% 100%, 100% 0, 54% 0%, 54% 38%, 32% 38%, 32% 87%, 13% 87%, 24% 0);
-    }
+      nav a::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: -4px;
+        width: 0%;
+        height: 2px;
+        background-color: #0800a2;
+        transition: width 0.3s ease;
+      }
 
-    @keyframes logoSpin {
-      0%, 100% {
-        transform: rotate(0deg);
+      nav a:hover::after {
+        width: 100%;
       }
-      50% {
-        transform: rotate(180deg);
+
+      nav a:hover {
+        color: #1100ff;
       }
-    }
+
+      @media (max-width: 800px) {
+        .hamburger {
+          display: flex;
+        }
+
+        nav {
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          position: fixed;
+          top: 0;
+          right: 0;
+          height: 100vh;
+          width: 100%;
+          background: rgba(0, 0, 0, 0.9);
+          transform: translateY(-100%);
+          opacity: 0;
+          transition: all 0.4s ease;
+          pointer-events: none;
+        }
+
+        nav.active {
+          transform: translateY(0);
+          opacity: 1;
+          pointer-events: auto;
+          z-index: 100;
+          left: 5%;
+          width: 400px;
+          height: 800px;
+        }
+
+        nav a {
+          font-size: 3rem;
+          margin: 1.5rem 0;
+        }
+        .logo {
+          height: 900px;
+        }
+      }
+
+      .loading-overlay {
+        position: fixed;
+        inset: 0;
+        background-color: #252525;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+        transition: opacity 1s ease;
+      }
+
+      .loading {
+        width: 75px;
+        height: 75px;
+        background-color: #ffffff;
+        animation: logoSpin 6s infinite;
+        clip-path: polygon(
+          0% 0%, 0 100%, 44% 100%, 44% 58%, 67% 58%, 68% 13%, 85% 13%, 
+          76% 100%, 100% 100%, 100% 0, 54% 0%, 54% 38%, 32% 38%, 32% 87%, 13% 87%, 24% 0);
+      }
+
+      @keyframes logoSpin {
+        0%, 100% {
+          transform: rotate(0deg);
+        }
+        50% {
+          transform: rotate(180deg);
+        }
+      }
+
       section {
         position: fixed;
         height: 100%;
@@ -236,247 +234,309 @@
         color: hsl(0, 0%, 52%);
       }
 
-      .contact {
-        .bg {
-          background-color: #ffffff;
-          padding: 2em;
-        }
-        .contact-content {
-          max-width: 600px;
-          width: 100%;
-          text-align: center;
-        }
-        .contact-form {
-          display: flex;
-          flex-direction: column;
-          gap: 1em;
-        }
-        .contact-form input,
-        .contact-form textarea {
-          padding: 0.75em;
-          border: none;
-          border-radius: 0.5em;
-          font-size: 1rem;
-          background-color: #bebebe;
-        }
-        .contact-form button {
-          padding: 0.75em;
-          border: none;
-          background: rgb(126, 126, 126);
-          color: rgb(91, 91, 91);
-          font-weight: bold;
-          border-radius: 0.5em;
-          cursor: pointer;
-        }
-        .contact-form button:hover {
-          background: #0004ff;
-        }
+      .contact .bg {
+        background-color: #ffffff;
+        padding: 2em;
       }
+
+      .contact-content {
+        max-width: 600px;
+        width: 100%;
+        text-align: center;
+      }
+
+      .contact-form {
+        display: flex;
+        flex-direction: column;
+        gap: 1em;
+      }
+
+      .contact-form input,
+      .contact-form textarea {
+        padding: 0.75em;
+        border: none;
+        border-radius: 0.5em;
+        font-size: 1rem;
+        background-color: #bebebe;
+      }
+
+      .contact-form button {
+        padding: 0.75em;
+        border: none;
+        background: rgb(126, 126, 126);
+        color: rgb(91, 91, 91);
+        font-weight: bold;
+        border-radius: 0.5em;
+        cursor: pointer;
+      }
+
+      .contact-form button:hover {
+        background: #0004ff;
+      }
+
+      .thank-you {
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        max-width: 600px;
+        width: 100%;
+        text-align: center;
+        padding: 2em;
+      }
+
+      .thank-you h2 {
+        font-size: clamp(1.5rem, 4vw, 3rem);
+        font-weight: 400;
+        letter-spacing: 0.5em;
+        color: hsl(0, 0%, 52%);
+        margin-bottom: 1rem;
+      }
+
+      .thank-you p {
+        font-size: 1.2rem;
+        color: rgb(91, 91, 91);
+      }
+
+      .thank-you button {
+        padding: 0.75em 1.5em;
+        border: none;
+        background: rgb(126, 126, 126);
+        color: rgb(91, 91, 91);
+        font-weight: bold;
+        border-radius: 0.5em;
+        cursor: pointer;
+        margin-top: 1rem;
+        text-transform: uppercase;
+      }
+
+      .thank-you button:hover {
+        background: #0004ff;
+      }
+
       .cursor, .cursor-follower {
-  position: fixed;
-  top: 0;
-  left: 0;
-  pointer-events: none;
-  border-radius: 50%;
-  transform: translate(-50%, -50%);
-  transition: background-color 0.3s ease;
-  z-index: 10000;
-}
+        position: fixed;
+        top: 0;
+        left: 0;
+        pointer-events: none;
+        border-radius: 50%;
+        transform: translate(-50%, -50%);
+        transition: background-color 0.3s ease;
+        z-index: 10000;
+      }
 
-.cursor {
-  width: 8px;
-  height: 8px;
-  background-color: black;
-  mix-blend-mode: difference; /* makes it visible on both light and dark */
-}
+      .cursor {
+        width: 8px;
+        height: 8px;
+        background-color: black;
+        mix-blend-mode: difference;
+      }
 
-.cursor-follower {
-  width: 30px;
-  height: 30px;
-  border: 2px solid black;
-  opacity: 0.4;
-  transition: opacity 0.3s ease;
-}
-.scroll-indicator {
-  position: fixed;
-  top: 50%;
-  right: 40px; /* pas aan voor meer of minder naar links */
-  transform: translateY(-50%); /* zodat het in het midden staat */
-  width: 8px;
-  height: 100px; /* lengte van de bar */
-  background: white;
-  border-radius: 10px;
-  overflow: hidden;
-  z-index: 1000;
-  
-}
+      .cursor-follower {
+        width: 30px;
+        height: 30px;
+        border: 2px solid black;
+        opacity: 0.4;
+        transition: opacity 0.3s ease;
+      }
 
-.scroll-indicator::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  background: #003cff;
-  height: var(--scroll, 0%);
-  transition: height 0.2s ease-out;
-  
-}
+      .scroll-indicator {
+        position: fixed;
+        top: 50%;
+        right: 40px;
+        transform: translateY(-50%);
+        width: 8px;
+        height: 100px;
+        background: white;
+        border-radius: 10px;
+        overflow: hidden;
+        z-index: 1000;
+      }
 
+      .scroll-indicator::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        background: #003cff;
+        height: var(--scroll, 0%);
+        transition: height 0.2s ease-out;
+      }
     </style>
   </head>
   <body>
-    <!-- ✅ Loading overlay -->
-  <div class="loading-overlay" id="loadingOverlay">
-    <div class="loading"></div>
-  </div>
-  <header>
-    <div class="logo">
-      <img src="Ch.png" alt="Logo Chassidy Doest" />
+    <div class="loading-overlay" id="loadingOverlay">
+      <div class="loading"></div>
     </div>
+    <header>
+      <div class="logo">
+        <img src="Ch.png" alt="Logo Chassidy Doest" />
+      </div>
 
-    <button class="hamburger" aria-label="Menu">
-      <span></span>
-      <span></span>
-      <span></span>
-    </button>
+      <button class="hamburger" aria-label="Menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
 
-    <nav class="floating-nav">
-     <a href="main.html" data-text="HOME">HOME</a>
-      <a href="about.html" data-text="ABOUT ME">ABOUT ME</a>
-      <a href="projects.html" data-text="PROJECTS">PROJECTS</a>
-      <a href="contact.html" data-text="CONTACT">CONTACT</a>
-    </nav>
-  </header>
+      <nav class="floating-nav">
+        <a href="main.html" data-text="HOME">HOME</a>
+        <a href="about.html" data-text="ABOUT ME">ABOUT ME</a>
+        <a href="projects.html" data-text="PROJECTS">PROJECTS</a>
+        <a href="contact.html" data-text="CONTACT">CONTACT</a>
+      </nav>
+    </header>
 
-  <div class="cursor"></div>
-<div class="cursor-follower"></div>
-
-
- <div class="scroll-indicator"></div>
-
-
-
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const hamburger = document.querySelector('.hamburger');
-      const nav = document.querySelector('nav');
-      const navLinks = document.querySelectorAll('nav a');
-      const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-
-      hamburger.addEventListener('click', () => {
-        nav.classList.toggle('active');
-        hamburger.classList.toggle('active');
-      });
-
-      navLinks.forEach(link => {
-        link.addEventListener('click', () => {
-          nav.classList.remove('active');
-          hamburger.classList.remove('active');
-        });
-
-        link.addEventListener('mouseenter', () => {
-          let iteration = 0;
-          const originalText = link.dataset.text;
-          const interval = setInterval(() => {
-            link.textContent = originalText
-              .split("")
-              .map((char, index) => {
-                if (index < iteration) return originalText[index];
-                return letters[Math.floor(Math.random() * letters.length)];
-              })
-              .join("");
-
-            if (iteration >= originalText.length) clearInterval(interval);
-            iteration += 1 / 2;
-          }, 30);
-        });
-
-        link.addEventListener('mouseleave', () => {
-          setTimeout(() => {
-            link.textContent = link.dataset.text;
-          }, 500);
-        });
-      });
-    });
-
-    // ✅ Hide loading overlay when page is fully loaded
-    window.addEventListener('load', () => {
-      const loadingOverlay = document.getElementById('loadingOverlay');
-      loadingOverlay.style.opacity = 0;
-      setTimeout(() => {
-        loadingOverlay.style.display = 'none';
-      }, 500);
-    });
-
-
-
-    
-window.addEventListener("scroll", () => {
-  const scrollTop = window.scrollY;
-  const docHeight = document.body.scrollHeight - window.innerHeight;
-  const scrollPercent = (scrollTop / docHeight) * 100;
-  document.querySelector(".scroll-indicator").style.setProperty('--scroll', scrollPercent + '%');
-});
-
-gsap.registerPlugin(ScrollTrigger)
-
-gsap.to(".scroll-indicator", {
-  scaleY: 1,
-  scrollTrigger: {
-    scrub: true,
-    trigger: "body",
-    start: "top top",
-    end: "bottom bottom"
-  },
-  ease: "none",
-  transformOrigin: "top"
-})
-
-
-
-
-    gsap.registerPlugin(ScrollTrigger);
-
-    const textElements = gsap.utils.toArray('.text');
-
-    textElements.forEach(text => {
-      gsap.to(text, {
-        backgroundSize: '100%',
-        ease: 'none',
-        scrollTrigger: {
-          trigger: text,
-          start: 'center 80%',
-          end: 'center 20%',
-          scrub: true,
-        },
-      });
-    });
-  </script>
-</body>
-</html>
+    <div class="cursor"></div>
+    <div class="cursor-follower"></div>
+    <div class="scroll-indicator"></div>
 
     <section class="contact">
-  <div class="outer">
-    <div class="inner">
-      <div class="bg">
-        <div class="contact-content">
-          <h2 class="section-heading">Contact me</h2>
-          <form class="contact-form" action="https://formspree.io/f/mldbvdlp" method="POST">
-            <input type="text" name="name" placeholder="Your name" required />
-            <input type="email" name="email" placeholder="Your email" required />
-            <textarea name="message" placeholder="Your message" rows="5" required></textarea>
-            <button type="submit">Send</button>
-          </form>
+      <div class="outer">
+        <div class="inner">
+          <div class="bg">
+            <div class="contact-content">
+              <h2 class="section-heading">Contact me</h2>
+              <form class="contact-form" action="https://formspree.io/f/mldbvdlp" method="POST">
+                <input type="text" name="name" placeholder="Your name" required />
+                <input type="email" name="email" placeholder="Your email" required />
+                <textarea name="message" placeholder="Your message" rows="5" required></textarea>
+                <button type="submit">Send</button>
+              </form>
+              <div class="thank-you" style="display: none;">
+                <h2>Thank You</h2>
+                <p>Your message has been sent successfully!</p>
+                <button onclick="window.location.reload()">Back to Form</button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-  </div>
-</section>
+    </section>
 
     <script src="https://unpkg.com/gsap@3/dist/gsap.min.js"></script>
     <script src="https://unpkg.com/gsap@3/dist/Observer.min.js"></script>
+    <script src="https://unpkg.com/gsap@3/dist/ScrollTrigger.min.js"></script>
     <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const hamburger = document.querySelector('.hamburger');
+        const nav = document.querySelector('nav');
+        const navLinks = document.querySelectorAll('nav a');
+        const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+        hamburger.addEventListener('click', () => {
+          nav.classList.toggle('active');
+          hamburger.classList.toggle('active');
+        });
+
+        navLinks.forEach(link => {
+          link.addEventListener('click', () => {
+            nav.classList.remove('active');
+            hamburger.classList.remove('active');
+          });
+
+          link.addEventListener('mouseenter', () => {
+            let iteration = 0;
+            const originalText = link.dataset.text;
+            const interval = setInterval(() => {
+              link.textContent = originalText
+                .split("")
+                .map((char, index) => {
+                  if (index < iteration) return originalText[index];
+                  return letters[Math.floor(Math.random() * letters.length)];
+                })
+                .join("");
+
+              if (iteration >= originalText.length) clearInterval(interval);
+              iteration += 1 / 2;
+            }, 30);
+          });
+
+          link.addEventListener('mouseleave', () => {
+            setTimeout(() => {
+              link.textContent = link.dataset.text;
+            }, 500);
+          });
+        });
+
+        // Form submission handling
+        const form = document.querySelector('.contact-form');
+        const thankYou = document.querySelector('.thank-you');
+
+        form.addEventListener('submit', async (e) => {
+          e.preventDefault(); // Prevent default form submission
+
+          const formData = new FormData(form);
+          try {
+            const response = await fetch(form.action, {
+              method: form.method,
+              body: formData,
+              headers: {
+                'Accept': 'application/json'
+              }
+            });
+
+            if (response.ok) {
+              form.style.display = 'none'; // Hide the form
+              thankYou.style.display = 'flex'; // Show the thank-you screen
+              gsap.fromTo(thankYou, 
+                { autoAlpha: 0, yPercent: 50 }, 
+                { autoAlpha: 1, yPercent: 0, duration: 0.5 }
+              ); // Animate thank-you screen
+            } else {
+              alert('There was an error submitting the form. Please try again.');
+            }
+          } catch (error) {
+            alert('There was an error submitting the form. Please try again.');
+          }
+        });
+      });
+
+      window.addEventListener('load', () => {
+        const loadingOverlay = document.getElementById('loadingOverlay');
+        loadingOverlay.style.opacity = 0;
+        setTimeout(() => {
+          loadingOverlay.style.display = 'none';
+        }, 500);
+      });
+
+      window.addEventListener("scroll", () => {
+        const scrollTop = window.scrollY;
+        const docHeight = document.body.scrollHeight - window.innerHeight;
+        const scrollPercent = (scrollTop / docHeight) * 100;
+        document.querySelector(".scroll-indicator").style.setProperty('--scroll', scrollPercent + '%');
+      });
+
+      gsap.registerPlugin(ScrollTrigger);
+
+      gsap.to(".scroll-indicator", {
+        scaleY: 1,
+        scrollTrigger: {
+          scrub: true,
+          trigger: "body",
+          start: "top top",
+          end: "bottom bottom"
+        },
+        ease: "none",
+        transformOrigin: "top"
+      });
+
+      const textElements = gsap.utils.toArray('.text');
+
+      textElements.forEach(text => {
+        gsap.to(text, {
+          backgroundSize: '100%',
+          ease: 'none',
+          scrollTrigger: {
+            trigger: text,
+            start: 'center 80%',
+            end: 'center 20%',
+            scrub: true,
+          },
+        });
+      });
+
       gsap.registerPlugin(Observer);
 
       const section = document.querySelector(".contact");
@@ -489,40 +549,29 @@ gsap.to(".scroll-indicator", {
       gsap.fromTo([outer, inner], { yPercent: 100 }, { yPercent: 0, duration: 1 });
       gsap.fromTo(bg, { yPercent: 15 }, { yPercent: 0, duration: 1 }, 0);
       gsap.fromTo(heading, { autoAlpha: 0, yPercent: 150 }, { autoAlpha: 1, yPercent: 0, duration: 1 }, 0.2);
-    
-    
 
-const cursor = document.querySelector('.cursor');
-const follower = document.querySelector('.cursor-follower');
+      const cursor = document.querySelector('.cursor');
+      const follower = document.querySelector('.cursor-follower');
 
-let mouseX = 0, mouseY = 0;
-let followerX = 0, followerY = 0;
+      let mouseX = 0, mouseY = 0;
+      let followerX = 0, followerY = 0;
 
-document.addEventListener('mousemove', e => {
-  mouseX = e.clientX;
-  mouseY = e.clientY;
+      document.addEventListener('mousemove', e => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        cursor.style.left = mouseX + 'px';
+        cursor.style.top = mouseY + 'px';
+      });
 
-  // Move small cursor directly
-  cursor.style.left = mouseX + 'px';
-  cursor.style.top = mouseY + 'px';
-});
+      function animate() {
+        followerX += (mouseX - followerX) * 0.1;
+        followerY += (mouseY - followerY) * 0.1;
+        follower.style.left = followerX + 'px';
+        follower.style.top = followerY + 'px';
+        requestAnimationFrame(animate);
+      }
 
-// Smooth trailing effect for follower
-function animate() {
-  followerX += (mouseX - followerX) * 0.1;
-  followerY += (mouseY - followerY) * 0.1;
-
-  follower.style.left = followerX + 'px';
-  follower.style.top = followerY + 'px';
-
-  requestAnimationFrame(animate);
-}
-
-animate();
-
-
-    
+      animate();
     </script>
-  
   </body>
 </html>
