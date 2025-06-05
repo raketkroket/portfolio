@@ -12,8 +12,62 @@
     }
 
     body {
-      background-color: #868686;
+      background-color: #4f4f4f; /* Dark grey */
       overflow: hidden;
+    }
+
+    .container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1000;
+    }
+
+    .screen-section {
+      position: absolute;
+      left: 0;
+      width: 100%;
+      height: 50%;
+      background-color: #4f4f4f; /* Dark grey */
+      overflow: hidden;
+    }
+
+    .screen-section.top {
+      top: 0;
+    }
+
+    .screen-section.bottom {
+      bottom: 0;
+    }
+
+    .reveal-background {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #ffffff; /* White screen */
+      z-index: 500;
+      opacity: 0;
+    }
+
+    .loading-bar-container {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 200px;
+      height: 4px;
+      background-color: #898989;
+      z-index: 2000;
+    }
+
+    .loading-bar {
+      width: 0%;
+      height: 100%;
+      background: linear-gradient(180deg, #0800a2, #1c3a94); /* Blue gradient */
     }
 
     .hello-bonjour {
@@ -47,6 +101,10 @@
     }
 
     @media (max-width: 800px) {
+      .loading-bar-container {
+        width: 150px;
+        height: 3px;
+      }
       .hello-bonjour {
         font-size: 15vw;
       }
@@ -54,6 +112,11 @@
   </style>
 </head>
 <body>
+  <div class="reveal-background"></div>
+  <div class="container">
+    <div class="screen-section top"></div>
+    <div class="screen-section bottom"></div>
+  </div>
   <div class="hello-bonjour">
     <div class="word visible">hello</div>
     <div class="word hidden">bonjour</div>
@@ -66,24 +129,27 @@
     <div class="word hidden">hallo</div>
     <div class="word hidden">ola</div>
   </div>
+  <div class="loading-bar-container">
+    <div class="loading-bar"></div>
+  </div>
 
-  <script src="https://unpkg.com/gsap@3/dist/gsap.min.js" onerror="console.error('GSAP failed to load'); setTimeout(() => window.location.href = 'main.html', 1700);"></script>
+  <script src="https://unpkg.com/gsap@3/dist/gsap.min.js" onerror="console.error('GSAP failed to load'); setTimeout(() => window.location.href = 'main.html', 3500);"></script>
   <script>
+    const sections = document.querySelectorAll('.screen-section');
+    const loadingBar = document.querySelector('.loading-bar');
     const words = document.querySelectorAll('.hello-bonjour .word');
     let currentWordIndex = 0;
-    const totalCycleTime = 1200; // 1.5 seconds for full cycle
     const wordCount = words.length;
     let currentTime = 0;
-    let isRedirecting = false;
+    const totalCycleTime = 3000; // 3s for greetings cycle
 
     function animateWords() {
-      if (isRedirecting) return;
+      if (currentTime >= totalCycleTime) return;
       const currentWord = words[currentWordIndex];
       const nextWordIndex = (currentWordIndex + 1) % wordCount;
       const nextWord = words[nextWordIndex];
 
-      const progress = currentTime / totalCycleTime;
-      const interval = 200 * (1 - progress) + 20;
+      const interval = 300; // 300ms per greeting
 
       gsap.to(currentWord, {
         opacity: 0,
@@ -99,27 +165,83 @@
             { opacity: 0, y: 20 },
             { opacity: 1, y: 0, duration: 0.15, ease: "power2.out" }
           );
-          currentWordIndex = nextWordIndex;
+          currentWordIndex += 1;
           currentTime += interval;
 
           if (currentTime < totalCycleTime) {
             setTimeout(animateWords, interval);
-          } else {
-            isRedirecting = true;
-            gsap.to(".hello-bonjour", {
-              opacity: 0,
-              duration: 0.2,
-              ease: "power2.out",
-              onComplete: () => {
-                window.location.href = "main.html";
-              }
-            });
           }
         }
       });
     }
 
+    gsap.to(loadingBar, {
+      width: '100%',
+      duration: 3, // 3s total duration
+      ease: "power2.inOut",
+      onComplete: () => {
+        gsap.to('.reveal-background', {
+          opacity: 1,
+          duration: 0.2,
+          ease: "power2.out"
+        });
+
+        gsap.to('.screen-section.top', {
+          y: '-100%', // Top panel moves up
+          duration: 0.8,
+          ease: "power2.out"
+        });
+
+        gsap.to('.screen-section.bottom', {
+          y: '100%', // Bottom panel moves down
+          duration: 0.8,
+          ease: "power2.out"
+        });
+
+        gsap.to(['.container', '.hello-bonjour', '.loading-bar-container'], {
+          opacity: 0,
+          duration: 0.2,
+          delay: 0.6,
+          ease: "power2.out",
+          onComplete: () => {
+            window.location.href = 'main.html';
+          }
+        });
+      }
+    });
+
     animateWords();
   </script>
 </body>
 </html>
+</xai>
+
+### Explanation:
+- **No LED or Shadow**:
+  - Removed all `box-shadow`, `text-shadow`, `filter: drop-shadow`, and pulse animations from panels, loading bar, and greetings.
+- **Split-Screen**:
+  - Two dark grey (`#4f4f4f`) panels split: top to `y: -100%`, bottom to `y: 100%`, revealing white (`#ffffff`) `.reveal-background`.
+- **Blue Loading Bar**:
+  - Gradient (`#0800a2` to `#1c3a94`), no glow or shadow.
+  - 3s animation.
+- **Greetings**:
+  - Exact style from your code: `top: 40%`, `rgba(255, 255, 255, 0.806)`, `Bebas Neue`/`Noto Serif SC`, fade and slide (`y: 20` to `y: -20`).
+  - 3s cycle (300ms per word x 10 words), syncing with loading bar.
+- **Background**:
+  - Body and panels: Dark grey (`#4f4f4f`).
+  - `.reveal-background`: White (`#ffffff`), no animation.
+- **Timing**:
+  - Loading bar and greetings: 3s.
+  - Split: 0.8s, starting at 3s.
+  - Transition: 3.8s.
+
+### If This Isn’t Right:
+Since I can’t see the clip, I followed your description and code. If it’s off, please specify:
+- **Split**: Confirm top/bottom split or change to vertical/diagonal?
+- **Colors**: Correct `#4f4f4f` (dark grey), `#ffffff` (white), `#0800a2` to `#1c3a94` (blue)?
+- **Greetings**: Revert to 1.2s cycle (200ms intervals)? Remove duplicate “hallo”?
+- **Loading Bar**: Change position or style?
+- **Duration**: Adjust total time (e.g., 2s, 4s)?
+- **Clip Details**: Any logo, extra animations, or specific vibe?
+
+Let me know what’s closer or needs tweaking, and I’ll match the clip perfectly! Thanks for your patience.
