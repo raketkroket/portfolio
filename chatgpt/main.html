@@ -34,7 +34,7 @@
       justify-content: space-between;
       width: 25px;
       height: 20px;
-      background-color: #909090;
+      background-color: #90909000;
       border: none;
       cursor: pointer;
       z-index: 10001;
@@ -190,50 +190,77 @@
       --gradient-color: linear-gradient(180deg, #d2ff00 0%, #00d2ff 100%);
     }
 
-    .marquee {
-      width: 100%;
-      overflow: hidden;
-      user-select: none;
-      display: flex;
-      gap: 0; /* No gaps between ul elements */
-      justify-content: flex-start;
-      align-items: center;
-      height: 135px;
-    }
+   .marquee {
+  width: 100%;
+  overflow: hidden;
+  user-select: none;
+  display: flex;
+  gap: 0; /* No gaps between ul elements */
+  justify-content: flex-start;
+  align-items: center;
+  
+}
 
-    .marquee ul {
-      list-style: none;
-      flex-shrink: 0;
-      min-width: 100%;
-      display: flex;
-      justify-content: flex-start;
-      align-items: center;
-      gap: 0; /* No gaps between li elements */
-      animation: marquee 80s linear infinite;
-    }
+.marquee ul {
+  list-style: none;
+  flex-shrink: 0;
+  min-width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 0; /* No gaps between li elements */
+  animation: marquee 120s linear infinite; /* Slower animation: 120s */
+}
 
-    .marquee-text {
-      font-family: 'Bebas Neue', sans-serif;
-      background: linear-gradient(to right, #a2a2a2, #1a2dff, #212121);
-      -webkit-background-clip: text;
-      -moz-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      font-weight: 900;
-      font-size: 10rem; /* Larger, like Reform Collective */
-      white-space: nowrap;
-      margin: 0;
-      padding: 0;
-    }
+.marquee-text {
+  font-family: 'Bebas Neue', sans-serif;
+  background: linear-gradient(to right, #d3d3d3, #4a4aff, #1c1c1c); /* Adjusted gradient for Reform Collective vibe */
+  -webkit-background-clip: text;
+  -moz-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  font-weight: 900;
+  font-size: 19rem; /* Larger and taller */
+  transform: scaleY(1.3); /* Stretch vertically */
+  letter-spacing: -0.05em; /* Condensed spacing */
+  white-space: nowrap;
+  margin: 0;
+  padding: 0;
+}
 
-    @keyframes marquee {
-      0% {
-        transform: translateX(0);
-      }
-      100% {
-        transform: translateX(calc(-100% * 6));
-      }
-    }
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(calc(-100% * 6));
+  }
+}
+
+@media (max-width: 800px) {
+  .marquee {
+    height: 270px; /* Increased for larger mobile text */
+  }
+
+  .marquee-text {
+    font-size: 200rem; /* Much larger for mobile */
+    transform: scaleY(2.2); /* Slightly less stretch for balance */
+    letter-spacing: -0.05em; /* Adjusted for readability */
+  }
+
+  .text {
+    font-size: 12vw; /* Significantly larger for mobile */
+    transform: scaleY(1.2); /* Maintain stretched look */
+    line-height: 120%; /* Increased to prevent overlap */
+    margin-bottom: 1.5rem; /* Added spacing between text elements */
+  }
+
+  .content-container {
+    margin-top: 40px;
+    padding: 5%; /* Reduced padding to fit larger text */
+  }
+}
+
 
     .scroll-indicator {
       position: fixed;
@@ -308,6 +335,21 @@
         margin: 1rem 0;
       }
     }
+
+
+
+
+     .logo-img { 
+  height: 15rem;
+  margin: 0 3rem;
+  vertical-align: middle;
+  object-fit: contain;
+  transform: none;
+  /* Optional tweaks: */
+  position: relative;
+  top: -6.1rem;   /* Move up or down */
+  left: 0; 
+}
 
     .cursor, .cursor-follower {
       position: fixed;
@@ -433,53 +475,80 @@
       <a href="contact.html" data-text="CONTACT">CONTACT</a>
     </nav>
 
-    <div class="header-container">
-      <div class="marquee">
-        <ul>
-          <li>
-            <span class="marquee-text">Digital and UX/UI Designer</span>
-            <span class="marquee-text">Digital and UX/UI Designer</span>
-            <span class="marquee-text">Digital and UX/UI Designer</span>
-          </li>
-        </ul>
-        <ul>
-          <li>
-            <span class="marquee-text">Digital and UX/UI Designer</span>
-            <span class="marquee-text">Digital and UX/UI Designer</span>
-            <span class="marquee-text">Digital and UX/UI Designer</span>
-          </li>
-        </ul>
-        <ul>
-          <li>
-            <span class="marquee-text">Digital and UX/UI Designer</span>
-            <span class="marquee-text">Digital and UX/UI Designer</span>
-            <span class="marquee-text">Digital and UX/UI Designer</span>
-          </li>
-        </ul>
-        <ul>
-          <li>
-            <span class="marquee-text">Digital and UX/UI Designer</span>
-            <span class="marquee-text">Digital and UX/UI Designer</span>
-            <span class="marquee-text">Digital and UX/UI Designer</span>
-          </li>
-        </ul>
-        <ul>
-          <li>
-            <span class="marquee-text">Digital and UX/UI Designer</span>
-            <span class="marquee-text">Digital and UX/UI Designer</span>
-            <span class="marquee-text">Digital and UX/UI Designer</span>
-          </li>
-        </ul>
-        <ul aria-hidden="true">
-          <li>
-            <span class="marquee-text">Digital and UX/UI Designer</span>
-            <span class="marquee-text">Digital and UX/UI Designer</span>
-            <span class="marquee-text">Digital and UX/UI Designer</span>
-          </li>
-        </ul>
-      </div>
+    <header>
+  <div class="header-container">
+    <div class="marquee">
+
+      <ul>
+        <li>
+          <span class="marquee-text">Digital and UX/UI Designer</span>
+          <img src="pinkchas.png" alt="Pink Logo" class="logo-img" />
+          <span class="marquee-text">Digital and UX/UI Designer</span>
+          <img src="blackchas.png" alt="Black Logo" class="logo-img" />
+          <span class="marquee-text">Digital and UX/UI Designer</span>
+          <img src="redchas.png" alt="Red Logo" class="logo-img" />
+        </li>
+      </ul>
+
+      <ul>
+        <li>
+          <span class="marquee-text">Digital and UX/UI Designer</span>
+          <img src="pinkchas.png" alt="Pink Logo" class="logo-img" />
+          <span class="marquee-text">Digital and UX/UI Designer</span>
+          <img src="blackchas.png" alt="Black Logo" class="logo-img" />
+          <span class="marquee-text">Digital and UX/UI Designer</span>
+          <img src="redchas.png" alt="Red Logo" class="logo-img" />
+        </li>
+      </ul>
+
+      <ul>
+        <li>
+          <span class="marquee-text">Digital and UX/UI Designer</span>
+          <img src="pinkchas.png" alt="Pink Logo" class="logo-img" />
+          <span class="marquee-text">Digital and UX/UI Designer</span>
+          <img src="blackchas.png" alt="Black Logo" class="logo-img" />
+          <span class="marquee-text">Digital and UX/UI Designer</span>
+          <img src="redchas.png" alt="Red Logo" class="logo-img" />
+        </li>
+      </ul>
+
+      <ul>
+        <li>
+          <span class="marquee-text">Digital and UX/UI Designer</span>
+          <img src="pinkchas.png" alt="Pink Logo" class="logo-img" />
+          <span class="marquee-text">Digital and UX/UI Designer</span>
+          <img src="blackchas.png" alt="Black Logo" class="logo-img" />
+          <span class="marquee-text">Digital and UX/UI Designer</span>
+          <img src="redchas.png" alt="Red Logo" class="logo-img" />
+        </li>
+      </ul>
+
+      <ul>
+        <li>
+          <span class="marquee-text">Digital and UX/UI Designer</span>
+          <img src="pinkchas.png" alt="Pink Logo" class="logo-img" />
+          <span class="marquee-text">Digital and UX/UI Designer</span>
+          <img src="blackchas.png" alt="Black Logo" class="logo-img" />
+          <span class="marquee-text">Digital and UX/UI Designer</span>
+          <img src="redchas.png" alt="Red Logo" class="logo-img" />
+        </li>
+      </ul>
+
+      <ul aria-hidden="true">
+        <li>
+          <span class="marquee-text">Digital and UX/UI Designer</span>
+          <img src="pinkchas.png" alt="Pink Logo" class="logo-img" />
+          <span class="marquee-text">Digital and UX/UI Designer</span>
+          <img src="blackchas.png" alt="Black Logo" class="logo-img" />
+          <span class="marquee-text">Digital and UX/UI Designer</span>
+          <img src="redchas.png" alt="Red Logo" class="logo-img" />
+        </li>
+      </ul>
+
     </div>
-  </header>
+  </div>
+</header>
+
 
   <div class="content-container">
     <h1 class="text">PRODUCT<span>MOTION</span></h1>
