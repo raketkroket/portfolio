@@ -12,7 +12,7 @@
     }
 
     body {
-      font-family: 'Poppins', sans-serif;
+      font-family: 'Cormorant Garamond', serif;
       background-color: #ffffff;
       overflow-x: hidden;
       padding-bottom: 4rem;
@@ -21,6 +21,7 @@
     header {
       position: relative;
       z-index: 1001;
+      font-family: 'Bebas Neue', sans-serif;
     }
 
     .logo img {
@@ -34,20 +35,21 @@
       justify-content: space-between;
       width: 25px;
       height: 20px;
-      background-color: #90909000;
+      background-color: transparent;
       border: none;
       cursor: pointer;
       z-index: 10001;
       position: fixed;
       top: 30px;
       right: 30px;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
 
     .hamburger span {
       display: block;
       height: 3px;
       width: 100%;
-      background-color: #000;
+      background-color: #a0a0a0;
       border-radius: 3px;
       transition: all 0.3s ease;
     }
@@ -64,72 +66,61 @@
       transform: rotate(-45deg) translate(6px, -6px);
     }
 
-    nav {
-      top: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: rgba(180, 180, 181, 0.85);
-      backdrop-filter: blur(10px);
-      border: 1px solid #444;
-      border-radius: 999px;
-      padding: 0.6rem 2rem;
-      gap: 3rem;
-      z-index: 1000;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
-      font-family: 'Cormorant Garamond', serif;
-      color: rgb(141, 141, 141);
-      text-transform: uppercase;
-      overflow: hidden;
-      position: fixed;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 0 5%;
-      height: 3em;
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(0.66rem, 2vw, 1rem);
-      letter-spacing: 0.2em;
-    }
+     nav {
+        position: fixed;
+        top: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: rgba(180, 180, 181, 0.85);
+        backdrop-filter: blur(10px);
+        border: 1px solid #444;
+        border-radius: 999px;
+        padding: 0.6rem 2rem;
+        display: flex;
+        gap: 2rem;
+        z-index: 1000;
+        box-shadow: 0 4px 20px rgba(201, 201, 201, 0.4);
+      }
 
     nav a {
-      color: white;
-      text-decoration: none;
-      font-weight: 500;
-      font-size: 1.3rem;
-      transition: all 0.3s ease;
-      position: relative;
-      cursor: pointer;
-      user-select: none;
-    }
+        color: white;
+        text-decoration: none;
+        font-weight: 500;
+        font-size: 1.3rem;
+        transition: all 0.3s ease;
+        position: relative;
+        cursor: pointer;
+        user-select: none;
+      }
 
     nav a::after {
-      content: '';
-      position: absolute;
-      left: 0;
-      bottom: -4px;
-      width: 0%;
-      height: 2px;
-      background-color: #0800a2;
-      transition: width 0.3s ease;
-    }
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: -4px;
+        width: 0%;
+        height: 2px;
+        background-color: #0800a2;
+        transition: width 0.3s ease;
+      }
 
-    nav a:hover::after {
-      width: 100%;
-    }
+      nav a:hover::after {
+        width: 100%;
+      }
 
-    nav a:hover {
-      color: #2515ff;
-    }
+      nav a:hover {
+        color: #1100ff;
+      }
 
     .header-container {
       margin-top: 110px;
-      padding: 2%; /* Reduced for better mobile fit */
+      padding: 2%;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: flex-start;
       height: auto;
-      min-height: 200px; /* Increased for larger text */
+      min-height: 200px;
     }
 
     .content-container {
@@ -142,10 +133,11 @@
       height: 150vh;
     }
 
-    .text {
+     .text {
       font-size: 10vw;
       letter-spacing: -.01em;
       line-height: 100%;
+      font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
       margin: 0;
       width: 100%;
       color: rgb(182, 182, 182, 0.2);
@@ -180,7 +172,7 @@
       clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
     }
 
-    a {
+ a {
       text-decoration: none;
       color: inherit;
     }
@@ -190,77 +182,64 @@
       --gradient-color: linear-gradient(180deg, #d2ff00 0%, #00d2ff 100%);
     }
 
-   .marquee {
-  width: 100%;
-  overflow: hidden;
-  user-select: none;
-  display: flex;
-  gap: 0; /* No gaps between ul elements */
-  justify-content: flex-start;
-  align-items: center;
-  
-}
+    .marquee {
+      width: 100%;
+      overflow: hidden;
+      user-select: none;
+      display: flex;
+      gap: 0;
+      justify-content: flex-start;
+      align-items: center;
+      height: 300px;
+    }
 
-.marquee ul {
-  list-style: none;
-  flex-shrink: 0;
-  min-width: 100%;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  gap: 0; /* No gaps between li elements */
-  animation: marquee 120s linear infinite; /* Slower animation: 120s */
-}
+    .marquee ul {
+      list-style: none;
+      flex-shrink: 0;
+      min-width: 100%;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      gap: 1rem;
+      animation: marquee 120s linear infinite;
+    }
 
-.marquee-text {
-  font-family: 'Bebas Neue', sans-serif;
-  background: linear-gradient(to right, #d3d3d3, #4a4aff, #1c1c1c); /* Adjusted gradient for Reform Collective vibe */
-  -webkit-background-clip: text;
-  -moz-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  font-weight: 900;
-  font-size: 19rem; /* Larger and taller */
-  transform: scaleY(1.3); /* Stretch vertically */
-  letter-spacing: -0.05em; /* Condensed spacing */
-  white-space: nowrap;
-  margin: 0;
-  padding: 0;
-}
+    .marquee-text {
+      font-family: 'Bebas Neue', sans-serif;
+      background: linear-gradient(to right, #d3d3d3, #4a4aff, #1c1c1c);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      font-weight: 900;
+      font-size: 12rem;
+      transform: scaleY(1.3);
+      letter-spacing: -0.05em;
+      white-space: nowrap;
+      margin: 0;
+      padding: 0;
+      display: inline-flex;
+      align-items: center;
+    }
 
-@keyframes marquee {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(calc(-100% * 6));
-  }
-}
+    .logo-img {
+      height: 13rem;
+      margin: 0 3rem;
+      vertical-align: middle;
+      object-fit: contain;
+      transform: none;
+      position: relative;
+      top: -4.1rem;
+      left: 0;
+    }
 
-@media (max-width: 800px) {
-  .marquee {
-    height: 270px; /* Increased for larger mobile text */
-  }
-
-  .marquee-text {
-    font-size: 200rem; /* Much larger for mobile */
-    transform: scaleY(2.2); /* Slightly less stretch for balance */
-    letter-spacing: -0.05em; /* Adjusted for readability */
-  }
-
-  .text {
-    font-size: 12vw; /* Significantly larger for mobile */
-    transform: scaleY(1.2); /* Maintain stretched look */
-    line-height: 120%; /* Increased to prevent overlap */
-    margin-bottom: 1.5rem; /* Added spacing between text elements */
-  }
-
-  .content-container {
-    margin-top: 40px;
-    padding: 5%; /* Reduced padding to fit larger text */
-  }
-}
-
+    @keyframes marquee {
+      0% {
+        transform: translateX(0);
+      }
+      100% {
+        transform: translateX(calc(-100% * 6));
+      }
+    }
 
     .scroll-indicator {
       position: fixed;
@@ -301,55 +280,64 @@
       }
       .content-container {
         margin-top: 40px;
+        padding: 5%;
+        height: 150vh;
+      }
+      .marquee {
+        height: 200px;
       }
       .marquee-text {
-        font-size: 4rem; /* Scaled down for mobile */
+        font-size: 6rem;
+        transform: scaleY(1.2);
+        letter-spacing: -0.03em;
+      }
+      .logo-img {
+        height: 8rem;
+        margin: 0 3rem;
+        vertical-align: middle;
+        object-fit: contain;
+        transform: none;
+        position: relative;
+        top: -2.1rem;
+        left: 0;
+      }
+      .text {
+        font-size: 12vw;
+        line-height: 120%;
+        margin-bottom: 1.5rem;
       }
       .scroll-indicator {
         display: block;
       }
-      .floating-nav {
+      nav {
         flex-direction: column;
         justify-content: center;
         align-items: center;
         position: fixed;
         top: 0;
-        left: 0;
+        right: 0;
         height: 100vh;
-        width: 100vw;
-        background: rgba(147, 147, 147, 0.95);
+        width: 100%;
+        background: rgba(0, 0, 0, 0.9);
         transform: translateY(-100%);
         opacity: 0;
         transition: all 0.4s ease;
         pointer-events: none;
       }
-
-      .floating-nav.active {
+      nav.active {
         transform: translateY(0);
         opacity: 1;
         pointer-events: auto;
+        z-index: 100;
+        left: 5%;
+        width: 400px;
+        height: 800px;
       }
-
-      .floating-nav a {
-        font-size: 2rem;
-        margin: 1rem 0;
+      nav a {
+        font-size: 3rem;
+        margin: 1.5rem 0;
       }
     }
-
-
-
-
-     .logo-img { 
-  height: 15rem;
-  margin: 0 3rem;
-  vertical-align: middle;
-  object-fit: contain;
-  transform: none;
-  /* Optional tweaks: */
-  position: relative;
-  top: -6.1rem;   /* Move up or down */
-  left: 0; 
-}
 
     .cursor, .cursor-follower {
       position: fixed;
@@ -443,7 +431,7 @@
         transform: rotate(0deg);
       }
       50% { 
-        transform: rotate(180deg);
+        transform: rotate(360deg);
       }
     }
   </style>
@@ -468,94 +456,85 @@
       <span></span>
       <span></span>
     </button>
-    <nav class="floating-nav">
-      <a href="main.html" data-text="HOME">HOME</a>
-      <a href="about.html" data-text="ABOUT ME">ABOUT ME</a>
-      <a href="projects.html" data-text="PROJECTS">PROJECTS</a>
-      <a href="contact.html" data-text="CONTACT">CONTACT</a>
+    <nav>
+      <a href="main.html" data-text="HOME" alt="Home">HOME</a>
+      <a href="about.html" data-text="ABOUT ME" alt="About Me">ABOUT ME</a>
+      <a href="projects.html" data-text="PROJECTS" alt="Projects">PROJECTS</a>
+      <a href="contact.html" data-text="CONTACT" alt="Contact">CONTACT</a>
     </nav>
 
-    <header>
-  <div class="header-container">
-    <div class="marquee">
-
-      <ul>
-        <li>
-          <span class="marquee-text">Digital and UX/UI Designer</span>
-          <img src="pinkchas.png" alt="Pink Logo" class="logo-img" />
-          <span class="marquee-text">Digital and UX/UI Designer</span>
-          <img src="blackchas.png" alt="Black Logo" class="logo-img" />
-          <span class="marquee-text">Digital and UX/UI Designer</span>
-          <img src="redchas.png" alt="Red Logo" class="logo-img" />
-        </li>
-      </ul>
-
-      <ul>
-        <li>
-          <span class="marquee-text">Digital and UX/UI Designer</span>
-          <img src="pinkchas.png" alt="Pink Logo" class="logo-img" />
-          <span class="marquee-text">Digital and UX/UI Designer</span>
-          <img src="blackchas.png" alt="Black Logo" class="logo-img" />
-          <span class="marquee-text">Digital and UX/UI Designer</span>
-          <img src="redchas.png" alt="Red Logo" class="logo-img" />
-        </li>
-      </ul>
-
-      <ul>
-        <li>
-          <span class="marquee-text">Digital and UX/UI Designer</span>
-          <img src="pinkchas.png" alt="Pink Logo" class="logo-img" />
-          <span class="marquee-text">Digital and UX/UI Designer</span>
-          <img src="blackchas.png" alt="Black Logo" class="logo-img" />
-          <span class="marquee-text">Digital and UX/UI Designer</span>
-          <img src="redchas.png" alt="Red Logo" class="logo-img" />
-        </li>
-      </ul>
-
-      <ul>
-        <li>
-          <span class="marquee-text">Digital and UX/UI Designer</span>
-          <img src="pinkchas.png" alt="Pink Logo" class="logo-img" />
-          <span class="marquee-text">Digital and UX/UI Designer</span>
-          <img src="blackchas.png" alt="Black Logo" class="logo-img" />
-          <span class="marquee-text">Digital and UX/UI Designer</span>
-          <img src="redchas.png" alt="Red Logo" class="logo-img" />
-        </li>
-      </ul>
-
-      <ul>
-        <li>
-          <span class="marquee-text">Digital and UX/UI Designer</span>
-          <img src="pinkchas.png" alt="Pink Logo" class="logo-img" />
-          <span class="marquee-text">Digital and UX/UI Designer</span>
-          <img src="blackchas.png" alt="Black Logo" class="logo-img" />
-          <span class="marquee-text">Digital and UX/UI Designer</span>
-          <img src="redchas.png" alt="Red Logo" class="logo-img" />
-        </li>
-      </ul>
-
-      <ul aria-hidden="true">
-        <li>
-          <span class="marquee-text">Digital and UX/UI Designer</span>
-          <img src="pinkchas.png" alt="Pink Logo" class="logo-img" />
-          <span class="marquee-text">Digital and UX/UI Designer</span>
-          <img src="blackchas.png" alt="Black Logo" class="logo-img" />
-          <span class="marquee-text">Digital and UX/UI Designer</span>
-          <img src="redchas.png" alt="Red Logo" class="logo-img" />
-        </li>
-      </ul>
-
+    <div class="header-container">
+      <div class="marquee">
+        <ul>
+          <li>
+            <span class="marquee-text">Digital and UX/UI Designer</span>
+            <img src="logori.png" alt="Pink Logo" class="logo-img" />
+            <span class="marquee-text">Digital and UX/UI Designer</span>
+            <img src="logori.png" alt="Black Logo" class="logo-img" />
+            <span class="marquee-text">Digital and UX/UI Designer</span>
+            <img src="logori.png" alt="Red Logo" class="logo-img" />
+          </li>
+        </ul>
+        <ul>
+          <li>
+            <span class="marquee-text">Digital and UX/UI Designer</span>
+            <img src="logori.png" alt="Pink Logo" class="logo-img" />
+            <span class="marquee-text">Digital and UX/UI Designer</span>
+            <img src="logori.png" alt="Black Logo" class="logo-img" />
+            <span class="marquee-text">Digital and UX/UI Designer</span>
+            <img src="logori.png" alt="Red Logo" class="logo-img" />
+          </li>
+        </ul>
+        <ul>
+          <li>
+            <span class="marquee-text">Digital and UX/UI Designer</span>
+            <img src="logori.png" alt="Pink Logo" class="logo-img" />
+            <span class="marquee-text">Digital and UX/UI Designer</span>
+            <img src="logori.png" alt="Black Logo" class="logo-img" />
+            <span class="marquee-text">Digital and UX/UI Designer</span>
+            <img src="logori.png" alt="Red Logo" class="logo-img" />
+          </li>
+        </ul>
+        <ul>
+          <li>
+            <span class="marquee-text">Digital and UX/UI Designer</span>
+            <img src="logori.png" alt="Pink Logo" class="logo-img" />
+            <span class="marquee-text">Digital and UX/UI Designer</span>
+            <img src="logori.png" alt="Black Logo" class="logo-img" />
+            <span class="marquee-text">Digital and UX/UI Designer</span>
+            <img src="logori.png" alt="Red Logo" class="logo-img" />
+          </li>
+        </ul>
+        <ul>
+          <li>
+            <span class="marquee-text">Digital and UX/UI Designer</span>
+            <img src="logori.png" alt="Pink Logo" class="logo-img" />
+            <span class="marquee-text">Digital and UX/UI Designer</span>
+            <img src="logori.png" alt="Black Logo" class="logo-img" />
+            <span class="marquee-text">Digital and UX/UI Designer</span>
+            <img src="logori.png" alt="Red Logo" class="logo-img" />
+          </li>
+        </ul>
+        <ul aria-hidden="true">
+          <li>
+            <span class="marquee-text">Digital and UX/UI Designer</span>
+            <img src="logori.png" alt="Pink Logo" class="logo-img" />
+            <span class="marquee-text">Digital and UX/UI Designer</span>
+            <img src="logori.png" alt="Black Logo" class="logo-img" />
+            <span class="marquee-text">Digital and UX/UI Designer</span>
+            <img src="logori.png" alt="Red Logo" class="logo-img" />
+          </li>
+        </ul>
+      </div>
     </div>
-  </div>
-</header>
-
+  </header>
 
   <div class="content-container">
     <h1 class="text">PRODUCT<span>MOTION</span></h1>
     <h1 class="text">GSAP<span>CHASSIDY</span></h1>
     <h1 class="text">3D<span>VISUAL</span></h1>
     <h1 class="text">HOVER ON ME<span>SOURCE</span></h1>
-    <h1 class="text">CLICK HERE<span><a href="https://tiktok.com/@eerlijkste1" target="_blank">LET'S CONNECT</a></span></h1>
+    <h1 class="text">CLICK HERE<span><a href="https://tiktok.com/@eerlijkste1" alt="TikTok Connect" target="_blank">LET'S CONNECT</a></span></h1>
   </div>
 
   <div class="cursor"></div>
@@ -604,9 +583,21 @@
     });
 
     const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-    const navLinks = document.querySelectorAll('.floating-nav a');
+    const hamburger = document.querySelector('.hamburger');
+    const nav = document.querySelector('nav');
+    const navLinks = document.querySelectorAll('nav a');
+
+    hamburger.addEventListener('click', () => {
+      nav.classList.toggle('active');
+      hamburger.classList.toggle('active');
+    });
 
     navLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        nav.classList.remove('active');
+        hamburger.classList.remove('active');
+      });
+
       link.addEventListener('mouseenter', () => {
         let iteration = 0;
         const originalText = link.dataset.text;
@@ -614,27 +605,38 @@
           link.textContent = originalText
             .split("")
             .map((char, index) => {
-              if (index < iteration) {
-                return originalText[index];
-              }
+              if (index < iteration) return originalText[index];
               return letters[Math.floor(Math.random() * letters.length)];
             })
             .join("");
 
-          if (iteration >= originalText.length) {
-            clearInterval(interval);
-          }
-          iteration += 1 / 3;
+          if (iteration >= originalText.length) clearInterval(interval);
+          iteration += 1 / 2;
         }, 30);
       });
-    });
 
-    const hamburger = document.querySelector('.hamburger');
-    const floatingNav = document.querySelector('.floating-nav');
+      link.addEventListener('mouseleave', () => {
+        setTimeout(() => {
+          link.textContent = link.dataset.text;
+        }, 500);
+      });
 
-    hamburger.addEventListener('click', () => {
-      hamburger.classList.toggle('active');
-      floatingNav.classList.toggle('active');
+      link.addEventListener('touchstart', () => {
+        let iteration = 0;
+        const originalText = link.dataset.text;
+        const interval = setInterval(() => {
+          link.textContent = originalText
+            .split("")
+            .map((char, index) => {
+              if (index < iteration) return originalText[index];
+              return letters[Math.floor(Math.random() * letters.length)];
+            })
+            .join("");
+
+          if (iteration >= originalText.length) clearInterval(interval);
+          iteration += 1 / 2;
+        }, 30);
+      });
     });
 
     window.addEventListener('load', () => {
