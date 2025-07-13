@@ -60,13 +60,14 @@
         display: block;
         height: 3px;
         width: 100%;
-        background-color: #a0a0a0;
+        background: linear-gradient(to right, #d3d3d3, #4a4aff);
         border-radius: 3px;
         transition: all 0.3s ease;
       }
 
       .hamburger.active span:nth-child(1) {
         transform: rotate(45deg) translate(5px, 5px);
+        background: #0741ff;
       }
 
       .hamburger.active span:nth-child(2) {
@@ -75,6 +76,80 @@
 
       .hamburger.active span:nth-child(3) {
         transform: rotate(-45deg) translate(6px, -6px);
+        background: #0741ff;
+      }
+
+      .menu-panel {
+        position: fixed;
+        top: 0;
+        right: 0;
+        height: 100vh;
+        width: 100%;
+        max-width: 400px;
+        background: rgba(180, 180, 181, 0.85);
+        backdrop-filter: blur(10px);
+        border-left: 1px solid #444;
+        transform: translateX(100%);
+        opacity: 0;
+        transition: transform 0.6s cubic-bezier(0.7, 0, 0.3, 1), opacity 0.4s ease;
+        z-index: 1000;
+        pointer-events: none;
+        box-shadow: 0 4px 20px rgba(201, 201, 201, 0.4);
+      }
+
+      .menu-panel.active {
+        transform: translateX(0);
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      .menu-panel ul {
+        list-style: none;
+        padding: 2rem;
+        margin-top: 5rem;
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+        align-items: center;
+      }
+
+      .menu-panel a {
+        font-family: 'Bebas Neue', sans-serif;
+        font-size: 3rem;
+        color: white;
+        text-decoration: none;
+        position: relative;
+        transition: color 0.3s ease;
+      }
+
+      .menu-panel a::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: -4px;
+        width: 0%;
+        height: 2px;
+        background-color: #0800a2;
+        transition: width 0.3s ease;
+      }
+
+      .menu-panel a:hover::after {
+        width: 100%;
+      }
+
+      .menu-panel a:hover {
+        color: #1100ff;
+      }
+
+      .menu-footer {
+        position: absolute;
+        bottom: 2rem;
+        width: 100%;
+        text-align: center;
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 0.9rem;
+        color: white;
+        opacity: 0.6;
       }
 
       nav {
@@ -125,41 +200,15 @@
 
       @media (max-width: 800px) {
         .hamburger {
-          display: flex;
+          display: flex !important;
         }
 
         nav {
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-          position: fixed;
-          top: 0;
-          right: 0;
-          height: 100vh;
-          width: 100%;
-          background: rgba(0, 0, 0, 0.9);
-          transform: translateY(-100%);
-          opacity: 0;
-          transition: all 0.4s ease;
-          pointer-events: none;
+          display: none;
         }
 
-        nav.active {
-          transform: translateY(0);
-          opacity: 1;
-          pointer-events: auto;
-          z-index: 100;
-          left: 5%;
-          width: 400px;
-          height: 800px;
-        }
-
-        nav a {
-          font-size: 3rem;
-          margin: 1.5rem 0;
-        }
         .logo {
-          height: 900px;
+          height: auto;
         }
       }
 
@@ -534,6 +583,15 @@
         <a href="projects.html" data-text="PROJECTS">PROJECTS</a>
         <a href="contact.html" data-text="CONTACT">CONTACT</a>
       </nav>
+      <div class="menu-panel" id="menuPanel">
+        <ul>
+          <li><a href="main.html" data-text="HOME" alt="Home">HOME</a></li>
+          <li><a href="about.html" data-text="ABOUT ME" alt="About Me">ABOUT ME</a></li>
+          <li><a href="projects.html" data-text="PROJECTS" alt="Projects">PROJECTS</a></li>
+          <li><a href="contact.html" data-text="CONTACT" alt="Contact">CONTACT</a></li>
+        </ul>
+        <div class="menu-footer">© 2025 Chassidy Doest. All rights reserved.</div>
+      </div>
     </header>
 
     <div class="cursor"></div>
@@ -575,28 +633,50 @@
       </div>
     </section>
 
-    <script src="https://unpkg.com/gsap@3/dist/gsap.min.js"></script>
-    <script src="https://unpkg.com/gsap@3/dist/Observer.min.js"></script>
-    <script src="https://unpkg.com/gsap@3/dist/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/Observer.min.js"></script>
     <script>
       document.addEventListener("DOMContentLoaded", () => {
+        // Ensure GSAP and plugins are loaded
+        if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined' || typeof Observer === 'undefined') {
+          console.error('GSAP, ScrollTrigger, or Observer failed to load');
+        } else {
+          gsap.registerPlugin(ScrollTrigger, Observer);
+        }
+
+        // Hamburger menu functionality
         const hamburger = document.querySelector('.hamburger');
-        const nav = document.querySelector('nav');
+        const menuPanel = document.querySelector('.menu-panel');
         const navLinks = document.querySelectorAll('nav a');
+        const menuLinks = document.querySelectorAll('.menu-panel a');
         const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-        const envelope = document.querySelector('.envelope');
-        const thankYou = document.querySelector('.thank-you');
-        const form = document.querySelector('.contact-form');
+
+        // GSAP timeline for menu items
+        const menuTimeline = gsap.timeline({ paused: true });
+        menuTimeline.fromTo(
+          '.menu-panel li',
+          { opacity: 0, x: 50 },
+          { opacity: 1, x: 0, duration: 0.5, stagger: 0.1, ease: "power3.out" }
+        );
 
         hamburger.addEventListener('click', () => {
-          nav.classList.toggle('active');
+          const isActive = menuPanel.classList.toggle('active');
           hamburger.classList.toggle('active');
+          document.body.style.overflow = isActive ? 'hidden' : 'auto';
+          if (isActive) {
+            menuTimeline.restart();
+          } else {
+            menuTimeline.reverse();
+          }
         });
 
+        // Desktop nav link interactions
         navLinks.forEach(link => {
           link.addEventListener('click', () => {
-            nav.classList.remove('active');
+            menuPanel.classList.remove('active');
             hamburger.classList.remove('active');
+            document.body.style.overflow = 'auto';
           });
 
           link.addEventListener('mouseenter', () => {
@@ -610,7 +690,6 @@
                   return letters[Math.floor(Math.random() * letters.length)];
                 })
                 .join("");
-
               if (iteration >= originalText.length) clearInterval(interval);
               iteration += 1 / 2;
             }, 30);
@@ -621,9 +700,142 @@
               link.textContent = link.dataset.text;
             }, 500);
           });
+
+          link.addEventListener('touchstart', () => {
+            let iteration = 0;
+            const originalText = link.dataset.text;
+            const interval = setInterval(() => {
+              link.textContent = originalText
+                .split("")
+                .map((char, index) => {
+                  if (index < iteration) return originalText[index];
+                  return letters[Math.floor(Math.random() * letters.length)];
+                })
+                .join("");
+              if (iteration >= originalText.length) clearInterval(interval);
+              iteration += 1 / 2;
+            }, 30);
+          });
         });
 
+        // Mobile menu link interactions
+        menuLinks.forEach(link => {
+          link.addEventListener('click', () => {
+            menuPanel.classList.remove('active');
+            hamburger.classList.toggle('active');
+            document.body.style.overflow = 'auto';
+            menuTimeline.reverse();
+          });
+
+          link.addEventListener('mouseenter', () => {
+            let iteration = 0;
+            const originalText = link.dataset.text;
+            const interval = setInterval(() => {
+              link.textContent = originalText
+                .split("")
+                .map((char, index) => {
+                  if (index < iteration) return originalText[index];
+                  return letters[Math.floor(Math.random() * letters.length)];
+                })
+                .join("");
+              if (iteration >= originalText.length) clearInterval(interval);
+              iteration += 1 / 2;
+            }, 30);
+          });
+
+          link.addEventListener('mouseleave', () => {
+            setTimeout(() => {
+              link.textContent = link.dataset.text;
+            }, 500);
+          });
+
+          link.addEventListener('touchstart', () => {
+            let iteration = 0;
+            const originalText = link.dataset.text;
+            const interval = setInterval(() => {
+              link.textContent = originalText
+                .split("")
+                .map((char, index) => {
+                  if (index < iteration) return originalText[index];
+                  return letters[Math.floor(Math.random() * letters.length)];
+                })
+                .join("");
+              if (iteration >= originalText.length) clearInterval(interval);
+              iteration += 1 / 2;
+            }, 30);
+          });
+        });
+
+        // Keyboard accessibility for mobile menu
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape' && menuPanel.classList.contains('active')) {
+            menuPanel.classList.remove('active');
+            hamburger.classList.remove('active');
+            document.body.style.overflow = 'auto';
+            menuTimeline.reverse();
+          }
+        });
+
+        // Dynamic menu item addition
+        function addMenuItem(text, href = '#') {
+          const li = document.createElement('li');
+          li.innerHTML = `<a href="${href}" data-text="${text}" alt="${text}">${text}</a>`;
+          menuPanel.querySelector('ul').appendChild(li);
+          menuTimeline.fromTo(
+            li,
+            { opacity: 0, x: 50 },
+            { opacity: 1, x: 0, duration: 0.5, ease: "power3.out" },
+            "-=0.3"
+          );
+          const newLink = li.querySelector('a');
+          newLink.addEventListener('click', () => {
+            menuPanel.classList.remove('active');
+            hamburger.classList.remove('active');
+            document.body.style.overflow = 'auto';
+            menuTimeline.reverse();
+          });
+          newLink.addEventListener('mouseenter', () => {
+            let iteration = 0;
+            const originalText = newLink.dataset.text;
+            const interval = setInterval(() => {
+              newLink.textContent = originalText
+                .split("")
+                .map((char, index) => {
+                  if (index < iteration) return originalText[index];
+                  return letters[Math.floor(Math.random() * letters.length)];
+                })
+                .join("");
+              if (iteration >= originalText.length) clearInterval(interval);
+              iteration += 1 / 2;
+            }, 30);
+          });
+          newLink.addEventListener('mouseleave', () => {
+            setTimeout(() => {
+              newLink.textContent = newLink.dataset.text;
+            }, 500);
+          });
+          newLink.addEventListener('touchstart', () => {
+            let iteration = 0;
+            const originalText = newLink.dataset.text;
+            const interval = setInterval(() => {
+              newLink.textContent = originalText
+                .split("")
+                .map((char, index) => {
+                  if (index < iteration) return originalText[index];
+                  return letters[Math.floor(Math.random() * letters.length)];
+                })
+                .join("");
+              if (iteration >= originalText.length) clearInterval(interval);
+              iteration += 1 / 2;
+            }, 30);
+          });
+        }
+
+        // Example: Add a new menu item after 2 seconds
+        setTimeout(() => addMenuItem('BLOG'), 2000);
+
         // Envelope entry animation
+        const envelope = document.querySelector('.envelope');
         gsap.fromTo(envelope, 
           { yPercent: 100, rotateX: 20, autoAlpha: 0 },
           { yPercent: 0, rotateX: 5, autoAlpha: 1, duration: 1.2, ease: 'power2.out' }
@@ -669,9 +881,10 @@
         });
 
         // Form submission handling
+        const form = document.querySelector('.contact-form');
+        const thankYou = document.querySelector('.thank-you');
         form.addEventListener('submit', async (e) => {
-          e.preventDefault(); // Prevent default form submission
-
+          e.preventDefault();
           const formData = new FormData(form);
           try {
             const response = await fetch(form.action, {
@@ -683,8 +896,8 @@
             });
 
             if (response.ok) {
-              envelope.style.display = 'none'; // Hide the envelope
-              thankYou.style.display = 'flex'; // Show the thank-you screen
+              envelope.style.display = 'none';
+              thankYou.style.display = 'flex';
               gsap.fromTo(thankYou, 
                 { autoAlpha: 0, yPercent: 50 }, 
                 { autoAlpha: 1, yPercent: 0, duration: 0.5 }
@@ -702,7 +915,6 @@
                 { autoAlpha: 1, y: 0, duration: 0.5, delay: 0.4 }
               );
 
-              // Confetti animation
               for (let i = 0; i < 20; i++) {
                 const confetti = document.createElement('div');
                 confetti.classList.add('confetti');
@@ -749,87 +961,88 @@
             ease: 'power2.out'
           });
         });
-      });
 
-      window.addEventListener('load', () => {
-        const loadingOverlay = document.getElementById('loadingOverlay');
-        loadingOverlay.style.opacity = 0;
-        setTimeout(() => {
-          loadingOverlay.style.display = 'none';
-        }, 500);
-      });
+        // Scroll indicator
+        window.addEventListener("scroll", () => {
+          const scrollTop = window.scrollY;
+          const docHeight = document.body.scrollHeight - window.innerHeight;
+          const scrollPercent = (scrollTop / docHeight) * 100;
+          document.querySelector(".scroll-indicator").style.setProperty('--scroll', scrollPercent + '%');
+        });
 
-      window.addEventListener("scroll", () => {
-        const scrollTop = window.scrollY;
-        const docHeight = document.body.scrollHeight - window.innerHeight;
-        const scrollPercent = (scrollTop / docHeight) * 100;
-        document.querySelector(".scroll-indicator").style.setProperty('--scroll', scrollPercent + '%');
-      });
+        // ScrollTrigger animations
+        if (typeof ScrollTrigger !== 'undefined') {
+          gsap.to(".scroll-indicator", {
+            scaleY: 1,
+            scrollTrigger: {
+              scrub: true,
+              trigger: "body",
+              start: "top top",
+              end: "bottom bottom"
+            },
+            ease: "none",
+            transformOrigin: "top"
+          });
 
-      gsap.registerPlugin(ScrollTrigger);
+          const textElements = gsap.utils.toArray('.text');
+          textElements.forEach(text => {
+            gsap.to(text, {
+              backgroundSize: '100%',
+              ease: 'none',
+              scrollTrigger: {
+                trigger: text,
+                start: 'center 80%',
+                end: 'center 20%',
+                scrub: true,
+              },
+            });
+          });
+        }
 
-      gsap.to(".scroll-indicator", {
-        scaleY: 1,
-        scrollTrigger: {
-          scrub: true,
-          trigger: "body",
-          start: "top top",
-          end: "bottom bottom"
-        },
-        ease: "none",
-        transformOrigin: "top"
-      });
+        // Section animations
+        const section = document.querySelector(".contact");
+        const outer = section.querySelector(".outer");
+        const inner = section.querySelector(".inner");
+        const heading = section.querySelector(".section-heading");
+        const bg = section.querySelector(".bg");
 
-      const textElements = gsap.utils.toArray('.text');
+        gsap.set(section, { autoAlpha: 1, zIndex: 1 });
+        gsap.fromTo([outer, inner], { yPercent: 100 }, { yPercent: 0, duration: 1 });
+        gsap.fromTo(bg, { yPercent: 15 }, { yPercent: 0, duration: 1 }, 0);
+        gsap.fromTo(heading, { autoAlpha: 0, yPercent: 150 }, { autoAlpha: 1, yPercent: 0, duration: 1 }, 0.2);
 
-      textElements.forEach(text => {
-        gsap.to(text, {
-          backgroundSize: '100%',
-          ease: 'none',
-          scrollTrigger: {
-            trigger: text,
-            start: 'center 80%',
-            end: 'center 20%',
-            scrub: true,
-          },
+        // Custom cursor
+        const cursor = document.querySelector('.cursor');
+        const follower = document.querySelector('.cursor-follower');
+        let mouseX = 0, mouseY = 0;
+        let followerX = 0, followerY = 0;
+
+        document.addEventListener('mousemove', e => {
+          mouseX = e.clientX;
+          mouseY = e.clientY;
+          cursor.style.left = mouseX + 'px';
+          cursor.style.top = mouseY + 'px';
+        });
+
+        function animate() {
+          followerX += (mouseX - followerX) * 0.1;
+          followerY += (mouseY - followerY) * 0.1;
+          follower.style.left = followerX + 'px';
+          follower.style.top = followerY + 'px';
+          requestAnimationFrame(animate);
+        }
+
+        animate();
+
+        // Loading overlay
+        window.addEventListener('load', () => {
+          const loadingOverlay = document.getElementById('loadingOverlay');
+          loadingOverlay.style.opacity = 0;
+          setTimeout(() => {
+            loadingOverlay.style.display = 'none';
+          }, 500);
         });
       });
-
-      gsap.registerPlugin(Observer);
-
-      const section = document.querySelector(".contact");
-      const outer = section.querySelector(".outer");
-      const inner = section.querySelector(".inner");
-      const heading = section.querySelector(".section-heading");
-      const bg = section.querySelector(".bg");
-
-      gsap.set(section, { autoAlpha: 1, zIndex: 1 });
-      gsap.fromTo([outer, inner], { yPercent: 100 }, { yPercent: 0, duration: 1 });
-      gsap.fromTo(bg, { yPercent: 15 }, { yPercent: 0, duration: 1 }, 0);
-      gsap.fromTo(heading, { autoAlpha: 0, yPercent: 150 }, { autoAlpha: 1, yPercent: 0, duration: 1 }, 0.2);
-
-      const cursor = document.querySelector('.cursor');
-      const follower = document.querySelector('.cursor-follower');
-
-      let mouseX = 0, mouseY = 0;
-      let followerX = 0, followerY = 0;
-
-      document.addEventListener('mousemove', e => {
-        mouseX = e.clientX;
-        mouseY = e.clientY;
-        cursor.style.left = mouseX + 'px';
-        cursor.style.top = mouseY + 'px';
-      });
-
-      function animate() {
-        followerX += (mouseX - followerX) * 0.1;
-        followerY += (mouseY - followerY) * 0.1;
-        follower.style.left = followerX + 'px';
-        follower.style.top = followerY + 'px';
-        requestAnimationFrame(animate);
-      }
-
-      animate();
     </script>
   </body>
 </html>
