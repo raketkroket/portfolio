@@ -43,7 +43,7 @@
       margin: 1rem;
     }
 
-     .hamburger {
+    .hamburger {
       display: none;
       flex-direction: column;
       justify-content: space-between;
@@ -290,6 +290,35 @@
       height: var(--scroll, 0%);
       transition: height 0.2s ease-out;
     }
+
+    .coming-soon {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 3rem;
+      color: #1100ff;
+      z-index: 5;
+    }
+
+    .coming-soon p {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem;
+      color: rgb(141, 141, 141);
+      text-transform: none;
+    }
+
+    .coming-soon a {
+      color: #0800a2;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .coming-soon a:hover {
+      color: #1100ff;
+    }
   </style>
 </head>
 <body>
@@ -324,6 +353,13 @@
   <div class="cursor"></div>
   <div class="cursor-follower"></div>
   <div class="scroll-indicator"></div>
+
+  <!-- Coming Soon Message -->
+  <div class="coming-soon">
+    <h1>Coming Soon!</h1>
+    <p>You can <a href="contact.html">contact me</a>.</p>
+  </div>
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script>
     document.addEventListener("DOMContentLoaded", () => {
@@ -332,1631 +368,224 @@
         console.error('GSAP failed to load');
       }
 
-      // Hamburger menu functionality
-      const hamburger = document.querySelector('.hamburger');
-      const menuPanel = document.querySelector('.menu-panel');
-      const navLinks = document.querySelectorAll('nav a');
-      const menuLinks = document.querySelectorAll('.menu-panel a');
-      const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+      // Hamburger menu functionality "..": {
+        const hamburger = document.querySelector('.hamburger');
+        const menuPanel = document.querySelector('.menu-panel');
+        const navLinks = document.querySelectorAll('nav a');
+        const menuLinks = document.querySelectorAll('.menu-panel a');
+        const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
-      // GSAP timeline for menu items
-      const menuTimeline = gsap.timeline({ paused: true });
-      menuTimeline.fromTo(
-        '.menu-panel li',
-        { opacity: 0, x: 50 },
-        { opacity: 1, x: 0, duration: 0.5, stagger: 0.1, ease: "power3.out" }
-      );
-
-      hamburger.addEventListener('click', () => {
-        const isActive = menuPanel.classList.toggle('active');
-        hamburger.classList.toggle('active');
-        document.body.style.overflow = isActive ? 'hidden' : 'auto';
-        if (isActive) {
-          menuTimeline.restart();
-        } else {
-          menuTimeline.reverse();
-        }
-      });
-
-      // Desktop nav link interactions
-      navLinks.forEach(link => {
-        link.addEventListener('click', () => {
-          menuPanel.classList.remove('active');
-          hamburger.classList.remove('active');
-          document.body.style.overflow = 'auto';
-        });
-
-        link.addEventListener('mouseenter', () => {
-          let iteration = 0;
-          const originalText = link.dataset.text;
-          const interval = setInterval(() => {
-            link.textContent = originalText
-              .split("")
-              .map((char, index) => {
-                if (index < iteration) return originalText[index];
-                return letters[Math.floor(Math.random() * letters.length)];
-              })
-              .join("");
-            if (iteration >= originalText.length) clearInterval(interval);
-            iteration += 1 / 2;
-          }, 30);
-        });
-
-        link.addEventListener('mouseleave', () => {
-          setTimeout(() => {
-            link.textContent = link.dataset.text;
-          }, 500);
-        });
-
-        link.addEventListener('touchstart', () => {
-          let iteration = 0;
-          const originalText = link.dataset.text;
-          const interval = setInterval(() => {
-            link.textContent = originalText
-              .split("")
-              .map((char, index) => {
-                if (index < iteration) return originalText[index];
-                return letters[Math.floor(Math.random() * letters.length)];
-              })
-              .join("");
-            if (iteration >= originalText.length) clearInterval(interval);
-            iteration += 1 / 2;
-          }, 30);
-        });
-      });
-
-      // Mobile menu link interactions
-      menuLinks.forEach(link => {
-        link.addEventListener('click', () => {
-          menuPanel.classList.remove('active');
-          hamburger.classList.remove('active');
-          document.body.style.overflow = 'auto';
-          menuTimeline.reverse();
-        });
-
-        link.addEventListener('mouseenter', () => {
-          let iteration = 0;
-          const originalText = link.dataset.text;
-          const interval = setInterval(() => {
-            link.textContent = originalText
-              .split("")
-              .map((char, index) => {
-                if (index < iteration) return originalText[index];
-                return letters[Math.floor(Math.random() * letters.length)];
-              })
-              .join("");
-            if (iteration >= originalText.length) clearInterval(interval);
-            iteration += 1 / 2;
-          }, 30);
-        });
-
-        link.addEventListener('mouseleave', () => {
-          setTimeout(() => {
-            link.textContent = link.dataset.text;
-          }, 500);
-        });
-
-        link.addEventListener('touchstart', () => {
-          let iteration = 0;
-          const originalText = link.dataset.text;
-          const interval = setInterval(() => {
-            link.textContent = originalText
-              .split("")
-              .map((char, index) => {
-                if (index < iteration) return originalText[index];
-                return letters[Math.floor(Math.random() * letters.length)];
-              })
-              .join("");
-            if (iteration >= originalText.length) clearInterval(interval);
-            iteration += 1 / 2;
-          }, 30);
-        });
-      });
-
-      // Keyboard accessibility for mobile menu
-      document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && menuPanel.classList.contains('active')) {
-          menuPanel.classList.remove('active');
-          hamburger.classList.remove('active');
-          document.body.style.overflow = 'auto';
-          menuTimeline.reverse();
-        }
-      });
-
-      // Dynamic menu item addition
-      function addMenuItem(text, href = '#') {
-        const li = document.createElement('li');
-        li.innerHTML = `<a href="${href}" data-text="${text}" alt="${text}">${text}</a>`;
-        menuPanel.querySelector('ul').appendChild(li);
+        // GSAP timeline for menu items
+        const menuTimeline = gsap.timeline({ paused: true });
         menuTimeline.fromTo(
-          li,
+          '.menu-panel li',
           { opacity: 0, x: 50 },
-          { opacity: 1, x: 0, duration: 0.5, ease: "power3.out" },
-          "-=0.3"
+          { opacity: 1, x: 0, duration: 0.5, stagger: 0.1, ease: "power3.out" }
         );
-        const newLink = li.querySelector('a');
-        newLink.addEventListener('click', () => {
-          menuPanel.classList.remove('active');
-          hamburger.classList.remove('active');
-          document.body.style.overflow = 'auto';
-          menuTimeline.reverse();
+
+        hamburger.addEventListener('click', () => {
+          const isActive = menuPanel.classList.toggle('active');
+          hamburger.classList.toggle('active');
+          document.body.style.overflow = isActive ? 'hidden' : 'auto';
+          if (isActive) {
+            menuTimeline.restart();
+          } else {
+            menuTimeline.reverse();
+          }
         });
-        newLink.addEventListener('mouseenter', () => {
-          let iteration = 0;
-          const originalText = newLink.dataset.text;
-          const interval = setInterval(() => {
-            newLink.textContent = originalText
-              .split("")
-              .map((char, index) => {
-                if (index < iteration) return originalText[index];
-                return letters[Math.floor(Math.random() * letters.length)];
-              })
-              .join("");
-            if (iteration >= originalText.length) clearInterval(interval);
-            iteration += 1 / 2;
-          }, 30);
+
+        // Desktop nav link interactions
+        navLinks.forEach(link => {
+          link.addEventListener('click', () => {
+            menuPanel.classList.remove('active');
+            hamburger.classList.remove('active');
+            document.body.style.overflow = 'auto';
+          });
+
+          link.addEventListener('mouseenter', () => {
+            let iteration = 0;
+            const originalText = link.dataset.text;
+            const interval = setInterval(() => {
+              link.textContent = originalText
+                .split("")
+                .map((char, index) => {
+                  if (index < iteration) return originalText[index];
+                  return letters[Math.floor(Math.random() * letters.length)];
+                })
+                .join("");
+              if (iteration >= originalText.length) clearInterval(interval);
+              iteration += 1 / 2;
+            }, 30);
+          });
+
+          link.addEventListener('mouseleave', () => {
+            setTimeout(() => {
+              link.textContent = link.dataset.text;
+            }, 500);
+          });
+
+          link.addEventListener('touchstart', () => {
+            let iteration = 0;
+            const originalText = link.dataset.text;
+            const interval = setInterval(() => {
+              link.textContent = originalText
+                .split("")
+                .map((char, index) => {
+                  if (index < iteration) return originalText[index];
+                  return letters[Math.floor(Math.random() * letters.length)];
+                })
+                .join("");
+              if (iteration >= originalText.length) clearInterval(interval);
+              iteration += 1 / 2;
+            }, 30);
+          });
         });
-        newLink.addEventListener('mouseleave', () => {
+
+        // Mobile menu link interactions
+        menuLinks.forEach(link => {
+          link.addEventListener('click', () => {
+            menuPanel.classList.remove('active');
+            hamburger.classList.remove('active');
+            document.body.style.overflow = 'auto';
+            menuTimeline.reverse();
+          });
+
+          link.addEventListener('mouseenter', () => {
+            let iteration = 0;
+            const originalText = link.dataset.text;
+            const interval = setInterval(() => {
+              link.textContent = originalText
+                .split("")
+                .map((char, index) => {
+                  if (index < iteration) return originalText[index];
+                  return letters[Math.floor(Math.random() * letters.length)];
+                })
+                .join("");
+              if (iteration >= originalText.length) clearInterval(interval);
+              iteration += 1 / 2;
+            }, 30);
+          });
+
+          link.addEventListener('mouseleave', () => {
+            setTimeout(() => {
+              link.textContent = link.dataset.text;
+            }, 500);
+          });
+
+          link.addEventListener('touchstart', () => {
+            let iteration = 0;
+            const originalText = link.dataset.text;
+            const interval = setInterval(() => {
+              link.textContent = originalText
+                .split("")
+                .map((char, index) => {
+                  if (index < iteration) return originalText[index];
+                  return letters[Math.floor(Math.random() * letters.length)];
+                })
+                .join("");
+              if (iteration >= originalText.length) clearInterval(interval);
+              iteration += 1 / 2;
+            }, 30);
+          });
+        });
+
+        // Keyboard accessibility for mobile menu
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape' && menuPanel.classList.contains('active')) {
+            menuPanel.classList.remove('active');
+            hamburger.classList.remove('active');
+            document.body.style.overflow = 'auto';
+            menuTimeline.reverse();
+          }
+        });
+
+        // Dynamic menu item addition
+        function addMenuItem(text, href = '#') {
+          const li = document.createElement('li');
+          li.innerHTML = `<a href="${href}" data-text="${text}" alt="${text}">${text}</a>`;
+          menuPanel.querySelector('ul').appendChild(li);
+          menuTimeline.fromTo(
+            li,
+            { opacity: 0, x: 50 },
+            { opacity: 1, x: 0, duration: 0.5, ease: "power3.out" },
+            "-=0.3"
+          );
+          const newLink = li.querySelector('a');
+          newLink.addEventListener('click', () => {
+            menuPanel.classList.remove('active');
+            hamburger.classList.remove('active');
+            document.body.style.overflow = 'auto';
+            menuTimeline.reverse();
+          });
+          newLink.addEventListener('mouseenter', () => {
+            let iteration = 0;
+            const originalText = newLink.dataset.text;
+            const interval = setInterval(() => {
+              newLink.textContent = originalText
+                .split("")
+                .map((char, index) => {
+                  if (index < iteration) return originalText[index];
+                  return letters[Math.floor(Math.random() * letters.length)];
+                })
+                .join("");
+              if (iteration >= originalText.length) clearInterval(interval);
+              iteration += 1 / 2;
+            }, 30);
+          });
+          newLink.addEventListener('mouseleave', () => {
+            setTimeout(() => {
+              newLink.textContent = newLink.dataset.text;
+            }, 500);
+          });
+          newLink.addEventListener('touchstart', () => {
+            let iteration = 0;
+            const originalText = newLink.dataset.text;
+            const interval = setInterval(() => {
+              newLink.textContent = originalText
+                .split("")
+                .map((char, index) => {
+                  if (index < iteration) return originalText[index];
+                  return letters[Math.floor(Math.random() * letters.length)];
+                })
+                .join("");
+              if (iteration >= originalText.length) clearInterval(interval);
+              iteration += 1 / 2;
+            }, 30);
+          });
+        }
+
+        // Loading overlay
+        window.addEventListener('load', () => {
+          const loadingOverlay = document.getElementById('loadingOverlay');
+          loadingOverlay.style.opacity = 0;
           setTimeout(() => {
-            newLink.textContent = newLink.dataset.text;
+            loadingOverlay.style.display = 'none';
           }, 500);
         });
-        newLink.addEventListener('touchstart', () => {
-          let iteration = 0;
-          const originalText = newLink.dataset.text;
-          const interval = setInterval(() => {
-            newLink.textContent = originalText
-              .split("")
-              .map((char, index) => {
-                if (index < iteration) return originalText[index];
-                return letters[Math.floor(Math.random() * letters.length)];
-              })
-              .join("");
-            if (iteration >= originalText.length) clearInterval(interval);
-            iteration += 1 / 2;
-          }, 30);
+
+        // Custom cursor
+        const cursor = document.querySelector('.cursor');
+        const follower = document.querySelector('.cursor-follower');
+        let mouseX = 0, mouseY = 0;
+        let followerX = 0, followerY = 0;
+
+        document.addEventListener('mousemove', e => {
+          mouseX = e.clientX;
+          mouseY = e.clientY;
+          cursor.style.left = mouseX + 'px';
+          cursor.style.top = mouseY + 'px';
         });
-      }
 
-      // Example: Add a new menu item after 2 seconds
-      setTimeout(() => addMenuItem('BLOG'), 2000);
+        function animate() {
+          followerX += (mouseX - followerX) * 0.1;
+          followerY += (mouseY - followerY) * 0.1;
+          follower.style.left = followerX + 'px';
+          follower.style.top = followerY + 'px';
+          requestAnimationFrame(animate);
+        }
 
-      // Loading overlay
-      window.addEventListener('load', () => {
-        const loadingOverlay = document.getElementById('loadingOverlay');
-        loadingOverlay.style.opacity = 0;
-        setTimeout(() => {
-          loadingOverlay.style.display = 'none';
-        }, 500);
+        animate();
       });
-
-      // Custom cursor
-      const cursor = document.querySelector('.cursor');
-      const follower = document.querySelector('.cursor-follower');
-      let mouseX = 0, mouseY = 0;
-      let followerX = 0, followerY = 0;
-
-      document.addEventListener('mousemove', e => {
-        mouseX = e.clientX;
-        mouseY = e.clientY;
-        cursor.style.left = mouseX + 'px';
-        cursor.style.top = mouseY + 'px';
-      });
-
-      function animate() {
-        followerX += (mouseX - followerX) * 0.1;
-        followerY += (mouseY - followerY) * 0.1;
-        follower.style.left = followerX + 'px';
-        follower.style.top = followerY + 'px';
-        requestAnimationFrame(animate);
-      }
-
-      animate();
-    });
   </script>
 </body>
 </html>
-<!-- 🧭 Header -->
-<header class="header">
-  <a href="https://turbokit.io/" target="_blank" class="made" aria-label="The fastest website template" data-microtip-position="top" role="tooltip">
-    <div class="by">MADE BY</div>
-    <div class="made-logo">
-      <img src="https://i.imgur.com/aNnuxjo.png" alt="logo" class="logo-img" draggable="false">
-      <div class="logo-text">TurboKit</div>
-    </div>
-  </a>
-</header>
-
-<div class="info to">
-  <div class="info-content">
-    <div class="weather">
-      <span class="weather-icon iconify" data-icon="famicons:cloudy-night"></span>
-      23° Cloudy
-    </div>
-    <div class="arr">
-      Arriving Today 8:40PM
-    </div>
-  </div>
-</div>
-
-<div class="info from">
-  <div class="info-content">
-    <div class="weather">
-      <span class="weather-icon iconify" data-icon="material-symbols:nights-stay"></span>
-      34° Clear
-    </div>
-    <div class="arr">
-      Departed Today 3:20PM
-    </div>
-  </div>
-</div>
-
-<small class="small">
-  <span class="captin iconify" data-icon="noto:pilot-light-skin-tone"></span>
-
-  <span class="small-text">
-    Tap to hear the captain
-  </span>
-</small>
-
-<div class="card-wrap">
-  <img src="https://i.imgur.com/NtaVpzy.png" alt="" class="thumbnail">
-  <div class="card pointer">
-
-    <div class="card-content">
-      <div class="border"></div>
-
-      <div class="blob"></div>
-      <div class="top">
-        <div class="logo-wrap">
-          <img src="https://cdn.brandfetch.io/idZKewuK9S/theme/light/logo.svg?c=1dxbfHSJFAPEGdCLU4o5B" class="logo" alt="" />
-        </div>
-
-        <div class="right">
-
-          <div class="on">
-            <span class="check iconify" data-icon="icon-park-solid:check-one"></span>
-
-            <div class="text">On Time</div>
-          </div>
-          <div class="flight">
-            <div class="num">QR1399</div>
-          </div>
-        </div>
-      </div>
-      <div class="mid">
-        <div class="loc">
-          <div class="box from">
-            <div class="label">
-              <span class="sign iconify" data-icon="tabler:plane-departure"></span>from
-            </div>
-            <div class="line">
-              <span class="iconify flag" data-icon="circle-flags:qa"></span>
-              <div class="code">DOH</div>
-            </div>
-            <div class="country">Qatar</div>
-            <img src="https://cdn.jsdelivr.net/gh/ouyahama/cdn@main/qatarm.svg" class="map" />
-          </div>
-          <div class="dur">
-            <div class="duration">
-              <svg width="100" viewBox="-40 -10 700 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M4 143C100.5 38.3333 356.3 -108.2 607.5 143" class="white" stroke="white" stroke-width="10" stroke-linecap="round" stroke-linejoin="bevel" stroke-dasharray="25 25" />
-                <path class="green" d="M4 143C101 38.5 321.5 -78.4999 543 87" stroke="#00FF77" stroke-width="20" stroke-miterlimit="16" stroke-linecap="round" />
-              </svg>
-
-            </div>
-            <div class="meta">
-              <div class="time">5h 20min</div>
-            </div>
-            <div class="min">
-              <div class="dot"></div>
-              ETA&nbsp;
-              <span class="land-time">17&nbsp;</span>MIN
-            </div>
-          </div>
-          <div class="box to pointer">
-
-            <div class="label">
-              <span class="sign iconify" data-icon="tabler:plane-arrival"></span>to
-            </div>
-            <div class="line">
-              <span class="flag iconify" data-icon="circle-flags:tn"></span>
-              <div class="code">TUN</div>
-            </div>
-            <div class="country">Tunisia</div>
-            <img src="https://cdn.jsdelivr.net/gh/ouyahama/cdn@main/tun.svg" alt="" class="map" />
-          </div>
-        </div>
-        <div class="stat">
-
-          <div class="times">
-
-            <div class="speed">
-              <div>
-                <span class="speed-label">
-                  <span class="icon iconify" data-icon="material-symbols:speed"></span>
-                  Speed</span>
-              </div>
-              <div class="speed-box">
-                <span class="speed-value">1294</span>
-                <span class="speed-unit">KM/H</span>
-              </div>
-
-            </div>
-
-            <div class="speed">
-              <div>
-                <span class="speed-label">
-                  <span class="icon iconify" data-icon="material-symbols-light:altitude-rounded"></span>
-                  Altitude</span>
-              </div>
-              <div class="speed-box">
-                <span class="speed-value altitude-value"></span>
-                <span class="speed-unit">METER</span>
-              </div>
-
-            </div>
-
-            <div class="speed">
-              <div>
-                <span class="speed-label">
-
-                  <span class="iconify" data-icon="radix-icons:angle"></span>
-                  Pitch</span>
-              </div>
-              <div class="speed-box">
-                <span class="speed-value pitch-value">3</span>
-                <span class="speed-unit">°</span>
-              </div>
-
-            </div>
-
-          </div>
-        </div>
-        <div class="plane">
-          <canvas id="plane"></canvas>
-          <div class="aircraft">
-            <div class="aircraft-logo">
-              <div class="aircraft-label">
-
-                <span class="iconify" data-icon="el:plane"></span>
-                Aircraft
-              </div>
-
-            </div>
-            <div class="type">
-              <span class="iconify" data-icon="simple-icons:boeing"></span>
-              Boeing 787-9 Dreamliner
-            </div>
-          </div>
-
-          <img src="https://cdn.jsdelivr.net/gh/ouyahama/cdn/cloud.png" class="cloud" />
-        </div>
-        <div class="foot">
-
-          <div class="item">
-            <img src="https://i.imgur.com/LMr8kX8.png" alt="" class="item-hover privilege">
-            <div class="wrap">
-              <span class="data"><span class="icon iconify" data-icon="solar:medal-star-bold-duotone"></span>Class</span>
-              <span class="val reveal">Business</span>
-            </div>
-          </div>
-
-          <div class="item">
-            <img src="https://i.imgur.com/t5xGveQ.png" alt="" class="item-hover">
-
-            <div class="wrap">
-              <span class="data"><span class="icon iconify" data-icon="ph:seat-fill"></span>Seat</span>
-              <span class="val reveal">3A</span>
-            </div>
-          </div>
-          <div class="item">
-            <div class="wrap">
-              <span class="data"><span class="icon iconify" data-icon="zondicons:travel-case"></span>Luggage</span>
-              <span class="val reveal">2</span>
-            </div>
-          </div>
-        </div>
-
-      </div>
-
-      <div class="features">
-        <div class="feature">
-          <span class="iconify wifi-icon" data-icon="material-symbols:wifi-rounded"></span>
-          WIFI ON
-        </div>
-
-        <div class="feature">
-          <span class="iconify belt-icon" data-icon="ph:belt-fill"></span>
-          fasten seatbelt
-        </div>
-      </div>
-
-      <div id="wave"></div>
-    </div>
-
-  </div>
-
-</div>
-
-<button class="reload" onclick="window.history.go(0)">
-
-  <span class="iconify arrows" data-icon="ci:arrows-reload-01"></span>
-
-  reload</button>
-
-<!-- 📣 Footer -->
-<footer class="footer">
-  <a class="follow" href="https://x.com/turbokitHQ" target="_blank">
-    <div class="by">MORE LIKE THIS?</div>
-    <div class="follow-x">
-      <div class="follow-logo">
-        <span class="iconify" data-icon="line-md:twitter-x"></span>
-      </div>
-      <div class="follow-text">
-        <div class="follow-us">
-          follow us
-        </div>
-        <div class="follow-handle">@turbokitHQ</div>
-      </div>
-    </div>
-  </a>
-</footer> <style> :root {
-  --bg: #ffffff;
-  --card: #555;
-  --status: #29c676;
-  --white: #fff;
-  --anim: cubic-bezier(0, 0, 0.25, 1);
-  --microtip-font-size: 10px;
-  --microtip-transition-easing: var(--anim);
-  --microtip-transition-duration: 0.3s;
-}
-
-.pointer,
-a,
-button,
-.card,
-.card *,
-.card-wrap {
-  cursor: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMyIgaGVpZ2h0PSIyMyIgdmlld0JveD0iMCAwIDE0IDE0Ij4KCTxwYXRoIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2I1YjFiMSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBkPSJNMTAuNSA2LjEzYTIgMiAwIDAgMSAxLjU5IDIuMjRsLS42MSA0LjI3YTEgMSAwIDAgMS0xIC44Nkg0YTEgMSAwIDAgMS0uOTMtLjYzTDIgMTAuMjFhMiAyIDAgMCAxIDEtMi41M0w0LjM1IDdWMmExLjUgMS41IDAgMCAxIDMgMHYzLjV6IiBzdHJva2Utd2lkdGg9IjEiIC8+Cjwvc3ZnPg=="),
-    pointer !important;
-}
-
-*::selection {
-  background: rgba(255, 0, 50, 0.3);
-}
-
-[aria-label][role~="tooltip"]::after {
-  border-radius: 2rem;
-}
-
-[aria-label][role~="tooltip"]::before {
-  display: none;
-}
-
-a {
-  text-decoration: none;
-}
-
-html {
-  background: black;
-  cursor: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMyIgaGVpZ2h0PSIyMyIgdmlld0JveD0iMCAwIDI0IDI0Ij4KCTxwYXRoIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzlkOWQ5ZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlLXdpZHRoPSIyIiBkPSJtMyAzbDcgMTlsMi4wNTEtNi4xNTRhNiA2IDAgMCAxIDMuNzk1LTMuNzk1TDIyIDEweiIgLz4KPC9zdmc+"),
-    default;
-}
-
-body {
-  margin: 0;
-  padding: 1rem;
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  flex-flow: column;
-  background: black;
-  color: var(--white);
-  font-family: "Switzer", sans-serif;
-}
-
-/*=================
-      MADE BY
-===================*/
-
-.by {
-  font-size: 0.5rem;
-  letter-spacing: 100;
-  letter-spacing: 0.2rem;
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  align-content: center;
-  margin-bottom: 0.2rem;
-  text-align: center;
-  margin-left: 1.5rem;
-}
-
-.header {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-flow: column;
-  margin: 3rem 0 4rem 0;
-}
-
-.made-logo {
-  height: 1.75rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.logo {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 1.75rem;
-  /*Initial*/
-  opacity: 0;
-}
-
-.made {
-  color: white;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-flow: column;
-  /*initial*/
-  opacity: 0;
-}
-
-.logo-img {
-  height: 1.75rem;
-  margin-right: 0.3rem;
-  pointer-events: none;
-  user-select: none;
-}
-
-.logo-text {
-  font-weight: 800;
-  font-size: 1.3rem;
-}
-
-/*=================
-       CARD
-===================*/
-
-.small {
-  font-size: 0.65rem;
-  margin-bottom: 1rem;
-  font-weight: 200;
-  letter-spacing: 0.05rem;
-  text-transform: uppercase;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  /*intial*/
-  opacity: 0;
-}
-
-.small-text {
-  opacity: 0.5;
-}
-
-.captin {
-  font-size: 0.8rem;
-  margin-right: 0.3rem;
-}
-
-.bg {
-  position: absolute;
-  top: 0;
-  left: 0;
-  min-width: 100vw;
-  max-height: 100vh;
-  filter: saturate(2) contrast(0.9);
-  background: black;
-  display: none;
-}
-
-.card-wrap {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 2rem;
-  position: relative;
-}
-
-.thumbnail {
-  position: absolute;
-  top: 0;
-  left: -1rem;
-  width: 25rem;
-  z-index: 99;
-  pointer-events: none;
-}
-
-.card {
-  background: rgba(255, 255, 255, 0.025);
-  backdrop-filter: blur(2rem);
-
-  border-radius: 2rem;
-  padding: 1.5rem;
-  width: 17.5rem;
-  min-height: 30rem;
-  position: relative;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 0 2rem rgba(255, 255, 255, 0.1);
-
-  overflow: hidden;
-  opacity: 0;
-}
-
-.blob {
-  height: 10rem;
-  width: 10rem;
-  background: rgba(255, 255, 255, 0.2);
-  position: absolute;
-  top: 0;
-  right: 0;
-  filter: blur(3rem);
-  border-radius: 40%;
-  z-index: -1;
-  pointer-events: none;
-}
-
-#wave {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  height: 15rem;
-  width: 100%;
-  z-index: -1;
-  opacity: 0.5;
-  filter: saturate(0) blur(0.5rem) brightness(2);
-  background: transparent;
-}
-
-.border {
-  position: absolute;
-  top: 0;
-  left: 10%;
-  height: 2px;
-  width: 80%;
-  background: linear-gradient(
-    0.25turn,
-    rgba(255, 255, 255, 0),
-    rgba(255, 255, 255, 0.4),
-    rgba(255, 255, 255, 0)
-  );
-}
-
-.top,
-.flight {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.on,
-.flight {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  flex-flow: row;
-}
-
-.flight {
-  opacity: 0;
-}
-
-.on {
-  font-size: 0.6rem;
-  margin-bottom: 0.3rem;
-  background: linear-gradient(to bottom, #00774f, var(--status));
-  box-shadow: 0 0 1rem rgba(255, 255, 255, 0.2);
-  border: 1px solid green;
-  border-radius: 3rem;
-  padding: 0.2rem 0.5rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  /*intial*/
-  opacity: 0;
-}
-
-.check {
-  margin-right: 0.25rem;
-}
-
-.label {
-  font-size: 0.65rem;
-  opacity: 0.5;
-  text-transform: uppercase;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  margin-right: 0.25rem;
-  /*initial*/
-  opacity: 0;
-}
-
-.num {
-  font-size: 0.7rem;
-  font-weight: 500;
-  opacity: 0.5;
-}
-
-.mid {
-  margin-top: 1.25rem;
-  position: relative;
-  z-index: 99;
-}
-.loc {
-  display: flex;
-  justify-content: center;
-  margin: 2rem 0;
-}
-
-.box {
-  background: rgba(255, 255, 255, 0.05);
-  padding: 0.5rem;
-  border-radius: 0.75rem;
-  text-align: center;
-  position: relative;
-  height: 4rem;
-  width: 8rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-flow: column;
-  /*Initial*/
-  opacity: 0;
-}
-.sign {
-  margin-right: 0.25rem;
-}
-
-.info {
-  position: fixed;
-  right: 0;
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(1rem);
-  padding: 0.5rem;
-  border-radius: 1rem;
-  font-size: 0.75rem;
-  color: var(--white);
-  width: 8rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.25rem;
-  z-index: 99;
-  /*Initial*/
-  filter: blur(1rem);
-  opacity: 0;
-}
-
-.code {
-  font-family: "led";
-  font-size: 1.5rem;
-}
-
-.country {
-  opacity: 0.2;
-  font-size: 0.7rem;
-  margin-top: 0.25rem;
-}
-
-.line {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 0.5rem;
-  margin-top: 0.5rem;
-}
-
-.map {
-  position: absolute;
-  top: 50%;
-  left: 0.5rem;
-  transform: translateY(-50%);
-  height: 8rem;
-  width: 8rem;
-  opacity: 0.25;
-  pointer-events: none;
-  display: none;
-}
-
-.icon {
-  margin-right: 0.2rem;
-}
-
-.dur {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  /*Initial*/
-  opacity: 0;
-}
-
-.duration {
-  margin-top: 0.9rem;
-}
-
-.meta {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: 0.8rem;
-  flex-flow: column;
-  opacity: 0.5;
-  text-align: center;
-}
-
-.stat {
-  display: flex;
-  align-items: center;
-  flex-flow: row;
-  gap: 0.5rem;
-  margin-top: 1rem;
-}
-
-.speed {
-  font-size: 0.7rem;
-  margin: 0 0.1rem;
-
-  padding: 0.25rem;
-  border-radius: 2rem;
-  font-size: 0.6rem;
-  color: #fff;
-  margin-left: 0.5rem;
-  font-weight: 400;
-  letter-spacing: 0.02rem;
-  text-transform: uppercase;
-  flex-flow: column;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  /*Initial*/
-  opacity: 0;
-}
-
-.speed-box {
-  margin-top: 0.25rem;
-}
-
-.speed-label {
-  opacity: 0.5;
-}
-
-.times {
-  display: flex;
-  justify-content: space-between;
-  flex-flow: row;
-  width: 100%;
-  align-items: center;
-}
-
-.time {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
-
-.dot {
-  width: 0.4rem;
-  height: 0.4rem;
-  background: var(--status);
-  border-radius: 50%;
-  position: relative;
-  margin-right: 0.5rem;
-  margin-left: 0.25rem;
-}
-
-.dot::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: 50%;
-  background: inherit;
-  animation: pulse 1s var(--anim) infinite;
-}
-
-@keyframes pulse {
-  from {
-    transform: scale(1);
-    opacity: 1;
-  }
-  to {
-    transform: scale(3);
-    opacity: 0;
-  }
-}
-
-.wrap {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.25rem;
-  font-size: 0.75rem;
-}
-
-.text {
-  font-weight: 700;
-  color: var(--white);
-  /*initial*/
-  opacity: 0;
-}
-
-.min {
-  opacity: 1;
-  padding: 0.25rem;
-  border-radius: 2rem;
-  font-size: 0.6rem;
-  color: var(--status);
-  font-weight: 600;
-  letter-spacing: 0.02rem;
-  text-transform: uppercase;
-  text-shadow: 0 0 1rem var(--status);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-left: -0.75rem;
-}
-
-.plane {
-  text-align: center;
-  margin: 1rem 0;
-  position: relative;
-  overflow: hidden;
-  /*Initial*/
-  opacity: 0;
-}
-
-#plane {
-  width: 100%;
-  max-height: 10rem;
-  background: transparent;
-  filter: brightness(0.8) contrast(1.2) saturate(0.6) hue-rotate(-10deg);
-  pointer-events: none;
-  /*initial*/
-  opacity: 0;
-}
-
-.aircraft {
-}
-
-.aircraft-label {
-  margin-bottom: 0.25rem;
-  font-size: 0.7rem;
-  opacity: 0.25;
-}
-
-.cloud {
-  height: 5rem;
-  position: absolute;
-  bottom: 1rem;
-  left: 0;
-  animation: move 10s linear infinite;
-}
-
-@keyframes move {
-  from {
-    opacity: 0;
-    transform: translateX(150%);
-  }
-  20% {
-    opacity: 1;
-  }
-
-  55% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 0;
-    transform: translateX(-100%);
-  }
-}
-
-.type {
-  font-size: 0.75rem;
-  opacity: 0.5;
-}
-
-.foot {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 1.5rem;
-  gap: 0.5rem;
-  position: relative;
-  z-index: 99;
-}
-
-.item {
-  background: rgba(255, 255, 255, 0.1);
-  padding: 0.75rem;
-  border-radius: 1rem;
-  flex: 1;
-  position: relative;
-  /*intial*/
-  opacity: 0;
-}
-
-.item .wrap {
-  opacity: 0.8;
-}
-
-.item-hover {
-  border-radius: 0.5rem;
-  overflow: hidden;
-  position: absolute;
-  height: 3rem;
-  top: -3rem;
-  transition: all 0.5s var(--anim);
-  /*Initial*/
-  transform: scale(0);
-  opacity: 0;
-}
-
-.item-hover.privilege {
-  height: 2.5rem;
-  box-shadow: 0 0 0.5rem rgba(255, 100, 100, 0.1);
-  border: 1px solid rgba(255, 100, 100, 0.2);
-}
-
-.item:hover .item-hover {
-  transform: scale(1);
-  opacity: 1;
-}
-
-.data {
-  display: flex;
-  align-items: center;
-  gap: 0.25rem;
-  font-size: 0.75rem;
-  opacity: 0.5;
-}
-
-.val {
-  margin-top: 0.25rem;
-  font-size: 0.7rem;
-  font-weight: 600;
-  letter-spacing: -0.01rem;
-}
-
-.weather-icon {
-  margin-right: 0.25rem;
-}
-
-.arr {
-  font-size: 0.7rem;
-  opacity: 0.5;
-  margin-top: 0.5rem;
-}
-
-@keyframes dash {
-  from {
-    stroke-dashoffset: 1000;
-  }
-  to {
-    stroke-dashoffset: 0;
-  }
-}
-
-.white {
-  animation: dash 5s linear alternate infinite;
-}
-
-.green {
-  stroke-dasharray: 1000;
-  stroke-dashoffset: 1000;
-  animation: dash 2s ease-in-out forwards;
-}
-
-.reload {
-  background: black;
-  padding: 0.5rem 1.5rem;
-  border: 1px solid rgba(255, 255, 255, 0.5);
-  font-size: 0.8rem;
-  color: white;
-  border-radius: 3rem;
-  opacity: 0.5;
-  margin-top: 1rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-transform: uppercase;
-  font-size: 0.6rem;
-}
-
-.arrows {
-  margin-right: 0.25rem;
-}
-
-/*=================
-      FOOTER
-===================*/
-
-.footer {
-  margin: 4rem 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.follow {
-  color: white;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-flow: column;
-}
-
-.follow-x {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 1rem 0;
-}
-
-.follow-logo {
-  height: 2rem;
-  width: 2rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 0.5rem;
-  margin-right: 0.5rem;
-  color: black;
-  background: white;
-}
-
-.follow-text {
-  font-size: 0.8rem;
-  font-weight: 600;
-  display: flex;
-  justify-content: center;
-  flex-flow: column;
-}
-
-.follow-us {
-  text-transform: uppercase;
-  opacity: 0.5;
-  font-size: 0.7rem;
-}
-
-.follow-handle {
-  font-weight: 700;
-  margin: 0.25rem 0;
-}
-
-.features {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  opacity: 0.5;
-  font-size: 0.6rem;
-  margin-top: 0.75rem;
-  padding: 0 1rem;
-  text-transform: uppercase;
-}
-
-.feature {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.wifi-icon {
-  color: var(--status);
-  margin-right: 0.25rem;
-  filter: drop-shadow(0 0 1rem var(--status));
-}
-
-.belt-icon {
-  color: yellow;
-  margin-right: 0.25rem;
-  filter: drop-shadow(0 0 1rem yellow);
-}
-</style> <script>import splt from "https://esm.sh/spltjs";
-import { animate, press, hover, stagger } from "https://esm.sh/motion";
-import { Howl } from "https://esm.sh/howler";
-import VanillaTilt from "https://esm.sh/vanilla-tilt";
-
-import AudioMotionAnalyzer from "https://cdn.skypack.dev/audiomotion-analyzer?min";
-
-VanillaTilt.init(document.querySelector(".card-wrap"), {
-  speed: 50,
-  max: 5,
-  glare: true,
-  "max-glare": 0.05
-});
-
-splt({ reveal: true });
-
-const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-let playAudio = true,
-  ended = true,
-  currentSound;
-
-const play = async (file, volume = 0.5, speed = 1) => {
-  await audioCtx.resume().catch(() => {});
-  if (audioCtx.state === "suspended") return false;
-  currentSound?.stop();
-  ended = false;
-  currentSound = new Howl({
-    src: [file],
-    autoplay: playAudio,
-    volume,
-    rate: speed,
-    onend: () => {
-      ended = true;
-      currentSound = null;
-    }
-  });
-  return true;
-};
-
-const audioEl = new Audio(
-  "https://cdn.jsdelivr.net/gh/ouyahama/cdn@main/land.mp3"
-);
-audioEl.crossOrigin = "anonymous";
-
-press(".card", () => {
-  animate(".card", { scale: 1.05 });
-  audioEl.play();
-  return () => {
-    animate(".card", { scale: 1 });
-  };
-});
-// audio visulizer
-const audioMotion = new AudioMotionAnalyzer(document.getElementById("wave"), {
-  source: audioEl,
-  mode: "led",
-  ledBars: true,
-  showBgColor: false,
-  showFPS: false,
-  showPeaks: false,
-  showScaleX: false,
-  showScaleY: false,
-  gradient: "prism",
-
-  mode: 1,
-  colorMode: "bar"
-});
-
-// -----intro animation------
-animate(".thumbnail", { opacity: 0 });
-(async () => {
-  animate(".made", { opacity: [0, 0.75] }, { duration: 0.5 });
-
-  animate(".small", { opacity: [0, 0.75] }, { duration: 0.5 });
-
-  animate(
-    ".card",
-    { filter: ["blur(1rem)", "blur(0)"], scale: [0.8, 1], opacity: [0, 1] },
-    { duration: 0.3 }
-  );
-
-  await animate(
-    ".logo",
-    { scale: [0, 1], opacity: [0, 1] },
-    { duration: 0.2, delay: 0.1 }
-  );
-
-  animate(
-    ".right .on",
-    { scale: [0.8, 1], opacity: [0, 1] },
-    { duration: 0.2 }
-  );
-
-  animate(
-    ".right .text",
-    { scale: [0.8, 1], opacity: [0, 1] },
-    { duration: 0.3 }
-  );
-
-  animate(
-    ".right .flight",
-    { scale: [0.8, 1], opacity: [0, 1] },
-    { duration: 0.3 }
-  );
-  await animate(
-    ".label",
-    { scale: [0.8, 1], opacity: [0, 0.5] },
-    { duration: 0.3 }
-  );
-
-  await animate(
-    ".box",
-    { filter: ["blur(1rem)", "blur(0)"], scale: [0.8, 1], opacity: [0, 1] },
-    { duration: 0.3, delay: stagger(0.1) }
-  );
-
-  await animate(
-    ".dur",
-    { scale: [0, 1], z: 20, opacity: [0, 1] },
-    { duration: 0.3 }
-  );
-  await animate(
-    ".speed",
-    { scale: [0.8, 1], opacity: [0, 0.5] },
-    { duration: 0.3, delay: stagger(0.1) }
-  );
-  await animate(
-    ".plane",
-    { scale: [0.8, 1], opacity: [0, 0.9] },
-    { duration: 0.3 }
-  );
-
-  await animate(
-    ".item",
-    { scale: [0.8, 1], opacity: [0, 1] },
-    { duration: 0.3, delay: stagger(0.1) }
-  );
-})();
-
-document.addEventListener("mousemove", (e) => {
-  const tooltips = document.querySelectorAll(".info");
-  tooltips.forEach((tooltip) => {
-    tooltip.style.left = `${e.clientX + 20}px`;
-    tooltip.style.top = `${e.clientY + 20}px`;
-  });
-});
-
-hover(".box.to", () => {
-  animate(
-    ".info.to",
-    {
-      opacity: 1,
-      scale: 1,
-      filter: "blur(0)"
-    },
-    { duration: 0.4 }
-  );
-  return () => {
-    animate(
-      ".info.to",
-      {
-        opacity: 0,
-        scale: 0,
-        filter: "blur(1rem)"
-      },
-      { duration: 0.4 }
-    );
-  };
-});
-
-hover(".box.from", () => {
-  animate(
-    ".info.from",
-    {
-      opacity: 1,
-      scale: 1,
-      filter: "blur(0)"
-    },
-    { duration: 0.4 }
-  );
-  return () => {
-    animate(
-      ".info.from",
-      {
-        opacity: 0,
-        scale: 0,
-        filter: "blur(1rem)"
-      },
-      { duration: 0.4 }
-    );
-  };
-});
-
-window.addEventListener("DOMContentLoaded", async () => {
-  const [
-    THREE,
-    { OrbitControls },
-    { GLTFLoader },
-    { DRACOLoader },
-    { RGBELoader },
-    { EffectComposer },
-    { RenderPass },
-    { ShaderPass },
-    { BrightnessContrastShader }
-  ] = await Promise.all([
-    import("https://esm.sh/three@0.178.0"),
-    import("https://esm.sh/three@0.178.0/examples/jsm/controls/OrbitControls"),
-    import("https://esm.sh/three@0.178.0/examples/jsm/loaders/GLTFLoader"),
-    import("https://esm.sh/three@0.178.0/examples/jsm/loaders/DRACOLoader"),
-    import("https://esm.sh/three@0.178.0/examples/jsm/loaders/RGBELoader"),
-    import(
-      "https://esm.sh/three@0.178.0/examples/jsm/postprocessing/EffectComposer"
-    ),
-    import(
-      "https://esm.sh/three@0.178.0/examples/jsm/postprocessing/RenderPass"
-    ),
-    import(
-      "https://esm.sh/three@0.178.0/examples/jsm/postprocessing/ShaderPass"
-    ),
-    import(
-      "https://esm.sh/three@0.178.0/examples/jsm/shaders/BrightnessContrastShader"
-    )
-  ]);
-
-  const canvas = document.querySelector("#plane");
-  const { width, height } = canvas.getBoundingClientRect();
-
-  const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(35, width / height, 0.1, 1000);
-  camera.position.set(40, 20, 70);
-
-  const renderer = new THREE.WebGLRenderer({
-    canvas,
-    antialias: true,
-    alpha: true
-  });
-  renderer.setSize(width, height, false);
-  renderer.setPixelRatio(devicePixelRatio);
-  renderer.outputColorSpace = THREE.SRGBColorSpace;
-  renderer.toneMapping = THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure = 0.8;
-
-  const controls = new OrbitControls(camera, renderer.domElement);
-  controls.enableZoom = false;
-  controls.enablePan = false;
-  controls.enableRotate = false;
-  controls.autoRotate = false;
-
-  const rimLight = new THREE.DirectionalLight(0xffffff, 0.1);
-  rimLight.position.set(-5, 5, 10);
-  scene.add(rimLight, new THREE.AmbientLight(0xffffff, 0.2));
-
-  const modelGroup = new THREE.Group();
-  const baseYaw = Math.PI / 1.6;
-  scene.add(modelGroup);
-
-  hover(".card", () => {
-    animate(modelGroup.scale, { x: 1.05, y: 1.05, z: 1.05 }, { duration: 0.4 });
-
-    return () => {
-      animate(modelGroup.scale, { x: 1, y: 1, z: 1 }, { duration: 0.4 });
-    };
-  });
-
-  const pmrem = new THREE.PMREMGenerator(renderer);
-  pmrem.compileEquirectangularShader();
-
-  new RGBELoader()
-    .setPath("https://cdn.jsdelivr.net/gh/ouyahama/cdn@main/")
-    .load("light3.hdr", (hdr) => {
-      const envMap = pmrem.fromEquirectangular(hdr).texture;
-      scene.environment = envMap;
-      hdr.dispose();
-      pmrem.dispose();
-    });
-
-  const dracoLoader = new DRACOLoader();
-  dracoLoader.setDecoderPath("https://www.gstatic.com/draco/v1/decoders/");
-  dracoLoader.setDecoderConfig({ type: "js" });
-
-  const loader = new GLTFLoader();
-  loader.setDRACOLoader(dracoLoader);
-  loader.load(
-    "https://cdn.jsdelivr.net/gh/ouyahama/cdn@main/plane.glb",
-    (gltf) => {
-      gltf.scene.traverse((child) => {
-        if (child.isMesh) {
-          const mat = child.material;
-          if (mat.isMeshStandardMaterial || mat.isMeshPhysicalMaterial) {
-            mat.roughness = 0.4;
-            mat.metalness = 0.7;
-            mat.envMapIntensity = 0.9;
-          }
-        }
-      });
-      modelGroup.add(gltf.scene);
-    },
-    undefined,
-    console.error
-  );
-
-  const composer = new EffectComposer(renderer);
-  composer.addPass(new RenderPass(scene, camera));
-  const brightnessContrast = new ShaderPass(BrightnessContrastShader);
-  brightnessContrast.uniforms["brightness"].value = 0;
-  brightnessContrast.uniforms["contrast"].value = 0;
-  composer.addPass(brightnessContrast);
-
-  const clock = new THREE.Clock();
-
-  const renderLoop = () => {
-    requestAnimationFrame(renderLoop);
-    const t = clock.getElapsedTime();
-
-    const yaw = baseYaw + Math.sin(t * 0.25) * 0.1;
-    const pitch = Math.sin(t * 0.35) * 0.05;
-    const roll = Math.sin(t * 0.5) * 0.07;
-
-    modelGroup.rotation.set(pitch, yaw, roll);
-    controls.update();
-    composer.render();
-  };
-  requestAnimationFrame(() => {
-    renderLoop();
-  });
-  animate(canvas, { opacity: [0, 1] }, { duration: 1, delay: 0.2 });
-  window.addEventListener("resize", () => {
-    const { width, height } = canvas.getBoundingClientRect();
-    camera.aspect = width / height;
-    camera.updateProjectionMatrix();
-    renderer.setSize(width, height, false);
-    composer.setSize(width, height);
-  });
-});
-
-let s = 290;
-setInterval(() => {
-  const n = Math.min(306, Math.max(278, s + (Math.random() * 6 - 3)));
-  animate(s, n, {
-    duration: 0.5,
-    ease: "circOut",
-    onUpdate: (v) =>
-      (document.querySelector(".speed-value").innerHTML = Math.round(v))
-  });
-  s = n;
-}, 500);
-
-let alt = 5500; // altitude in meters
-
-setInterval(() => {
-  const descentRate = 4.5; // slow descent ~540 m/min
-  const fluctuation = Math.random() * 6 - 3; // small noise ±3m
-  const nextAlt = Math.max(0, alt - descentRate + fluctuation);
-
-  animate(alt, nextAlt, {
-    duration: 0.5,
-    ease: "circOut",
-    onUpdate: (v) =>
-      (document.querySelector(".altitude-value").innerHTML = Math.round(v))
-  });
-
-  alt = nextAlt;
-}, 500);
-
-let pitch = 3.5; // start with mild nose-down
-
-setInterval(() => {
-  const leveling = -0.01; // subtle leveling trend
-  const fluctuation = Math.random() * 0.2 - 0.1; // small noise
-  const nextPitch = Math.min(5, Math.max(2, pitch + leveling + fluctuation));
-
-  animate(pitch, nextPitch, {
-    duration: 0.5,
-    ease: "circOut",
-    onUpdate: (v) =>
-      (document.querySelector(".pitch-value").innerHTML = v.toFixed(1))
-  });w
-
-  pitch = nextPitch;
-}, 500);
-
-hover(".made", () => {
-  animate(
-    ".made",
-    { scale: 1.02, opacity: 1 },
-    { type: "spring", stiffness: 200 }
-  );
-  return () =>
-    animate(".made", { scale: 1, opacity: 0.75 }, { type: "spring" });
-});
-
-hover(".follow", () => {
-  animate(
-    ".follow",
-    { scale: 1.02, opacity: 1 },
-    { type: "spring", stiffness: 200 }
-  );
-  return () =>
-    animate(".follow", { scale: 1, opacity: 0.75 }, { type: "spring" });
-});
-</script>
