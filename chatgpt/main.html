@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cormorant+Garamond&family=Helvetica+Neue:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cormorant+Garamond&display=swap" rel="stylesheet">
   <meta charset="UTF-8" />
   <title>HOME</title>
   <style>
@@ -13,151 +13,61 @@
 
     body {
       font-family: 'Cormorant Garamond', serif;
-      background-color: #000000;
+      background-color: #ffffff;
       overflow-x: hidden;
       padding-bottom: 4rem;
-    }
-
-    /* Gradient Background Styles inspired by Dverso Studio */
-    .gradient-bg {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      z-index: -1;
-      overflow: hidden;
-    }
-
-    .gradient-bg svg {
-      width: 0;
-      height: 0;
-    }
-
-    .gradients-container {
-      width: 100%;
-      height: 100%;
-      position: fixed;
-      top: 0;
-      left: 0;
-      background: linear-gradient(45deg, #3d3d3d, #1a1a1a);
-    }
-
-    
-
-
-   
-
-
-  
-
-    .interactive {
-      width: 150px;
-      height: 150px;
-      background: radial-gradient(circle at center, rgba(255, 255, 255, 0.4) 0%, transparent 70%);
-      filter: url(#goo);
-      transform: translate(-50%, -50%);
-      pointer-events: none;
-    }
-
-    @keyframes move1 {
-      0% { transform: translate(0, 0) scale(1); }
-      50% { transform: translate(120px, 60px) scale(1.1); }
-      100% { transform: translate(0, 0) scale(1); }
-    }
-
-    @keyframes move2 {
-      0% { transform: translate(0, 0) scale(1); }
-      50% { transform: translate(-100px, 80px) scale(0.9); }
-      100% { transform: translate(0, 0) scale(1); }
-    }
-
-    @keyframes move3 {
-      0% { transform: translate(0, 0) scale(1); }
-      50% { transform: translate(80px, -100px) scale(1.2); }
-      100% { transform: translate(0, 0) scale(1); }
-    }
-
-    @keyframes move4 {
-      0% { transform: translate(0, 0) scale(1); }
-      50% { transform: translate(-60px, 120px) scale(0.95); }
-      100% { transform: translate(0, 0) scale(1); }
-    }
-
-    @keyframes move5 {
-      0% { transform: translate(0, 0) scale(1); }
-      50% { transform: translate(90px, -80px) scale(1.05); }
-      100% { transform: translate(0, 0) scale(1); }
     }
 
     header {
       position: relative;
       z-index: 1001;
-      padding: 1.5rem 2rem;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      position: relative;
-    }
-
-    .logo {
-      position: fixed;
-      left: 50%;
-      transform: translateX(-50%);
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(0.66rem, 2vw, 1rem);
+      letter-spacing: 0.5em;
     }
 
     .logo img {
-      height: 100px;
-      margin: 0;
-      transition: filter 0.3s ease; /* Smooth transition for color adjustment */
-      
+      height: 180px;
+      margin: 1rem;
     }
 
-    .time-display {
-      position: absolute;
-      left: 2rem;
-      font-family: 'Helvetica Neue', 'Arial', sans-serif;
-      font-size: 0.90rem;
-      font-weight: 400;
-      letter-spacing: 0.1em;
-      color: white;
-      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-    }
-
-    .menu-button {
-      position: absolute;
-      left: 57rem;
-      font-family: 'Helvetica Neue', 'Arial', sans-serif;
-      font-size: 0.90rem;
-      font-weight: 400;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: white;
-      background: none;
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 45px;
+      height: 40px;
+      background-color: transparent;
       border: none;
-      cursor: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAABU5JREFUWEe9l2tsFFUUx//nzsy23RaKaZnStN3dCQWMaCAQCUFNMBalRqNgiR8sIjF+JNQYIdHEKGh8RB4JGu2GIBoiREQRISomysM14iOIPLQFO9N0+8BdGuhj233MXHN3ZrfLuttKNTvJZHf23rvnd/7n3HPuEPJcHo9nFWPsJSKaCaAdwHO6rn+eb/5kf6dcC71e7wpG7JNqWFjCEzhOMkIgyzTNxq6urqOTNZZrXU4ATdNOVXBr0XEMwc0IAxLhrrgbA6BvDMO4pxAAfQ1IVPmlUUCi5L06WoTvTNZhGIYIyf925VPg8jKWUFtdUYDZAM0RFwKJQgJIptpaEgMk2ACDCgKxQgIoptpaFk+HoPmqjMAoFTAERabaWp4AZJZUoTkkITBSSIBiS22tNMcU6GUIRFBABdxcba2yANlJwiAQGCwkQBlXW2u4rYBMaNaBwAAvnAINU7nq99reJwEuWghc5RxAD+d87/Dw8KZwODz4XwtCZh0oqqmpmd7d3d2jaVpvwzSo/pksHYKt3Rb6LaBtiOOHK5ZgOs85X22aphkMBtsARCcDkwTw+XwtRLQJwBTOeSeA6csqyO2fIzm7QKhg1wMoDAcuW3j61ChkUaTs6xqALbquvwLAuhEQ8nq9jxGjPbe5gYZphH1hoC8GNFQS/HPldAiSyegkpIDYfDaG6ikMikw49GcMv/QmQITdnPMdkUikPRQKDf0bEPL5fD+rLiw8OV+CixEuWYS7T8XROEOCf54yZjRlPAWS+exiWPf1EI78EYNIEiKMWpa10zTNDcFgcGQ8EAEQebiKlWyrlxyJCY0/xVFXSvAvdNkhyDbuJGYqQcV4OAHs/z2KqaUMx9qj+PK8CBFE97wXgJkPIgmwsloq2XKzkBtJY5svmega4fAvLs4dgsxwpGCyFNl+cgjbDl8DgT/Z2dm5Ky+Apmlt88pp9qeLXXbnkwlnI8COthj8d5ZkeC+UcBIxW5VsRSSCWcywYGMQgyP8qK7r942nwG4C1px70A13OskIfQlghtuRP9O7tMeiR2QkZmqOo6LQf60/hGNnIn2GYVTnBfB4PE0gtn/7kmKs8DhJl9PgWFEai73dqK4DcQ4wQskN+/rx8beDcV3XXXkBamtrS2RZ7l6gSjcdaCxLhyEzwXJ6mgsyZdz5bHk/hM+ODUYMwyjNCyAGvF7vGyanZw+vmop5laL4CG9zyJ+W2ZE+8zlt3FHExbDyxSB+bY+267o+ZyKAaiK6dHut4v6oqRxgGcmWGef0d3u3JCFTIcj0XiaMMMLcRy+KuvCBYRhrxgUQg5qmvRw3+fNvPVKOh2YX2QayZc6GyZI8vUsYYd/3g9i4tU9sw6bOzs4DEwKIXFAU5Te3jPqvWlTUlGUVoH8YEwrg+pwRcxghrhCWPtWB3r8SXbqui1N0fEIAMaG2tnaRoign6lW56OB61d6WqTtZI0Ro8sieNA5AIby+9wre2RMWJXmtYRi7xy3F2YM+n+8JAO/N97iwp6UKpS5m//F4Cecc3cWcQz8OYd0LQTAJXxiGcf9EDSnne4HP51sPYJtnukw7n6nGrEqnKybD4CRoZkgEoIvh3YP9eO3tyyCGCwDuMAzj6qQAxCLxcipJ0i5wXta8vByPL5+Geo/LbitJj21VrCKGE6eHsXVXCGcujECS6GQ0Gl3Z09MTnsi4GM+pQGphXV3dTFmWtwN4IBqzUKMquHVWMSqEIkQIheM4fS6C/gETisyucc5fNQzjzfG6XzbUuACpyZqmzbEsq4kxtpRzfgsRVThjIQBnOOdHGGMfdnR0iJPRDV1/A/S02zBdMZSwAAAAAElFTkSuQmCC") 6 3, pointer;
-      position: relative;
-      transition: color 0.3s ease;
-      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+      cursor: pointer;
+      z-index: 10001;
+      position: fixed;
+      top: 30px;
+      right: 30px;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
 
-    .menu-button:hover {
-      color: #ef4444;
-    }
-
-    .menu-button::after {
-      content: '';
-      position: absolute;
-      bottom: -4px;
-      left: 0;
-      width: 0;
-      height: 1px;
-      background-color: #ef4444;
-      transition: width 0.3s ease;
-    }
-
-    .menu-button:hover::after {
+    .hamburger span {
+      display: block;
+      height: 3px;
       width: 100%;
+      background: linear-gradient(to right, #d3d3d3, #4a4aff);
+      border-radius: 3px;
+      transition: all 0.3s ease;
+    }
+
+    .hamburger.active span:nth-child(1) {
+      transform: rotate(45deg) translate(5px, 5px);
+      background: #0741ff;
+    }
+
+    .hamburger.active span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .hamburger.active span:nth-child(3) {
+      transform: rotate(-45deg) translate(6px, -6px);
+      background: #0741ff;
     }
 
     .menu-panel {
@@ -166,7 +76,8 @@
       right: 0;
       height: 100vh;
       width: 100%;
-      background: #777777;
+      max-width: 400px;
+      background: rgba(180, 180, 181, 0.85);
       backdrop-filter: blur(10px);
       border-left: 1px solid #444;
       transform: translateX(100%);
@@ -190,21 +101,16 @@
       display: flex;
       flex-direction: column;
       gap: 2rem;
-      align-items: flex-start;
+      align-items: center;
     }
 
     .menu-panel a {
-      font-family: 'Helvetica Neue', 'Arial', sans-serif;
-      font-size: 2rem;
-      font-weight: 700;
-      color: #ffffff;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 3rem;
+      color: white;
       text-decoration: none;
       position: relative;
       transition: color 0.3s ease;
-    }
-
-    .menu-panel a.active {
-      color: #0004ff;
     }
 
     .menu-panel a::after {
@@ -214,7 +120,7 @@
       bottom: -4px;
       width: 0%;
       height: 2px;
-      background-color: #ef4444;
+      background-color: #0800a2;
       transition: width 0.3s ease;
     }
 
@@ -223,17 +129,7 @@
     }
 
     .menu-panel a:hover {
-      color: #ef4444;
-    }
-
-    .menu-panel .logo-bottom {
-      position: absolute;
-      bottom: 2rem;
-      left: 2rem;
-    }
-
-    .menu-panel .logo-bottom img {
-      height: 100px;
+      color: #1100ff;
     }
 
     .menu-footer {
@@ -245,6 +141,52 @@
       font-size: 0.9rem;
       color: white;
       opacity: 0.6;
+    }
+
+    nav {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(180, 180, 181, 0.85);
+      backdrop-filter: blur(10px);
+      border: 1px solid #444;
+      border-radius: 999px;
+      padding: 0.6rem 2rem;
+      display: flex;
+      gap: 2rem;
+      z-index: 1000;
+      box-shadow: 0 4px 20px rgba(201, 201, 201, 0.4);
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 1.3rem;
+      transition: all 0.3s ease;
+      position: relative;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    nav a::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -4px;
+      width: 0%;
+      height: 2px;
+      background-color: #0800a2;
+      transition: width 0.3s ease;
+    }
+
+    nav a:hover::after {
+      width: 100%;
+    }
+
+    nav a:hover {
+      color: #1100ff;
     }
 
     .header-container {
@@ -341,34 +283,19 @@
 
     .marquee-text {
       font-family: 'Bebas Neue', sans-serif;
+      background: linear-gradient(to right, #d3d3d3, #4a4aff, #1c1c1c);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
       font-weight: 900;
       font-size: 12rem;
       transform: scaleY(1.3);
       letter-spacing: -0.05em;
       white-space: nowrap;
       margin: 0;
-      padding: 0 1rem;
+      padding: 0;
       display: inline-flex;
       align-items: center;
-      color: rgba(255, 255, 255, 0.2);
-      -webkit-text-stroke: 2px rgba(255, 255, 255, 0.5);
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      border-radius: 0.5rem;
-      text-shadow: 
-        0 0 10px rgba(255, 255, 255, 0.3),
-        0 0 20px rgba(255, 255, 255, 0.2);
-      font-feature-settings: "kern";
-      -webkit-font-smoothing: antialiased;
-    }
-
-    .marquee-text:hover {
-      color: rgba(255, 255, 255, 0.4);
-      -webkit-text-stroke: 2px rgba(255, 255, 255, 0.7);
-      text-shadow: 
-        0 0 15px rgba(255, 255, 255, 0.5),
-        0 0 30px rgba(255, 255, 255, 0.3);
     }
 
     .logo-img {
@@ -383,8 +310,12 @@
     }
 
     @keyframes marquee {
-      0% { transform: translateX(0); }
-      100% { transform: translateX(calc(-100% * 6)); }
+      0% {
+        transform: translateX(0);
+      }
+      100% {
+        transform: translateX(calc(-100% * 6));
+      }
     }
 
     .scroll-indicator {
@@ -413,6 +344,10 @@
     }
 
     @media (max-width: 1100px) {
+      .hamburger {
+        display: flex !important;
+        z-index: 10001;
+      }
       .header-container, .content-container {
         position: relative;
         width: 100%;
@@ -432,8 +367,6 @@
         font-size: 16rem;
         transform: scaleY(1.2);
         letter-spacing: -0.03em;
-        -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.5);
-        border-radius: 0.4rem;
       }
       .logo-img {
         height: 8rem;
@@ -453,16 +386,8 @@
       .scroll-indicator {
         display: block;
       }
-      .logo img {
-        height: 80px;
-      }
-      .time-display {
-        font-size: 0.7rem;
-        left: 1.5rem;
-      }
-      .menu-button {
-        font-size: 0.7rem;
-        left: 20rem;
+      nav {
+        display: none;
       }
     }
 
@@ -480,14 +405,14 @@
     .cursor {
       width: 8px;
       height: 8px;
-      background-color: white;
+      background-color: black;
       mix-blend-mode: difference;
     }
 
     .cursor-follower {
       width: 30px;
       height: 30px;
-      border: 2px solid white;
+      border: 2px solid black;
       opacity: 0.4;
       transition: opacity 0.3s ease;
     }
@@ -564,26 +489,6 @@
   </style>
 </head>
 <body>
-  <div class="gradient-bg">
-    <svg xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <filter id="goo">
-          <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur"></feGaussianBlur>
-          <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -8" result="goo"></feColorMatrix>
-          <feBlend in="SourceGraphic" in2="goo"></feBlend>
-        </filter>
-      </defs>
-    </svg>
-    <div class="gradients-container">
-      <div class="g1"></div>
-      <div class="g2"></div>
-      <div class="g3"></div>
-      <div class="g4"></div>
-      <div class="g5"></div>
-      <div class="interactive"></div>
-    </div>
-  </div>
-
   <div class="loading-overlay" id="loadingOverlay">
     <div class="loading"></div>
   </div>
@@ -595,21 +500,27 @@
   <div class="scroll-indicator"></div>
 
   <header>
-    <div class="time-display" id="timeDisplay"></div>
     <div class="logo">
-      <img src="Ch.png" alt="Logo Chassidy Doest" id="logoImg" />
+      <img src="Ch.png" alt="Logo Chassidy Doest" />
     </div>
-    <button class="menu-button" aria-label="Menu" id="menuButton">MENU</button>
+    <button class="hamburger" aria-label="Menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+    <nav>
+      <a href="main.html" data-text="HOME" alt="Home">HOME</a>
+      <a href="about.html" data-text="ABOUT ME" alt="About Me">ABOUT ME</a>
+      <a href="projects.html" data-text="PROJECTS" alt="Projects">PROJECTS</a>
+      <a href="contact.html" data-text="CONTACT" alt="Contact">CONTACT</a>
+    </nav>
     <div class="menu-panel" id="menuPanel">
       <ul>
-        <li><a href="/main.html" data-text="1 HOME" alt="Home"> HOME</a></li>
-        <li><a href="/about.html" data-text="2 ABOUT ME" alt="About Me"> ABOUT ME</a></li>
-        <li><a href="/projects.html" data-text="3 PROJECTS" alt="Projects"> PROJECTS</a></li>
-        <li><a href="/contact.html" data-text="4 CONTACT" alt="Contact"> CONTACT</a></li>
+        <li><a href="main.html" data-text="HOME" alt="Home">HOME</a></li>
+        <li><a href="about.html" data-text="ABOUT ME" alt="About Me">ABOUT ME</a></li>
+        <li><a href="projects.html" data-text="PROJECTS" alt="Projects">PROJECTS</a></li>
+        <li><a href="contact.html" data-text="CONTACT" alt="Contact">CONTACT</a></li>
       </ul>
-      <div class="logo-bottom">
-        <img src="Ch.png" alt="Logo Chassidy Doest" />
-      </div>
       <div class="menu-footer">© 2025 Chassidy Doest. All rights reserved.</div>
     </div>
   </header>
@@ -691,41 +602,6 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <script>
-    // Time zone display
-    function updateTime() {
-      const now = new Date();
-      const time = now.toLocaleTimeString('en-GB', {
-        hour: '2-digit',
-        minute: '2-digit',
-        timeZone: 'Africa/Johannesburg'
-      });
-      document.getElementById('timeDisplay').textContent = `${time} (GMT+2)`;
-    }
-    updateTime();
-    setInterval(updateTime, 1000);
-
-    // Interactive gradient background
-    const interactive = document.querySelector('.interactive');
-    let mouseX = 0, mouseY = 0;
-    let interactiveX = 0, interactiveY = 0;
-
-    document.addEventListener('mousemove', e => {
-      mouseX = e.clientX;
-      mouseY = e.clientY;
-      interactive.style.left = mouseX + 'px';
-      interactive.style.top = mouseY + 'px';
-    });
-
-    function animateInteractive() {
-      interactiveX += (mouseX - interactiveX) * 0.1;
-      interactiveY += (mouseY - interactiveY) * 0.1;
-      interactive.style.left = interactiveX + 'px';
-      interactive.style.top = interactiveY + 'px';
-      requestAnimationFrame(animateInteractive);
-    }
-
-    animateInteractive();
-
     // Ensure GSAP and ScrollTrigger are loaded before registering
     if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
       console.error('GSAP or ScrollTrigger failed to load');
@@ -774,9 +650,10 @@
       });
     }
 
-    // Menu functionality
-    const menuButton = document.querySelector('.menu-button');
+    // Hamburger menu functionality
+    const hamburger = document.querySelector('.hamburger');
     const menuPanel = document.querySelector('.menu-panel');
+    const navLinks = document.querySelectorAll('nav a');
     const menuLinks = document.querySelectorAll('.menu-panel a');
     const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
@@ -788,9 +665,9 @@
       { opacity: 1, x: 0, duration: 0.5, stagger: 0.1, ease: "power3.out" }
     );
 
-    menuButton.addEventListener('click', () => {
+    hamburger.addEventListener('click', () => {
       const isActive = menuPanel.classList.toggle('active');
-      menuButton.textContent = isActive ? 'CLOSE' : 'MENU';
+      hamburger.classList.toggle('active');
       document.body.style.overflow = isActive ? 'hidden' : 'auto';
       if (isActive) {
         menuTimeline.restart();
@@ -799,28 +676,11 @@
       }
     });
 
-    // Set active link based on current page
-    function setActiveLink() {
-      const currentPage = window.location.pathname.split('/').pop() || 'main.html';
-      menuLinks.forEach(link => {
-        const href = link.getAttribute('href');
-        if (href === currentPage) {
-          link.classList.add('active');
-        } else {
-          link.classList.remove('active');
-        }
-      });
-    }
-    setActiveLink();
-
-    // Menu link interactions
-    menuLinks.forEach(link => {
+    // Desktop nav link interactions
+    navLinks.forEach(link => {
       link.addEventListener('click', () => {
-        menuPanel.classList.remove('active');
-        menuButton.textContent = 'MENU';
-        document.body.style.overflow = 'auto';
-        menuTimeline.reverse();
-        setActiveLink(); // Update active link after navigation
+        nav.classList.remove('active');
+        hamburger.classList.remove('active');
       });
 
       link.addEventListener('mouseenter', () => {
@@ -862,11 +722,59 @@
       });
     });
 
-    // Keyboard accessibility for menu
+    // Mobile menu link interactions
+    menuLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        menuPanel.classList.remove('active');
+        hamburger.classList.remove('active');
+        document.body.style.overflow = 'auto';
+        menuTimeline.reverse();
+      });
+
+      link.addEventListener('mouseenter', () => {
+        let iteration = 0;
+        const originalText = link.dataset.text;
+        const interval = setInterval(() => {
+          link.textContent = originalText
+            .split("")
+            .map((char, index) => {
+              if (index < iteration) return originalText[index];
+              return letters[Math.floor(Math.random() * letters.length)];
+            })
+            .join("");
+          if (iteration >= originalText.length) clearInterval(interval);
+          iteration += 1 / 2;
+        }, 30);
+      });
+
+      link.addEventListener('mouseleave', () => {
+        setTimeout(() => {
+          link.textContent = link.dataset.text;
+        }, 500);
+      });
+
+      link.addEventListener('touchstart', () => {
+        let iteration = 0;
+        const originalText = link.dataset.text;
+        const interval = setInterval(() => {
+          link.textContent = originalText
+            .split("")
+            .map((char, index) => {
+              if (index < iteration) return originalText[index];
+              return letters[Math.floor(Math.random() * letters.length)];
+            })
+            .join("");
+          if (iteration >= originalText.length) clearInterval(interval);
+          iteration += 1 / 2;
+        }, 30);
+      });
+    });
+
+    // Keyboard accessibility for mobile menu
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape' && menuPanel.classList.contains('active')) {
         menuPanel.classList.remove('active');
-        menuButton.textContent = 'MENU';
+        hamburger.classList.remove('active');
         document.body.style.overflow = 'auto';
         menuTimeline.reverse();
       }
@@ -886,10 +794,9 @@
       const newLink = li.querySelector('a');
       newLink.addEventListener('click', () => {
         menuPanel.classList.remove('active');
-        menuButton.textContent = 'MENU';
+        hamburger.classList.remove('active');
         document.body.style.overflow = 'auto';
         menuTimeline.reverse();
-        setActiveLink();
       });
       newLink.addEventListener('mouseenter', () => {
         let iteration = 0;
@@ -928,7 +835,8 @@
       });
     }
 
-  
+    // Example: Add a new menu item after 2 seconds
+    setTimeout(() => addMenuItem('BLOG'), 2000);
 
     // Loading overlay
     window.addEventListener('load', () => {
@@ -943,57 +851,25 @@
     // Custom cursor
     const cursor = document.querySelector('.cursor');
     const follower = document.querySelector('.cursor-follower');
-    let cursorX = 0, cursorY = 0;
+    let mouseX = 0, mouseY = 0;
     let followerX = 0, followerY = 0;
 
     document.addEventListener('mousemove', e => {
-      cursorX = e.clientX;
-      cursorY = e.clientY;
-      cursor.style.left = cursorX + 'px';
-      cursor.style.top = cursorY + 'px';
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      cursor.style.left = mouseX + 'px';
+      cursor.style.top = mouseY + 'px';
     });
 
-    function animateCursor() {
-      followerX += (cursorX - followerX) * 0.1;
-      followerY += (cursorY - followerY) * 0.1;
+    function animate() {
+      followerX += (mouseX - followerX) * 0.1;
+      followerY += (mouseY - followerY) * 0.1;
       follower.style.left = followerX + 'px';
       follower.style.top = followerY + 'px';
-      requestAnimationFrame(animateCursor);
+      requestAnimationFrame(animate);
     }
 
-    animateCursor();
-
-    // Logo color adaptation on scroll
-    const logoImg = document.getElementById('logoImg');
-
-    function adjustLogoColor() {
-      const logoRect = logoImg.getBoundingClientRect();
-      const logoCenterX = logoRect.left + logoRect.width / 2;
-      const logoCenterY = logoRect.top + logoRect.height / 2;
-
-      // Create an element to sample background color
-      const sample = document.elementFromPoint(logoCenterX, logoCenterY);
-      if (sample) {
-        const style = window.getComputedStyle(sample);
-        const bgColor = style.backgroundColor;
-
-        // Convert RGB to luminance (approximation)
-        const rgb = bgColor.match(/\d+/g);
-        if (rgb) {
-          const luminance = (0.299 * rgb[0] + 0.587 * rgb[1] + 0.114 * rgb[2]) / 255;
-          if (luminance > 0.7) { // Threshold for light background
-            logoImg.style.filter = 'brightness(0) invert(1)'; // Invert to dark
-          } else {
-            logoImg.style.filter = 'none'; // Reset to original
-          }
-        }
-      }
-    }
-
-    // Adjust color on scroll and initial load
-    window.addEventListener('scroll', adjustLogoColor);
-    window.addEventListener('load', adjustLogoColor);
-    window.addEventListener('resize', adjustLogoColor);
+    animate();
   </script>
 </body>
 </html>
