@@ -65,7 +65,7 @@
       opacity: 0;
     }
 
-    .hamburger.active span:nth-child(3) {
+   .hamburger.active span:nth-child(3) {
       transform: rotate(-45deg) translate(6px, -6px);
       background: #0741ff;
     }
@@ -344,9 +344,12 @@
     }
 
     @media (max-width: 1100px) {
-      .hamburger {
+       .hamburger {
         display: flex !important;
-        z-index: 10001;
+      }
+     nav {
+        display: none;
+      }
       }
       .header-container, .content-container {
         position: relative;
@@ -389,7 +392,7 @@
       nav {
         display: none;
       }
-    }
+    
 
     .cursor, .cursor-follower {
       position: fixed;
