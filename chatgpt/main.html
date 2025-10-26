@@ -13,8 +13,8 @@
   <header id="header" class="header">
     <div class="logo">
         <img src="ch.png" alt="Logo">
-      
     </div>
+    <button class="hamburger" id="hamburger">☰</button>
     <nav class="nav">
       <a href="#home" class="nav-link">Home</a>
       <a href="#about" class="nav-link">About</a>
@@ -138,7 +138,12 @@
             <p class="service-description">Custom illustrations that bring personality, charm, and uniqueness to brands, websites, products.</p>
           </div>
         </div>
-        
+        <div class="service-item">
+          <div class="service-number">06</div>
+          <div class="service-content">
+            <h3 class="service-title">CREATIVES GFX</h3>
+            <p class="service-description">Combining design thinking with brand goals to develop concepts that resonate with audiences.</p>
+          </div>
         </div>
       </div>
     </div>
@@ -240,14 +245,11 @@
             <li><a href="#" class="footer-link">Contact</a></li>
           </ul>
         </div>
-        
-        
       <div class="footer-bottom">
         <p class="footer-text">Made by CHAS | Powered by CHAS</p>
         <div class="footer-socials">
           <a href="https://www.tiktok.com/@eerlijkste1" class="footer-link">TikTok</a>
           <a href="https://www.instagram.com/@ch4ssiidy" class="footer-link">Instagram</a>
-          
         </div>
       </div>
     </div>
@@ -308,6 +310,16 @@ h1, h2, h3, h4, h5, h6 {
 .logo:hover .logo-text {
   transform: scale(1.1);
   color: #facc15; /* yellow-400 */
+}
+
+.hamburger {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: #ffffff;
+  cursor: pointer;
+  z-index: 60;
 }
 
 .nav {
@@ -1072,8 +1084,36 @@ h1, h2, h3, h4, h5, h6 {
     padding: 1rem;
   }
 
+  .hamburger {
+    display: block;
+  }
+
   .nav {
-    display: none; /* Hide nav on mobile; add hamburger if needed */
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.95);
+    backdrop-filter: blur(12px);
+    flex-direction: column;
+    padding: 1rem;
+    gap: 1rem;
+    z-index: 55;
+  }
+
+  .nav.active {
+    display: flex;
+  }
+
+  .nav-link {
+    font-size: 1.25rem;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #1f2937;
+  }
+
+  .nav-link:last-child {
+    border-bottom: none;
   }
 
   /* Hero */
@@ -1311,12 +1351,34 @@ h1, h2, h3, h4, h5, h6 {
     padding: 0.75rem 1.5rem;
     font-size: 0.75rem;
   }
+
+  .hamburger {
+    font-size: 1.25rem;
+  }
+
+  .nav-link {
+    font-size: 1rem;
+  }
 }</style>
 <script>document.addEventListener('DOMContentLoaded', () => {
   // Header Scroll Effect
   const header = document.querySelector('.header');
   window.addEventListener('scroll', () => {
     header.classList.toggle('scrolled', window.scrollY > 50);
+  });
+
+  // Hamburger Menu Toggle
+  const hamburger = document.getElementById('hamburger');
+  const nav = document.querySelector('.nav');
+  hamburger.addEventListener('click', () => {
+    nav.classList.toggle('active');
+  });
+
+  // Close mobile nav when clicking on a link
+  document.querySelectorAll('.nav-link').forEach(link => {
+    link.addEventListener('click', () => {
+      nav.classList.remove('active');
+    });
   });
 
   // Intersection Observer for Animations
