@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>CONTACT</title>
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cormorant+Garamond&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter+Tight:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
       * {
         box-sizing: border-box;
@@ -15,232 +15,49 @@
 
       body {
         height: 100vh;
-        background: rgb(54, 54, 54);
-        font-family: 'Cormorant Garamond', serif;
-        color: rgb(141, 141, 141);
+        background: black;
+        font-family: 'Inter Tight', sans-serif;
+        color: white;
         text-transform: uppercase;
         overflow: hidden;
       }
 
       header {
         position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 50;
+        padding: 1.5rem 2rem;
         display: flex;
-        justify-content: space-between;
         align-items: center;
-        width: 100%;
-        padding: 0 5%;
-        height: 7em;
-        z-index: 1001;
-        font-family: 'Bebas Neue', sans-serif;
-        font-size: clamp(0.66rem, 2vw, 1rem);
-        letter-spacing: 0.5em;
+        justify-content: space-between;
+        background: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(4px);
+        opacity: 0;
+        visibility: hidden;
       }
 
       .logo img {
-        height: 140px;
-        margin: 1rem;
-      }
-
-       .hamburger {
-      display: none;
-      flex-direction: column;
-      justify-content: space-between;
-      width: 45px;
-      height: 40px;
-      background-color: transparent;
-      border: none;
-      cursor: pointer;
-      z-index: 10001;
-      position: fixed;
-      top: 30px;
-      right: 30px;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
-
-      .hamburger span {
-        display: block;
-        height: 3px;
-        width: 100%;
-        background: linear-gradient(to right, #d3d3d3, #4a4aff);
-        border-radius: 3px;
-        transition: all 0.3s ease;
-      }
-
-      .hamburger.active span:nth-child(1) {
-        transform: rotate(45deg) translate(5px, 5px);
-        background: #0741ff;
-      }
-
-      .hamburger.active span:nth-child(2) {
-        opacity: 0;
-      }
-
-      .hamburger.active span:nth-child(3) {
-        transform: rotate(-45deg) translate(6px, -6px);
-        background: #0741ff;
-      }
-
-      .menu-panel {
-        position: fixed;
-        top: 0;
-        right: 0;
-        height: 100vh;
-        width: 100%;
-        max-width: 400px;
-        background: rgba(180, 180, 181, 0.85);
-        backdrop-filter: blur(10px);
-        border-left: 1px solid #444;
-        transform: translateX(100%);
-        opacity: 0;
-        transition: transform 0.6s cubic-bezier(0.7, 0, 0.3, 1), opacity 0.4s ease;
-        z-index: 1000;
-        pointer-events: none;
-        box-shadow: 0 4px 20px rgba(201, 201, 201, 0.4);
-      }
-
-      .menu-panel.active {
-        transform: translateX(0);
-        opacity: 0.98;
-        pointer-events: auto;
-      }
-
-      .menu-panel ul {
-        list-style: none;
-        padding: 2rem;
-        margin-top: 5rem;
-        display: flex;
-        flex-direction: column;
-        gap: 2rem;
-        align-items: center;
-      }
-
-      .menu-panel a {
-        font-family: 'Bebas Neue', sans-serif;
-        font-size: 3rem;
-        color: white;
-        text-decoration: none;
-        position: relative;
-        transition: color 0.3s ease;
-      }
-
-      .menu-panel a::after {
-        content: '';
-        position: absolute;
-        left: 0;
-        bottom: -4px;
-        width: 0%;
-        height: 2px;
-        background-color: #0800a2;
-        transition: width 0.3s ease;
-      }
-
-      .menu-panel a:hover::after {
-        width: 100%;
-      }
-
-      .menu-panel a:hover {
-        color: #1100ff;
-      }
-
-      .menu-footer {
-        position: absolute;
-        bottom: 2rem;
-        width: 100%;
-        text-align: center;
-        font-family: 'Cormorant Garamond', serif;
-        font-size: 0.9rem;
-        color: white;
-        opacity: 0.6;
+        height: 120px;
       }
 
       nav {
-        position: fixed;
-        top: 20px;
-        left: 50%;
-        transform: translateX(-50%);
-        background: rgba(180, 180, 181, 0.85);
-        backdrop-filter: blur(10px);
-        border: 1px solid #444;
-        border-radius: 999px;
-        padding: 0.6rem 2rem;
         display: flex;
-        gap: 2rem;
-        z-index: 1000;
-        box-shadow: 0 4px 20px rgba(201, 201, 201, 0.4);
+        align-items: center;
+        gap: 1.5rem;
       }
 
       nav a {
+        font-size: 0.875rem;
+        font-family: 'Inter Tight', sans-serif;
         color: white;
         text-decoration: none;
-        font-weight: 500;
-        font-size: 1.3rem;
-        transition: all 0.3s ease;
-        position: relative;
-        cursor: pointer;
-        user-select: none;
-      }
-
-      nav a::after {
-        content: '';
-        position: absolute;
-        left: 0;
-        bottom: -4px;
-        width: 0%;
-        height: 2px;
-        background-color: #0800a2;
-        transition: width 0.3s ease;
-      }
-
-      nav a:hover::after {
-        width: 100%;
+        transition: color 0.3s ease;
       }
 
       nav a:hover {
-        color: #1100ff;
-      }
-
-      @media (max-width: 1100px) {
-        .hamburger {
-          display: flex !important;
-        }
-
-        nav {
-          display: none;
-        }
-
-        .logo {
-          height: auto;
-        }
-      }
-
-      .loading-overlay {
-        position: fixed;
-        inset: 0;
-        background-color: #252525;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        z-index: 9999;
-        transition: opacity 1s ease;
-      }
-
-      .loading {
-        width: 75px;
-        height: 75px;
-        background-color: #ffffff;
-        animation: logoSpin 6s infinite;
-        clip-path: polygon(
-          0% 0%, 0 100%, 44% 100%, 44% 58%, 67% 58%, 68% 13%, 85% 13%, 
-          76% 100%, 100% 100%, 100% 0, 54% 0%, 54% 38%, 32% 38%, 32% 87%, 13% 87%, 24% 0);
-      }
-
-      @keyframes logoSpin {
-        0%, 100% {
-          transform: rotate(0deg);
-        }
-        50% {
-          transform: rotate(180deg);
-        }
+        color: hsl(48, 94%, 68%);
       }
 
       section {
@@ -293,11 +110,12 @@
         text-align: center;
         letter-spacing: 0.5em;
         margin-bottom: 2rem;
-        color: hsl(0, 0%, 52%);
+        color: hsl(0, 0%, 100%);
+        font-family: 'Anton', sans-serif;
       }
 
       .contact .bg {
-        background-color: #ffffff;
+        background-color: black;
         padding: 2em;
       }
 
@@ -311,8 +129,8 @@
 
       .envelope {
         position: relative;
-        background: #f5f5f5 url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAAG0lEQVQYV2NkYGD4z8DAwMgABXAGNgGwSgwVAFbmAgXQdTBAQAAAABJRU5ErkJggg==') repeat;
-        border: 1px solid #d0d0d0;
+        background: #111 url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAAG0lEQVQYV2NkYGD4z8DAwMgABXAGNgGwSgwVAFbmAgXQdTBAQAAAABJRU5ErkJggg==') repeat;
+        border: 1px solid #333;
         border-radius: 10px;
         padding: 2em;
         box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2), 
@@ -330,7 +148,7 @@
         left: 0;
         right: 0;
         height: 20px;
-        background: linear-gradient(180deg, #e0e0e0 0%, #f5f5f5 100%);
+        background: linear-gradient(180deg, #333 0%, #111 100%);
         clip-path: polygon(0 100%, 50% 0, 100% 100%);
         z-index: 1;
         transform-origin: top;
@@ -355,15 +173,16 @@
         border: none;
         border-radius: 0.5em;
         font-size: 1rem;
-        background-color: #ffffff;
+        background-color: #222;
         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1) inset;
         transition: transform 0.2s ease, box-shadow 0.2s ease;
         animation: pulseGlow 2s infinite ease-in-out;
+        color: white;
       }
 
       @keyframes pulseGlow {
         0%, 100% { box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1) inset; }
-        50% { box-shadow: 0 2px 10px rgba(6, 10, 255, 0.2) inset, 0 0 5px rgba(6, 10, 255, 0.2); }
+        50% { box-shadow: 0 2px 10px rgba(247, 209, 84, 0.2) inset, 0 0 5px rgba(247, 209, 84, 0.2); }
       }
 
       .contact-form input:focus,
@@ -379,7 +198,7 @@
         top: 0.75em;
         left: 0.75em;
         font-size: 1rem;
-        color: rgb(91, 91, 91);
+        color: rgb(141, 141, 141);
         transition: all 0.2s ease;
         pointer-events: none;
       }
@@ -391,14 +210,14 @@
         top: -0.5em;
         left: 0.5em;
         font-size: 0.8rem;
-        color: #060aff;
+        color: hsl(48, 94%, 68%);
       }
 
       .contact-form button {
         padding: 0.75em;
         border: none;
-        background: rgb(126, 126, 126);
-        color: rgb(91, 91, 91);
+        background: white;
+        color: black;
         font-weight: bold;
         border-radius: 0.5em;
         cursor: pointer;
@@ -406,7 +225,7 @@
       }
 
       .contact-form button:hover {
-        background: #060aff;
+        background: hsl(48, 94%, 68%);
         transform: translateY(-2px);
       }
 
@@ -419,8 +238,8 @@
         width: 100%;
         text-align: center;
         padding: 2em;
-        background: #f5f5f5 url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAAG0lEQVQYV2NkYGD4z8DAwMgABXAGNgGwSgwVAFbmAgXQdTBAQAAAABJRU5ErkJggg==') repeat;
-        border: 1px solid #d0d0d0;
+        background: #111 url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAAG0lEQVQYV2NkYGD4z8DAwMgABXAGNgGwSgwVAFbmAgXQdTBAQAAAABJRU5ErkJggg==') repeat;
+        border: 1px solid #333;
         border-radius: 10px;
         box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
         transform: perspective(1000px) rotateX(5deg);
@@ -433,20 +252,21 @@
         font-size: clamp(1.5rem, 4vw, 3rem);
         font-weight: 400;
         letter-spacing: 0.5em;
-        color: hsl(0, 0%, 52%);
+        color: white;
         margin-bottom: 1rem;
+        font-family: 'Anton', sans-serif;
       }
 
       .thank-you p {
         font-size: 1.2rem;
-        color: rgb(91, 91, 91);
+        color: rgb(141, 141, 141);
         margin-bottom: 1rem;
       }
 
       .thank-you .checkmark {
         width: 50px;
         height: 50px;
-        background: #060aff;
+        background: hsl(48, 94%, 68%);
         border-radius: 50%;
         display: flex;
         align-items: center;
@@ -456,7 +276,7 @@
 
       .thank-you .checkmark::after {
         content: '\2713';
-        color: #ffffff;
+        color: black;
         font-size: 1.5rem;
         font-weight: bold;
       }
@@ -464,8 +284,8 @@
       .thank-you button {
         padding: 0.75em 1.5em;
         border: none;
-        background: rgb(126, 126, 126);
-        color: rgb(91, 91, 91);
+        background: white;
+        color: black;
         font-weight: bold;
         border-radius: 0.5em;
         cursor: pointer;
@@ -475,7 +295,7 @@
       }
 
       .thank-you button:hover {
-        background: #060aff;
+        background: hsl(48, 94%, 68%);
         transform: translateY(-2px);
       }
 
@@ -483,59 +303,9 @@
         position: absolute;
         width: 10px;
         height: 10px;
-        background: #060aff;
+        background: hsl(48, 94%, 68%);
         border-radius: 50%;
         opacity: 0;
-      }
-
-      .cursor, .cursor-follower {
-        position: fixed;
-        top: 0;
-        left: 0;
-        pointer-events: none;
-        border-radius: 50%;
-        transform: translate(-50%, -50%);
-        transition: background-color 0.3s ease;
-        z-index: 10000;
-      }
-
-      .cursor {
-        width: 8px;
-        height: 8px;
-        background-color: black;
-        mix-blend-mode: difference;
-      }
-
-      .cursor-follower {
-        width: 30px;
-        height: 30px;
-        border: 2px solid black;
-        opacity: 0.4;
-        transition: opacity 0.3s ease;
-      }
-
-      .scroll-indicator {
-        position: fixed;
-        top: 50%;
-        right: 40px;
-        transform: translateY(-50%);
-        width: 8px;
-        height: 100px;
-        background: white;
-        border-radius: 10px;
-        overflow: hidden;
-        z-index: 1000;
-      }
-
-      .scroll-indicator::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        background: #003cff;
-        height: var(--scroll, 0%);
-        transition: height 0.2s ease-out;
       }
 
       @media (max-width: 600px) {
@@ -562,42 +332,28 @@
         .contact-form textarea {
           animation-duration: 3s;
         }
+        .logo img {
+          height: 60px;
+        }
+        nav a {
+          font-size: 0.75rem;
+        }
       }
     </style>
   </head>
   <body>
-    <div class="loading-overlay" id="loadingOverlay">
-      <div class="loading"></div>
-    </div>
+    <!-- Header -->
     <header>
       <div class="logo">
-        <img src="Ch.png" alt="Logo Chassidy Doest" />
+        <img src="ch.png" alt="Logo">
       </div>
-      <button class="hamburger" aria-label="Menu">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
-      <nav class="floating-nav">
-        <a href="/main.html" data-text="HOME">HOME</a>
-        <a href="/about.html" data-text="ABOUT ME">ABOUT ME</a>
-        <a href="/projects.html" data-text="PROJECTS">PROJECTS</a>
-        <a href="/contact.html" data-text="CONTACT">CONTACT</a>
+      <nav>
+        <a href="main.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="projects.html">Projects</a>
+        <a href="contact.html">Contact</a>
       </nav>
-      <div class="menu-panel" id="menuPanel">
-        <ul>
-          <li><a href="/main.html" data-text="HOME" alt="Home">HOME</a></li>
-          <li><a href="/about.html" data-text="ABOUT ME" alt="About Me">ABOUT ME</a></li>
-          <li><a href="/projects.html" data-text="PROJECTS" alt="Projects">PROJECTS</a></li>
-          <li><a href="/contact.html" data-text="CONTACT" alt="Contact">CONTACT</a></li>
-        </ul>
-        <div class="menu-footer">© 2025 CHAS. All rights reserved.</div>
-      </div>
     </header>
-
-    <div class="cursor"></div>
-    <div class="cursor-follower"></div>
-    <div class="scroll-indicator"></div>
 
     <section class="contact">
       <div class="outer">
@@ -646,199 +402,27 @@
           gsap.registerPlugin(ScrollTrigger, Observer);
         }
 
-        // Hamburger menu functionality
-        const hamburger = document.querySelector('.hamburger');
-        const menuPanel = document.querySelector('.menu-panel');
-        const navLinks = document.querySelectorAll('nav a');
-        const menuLinks = document.querySelectorAll('.menu-panel a');
-        const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-
-        // GSAP timeline for menu items
-        const menuTimeline = gsap.timeline({ paused: true });
-        menuTimeline.fromTo(
-          '.menu-panel li',
-          { opacity: 0, x: 50 },
-          { opacity: 1, x: 0, duration: 0.5, stagger: 0.1, ease: "power3.out" }
-        );
-
-        hamburger.addEventListener('click', () => {
-          const isActive = menuPanel.classList.toggle('active');
-          hamburger.classList.toggle('active');
-          document.body.style.overflow = isActive ? 'hidden' : 'auto';
-          if (isActive) {
-            menuTimeline.restart();
-          } else {
-            menuTimeline.reverse();
-          }
-        });
-
-        // Desktop nav link interactions
-        navLinks.forEach(link => {
-          link.addEventListener('click', () => {
-            menuPanel.classList.remove('active');
-            hamburger.classList.remove('active');
-            document.body.style.overflow = 'auto';
-          });
-
-          link.addEventListener('mouseenter', () => {
-            let iteration = 0;
-            const originalText = link.dataset.text;
-            const interval = setInterval(() => {
-              link.textContent = originalText
-                .split("")
-                .map((char, index) => {
-                  if (index < iteration) return originalText[index];
-                  return letters[Math.floor(Math.random() * letters.length)];
-                })
-                .join("");
-              if (iteration >= originalText.length) clearInterval(interval);
-              iteration += 1 / 2;
-            }, 30);
-          });
-
-          link.addEventListener('mouseleave', () => {
-            setTimeout(() => {
-              link.textContent = link.dataset.text;
-            }, 500);
-          });
-
-          link.addEventListener('touchstart', () => {
-            let iteration = 0;
-            const originalText = link.dataset.text;
-            const interval = setInterval(() => {
-              link.textContent = originalText
-                .split("")
-                .map((char, index) => {
-                  if (index < iteration) return originalText[index];
-                  return letters[Math.floor(Math.random() * letters.length)];
-                })
-                .join("");
-              if (iteration >= originalText.length) clearInterval(interval);
-              iteration += 1 / 2;
-            }, 30);
-          });
-        });
-
-        // Mobile menu link interactions
-        menuLinks.forEach(link => {
-          link.addEventListener('click', () => {
-            menuPanel.classList.remove('active');
-            hamburger.classList.toggle('active');
-            document.body.style.overflow = 'auto';
-            menuTimeline.reverse();
-          });
-
-          link.addEventListener('mouseenter', () => {
-            let iteration = 0;
-            const originalText = link.dataset.text;
-            const interval = setInterval(() => {
-              link.textContent = originalText
-                .split("")
-                .map((char, index) => {
-                  if (index < iteration) return originalText[index];
-                  return letters[Math.floor(Math.random() * letters.length)];
-                })
-                .join("");
-              if (iteration >= originalText.length) clearInterval(interval);
-              iteration += 1 / 2;
-            }, 30);
-          });
-
-          link.addEventListener('mouseleave', () => {
-            setTimeout(() => {
-              link.textContent = link.dataset.text;
-            }, 500);
-          });
-
-          link.addEventListener('touchstart', () => {
-            let iteration = 0;
-            const originalText = link.dataset.text;
-            const interval = setInterval(() => {
-              link.textContent = originalText
-                .split("")
-                .map((char, index) => {
-                  if (index < iteration) return originalText[index];
-                  return letters[Math.floor(Math.random() * letters.length)];
-                })
-                .join("");
-              if (iteration >= originalText.length) clearInterval(interval);
-              iteration += 1 / 2;
-            }, 30);
-          });
-        });
-
-        // Keyboard accessibility for mobile menu
-        document.addEventListener('keydown', (e) => {
-          if (e.key === 'Escape' && menuPanel.classList.contains('active')) {
-            menuPanel.classList.remove('active');
-            hamburger.classList.remove('active');
-            document.body.style.overflow = 'auto';
-            menuTimeline.reverse();
-          }
-        });
-
-        // Dynamic menu item addition
-        function addMenuItem(text, href = '#') {
-          const li = document.createElement('li');
-          li.innerHTML = `<a href="${href}" data-text="${text}" alt="${text}">${text}</a>`;
-          menuPanel.querySelector('ul').appendChild(li);
-          menuTimeline.fromTo(
-            li,
-            { opacity: 0, x: 50 },
-            { opacity: 1, x: 0, duration: 0.5, ease: "power3.out" },
-            "-=0.3"
-          );
-          const newLink = li.querySelector('a');
-          newLink.addEventListener('click', () => {
-            menuPanel.classList.remove('active');
-            hamburger.classList.remove('active');
-            document.body.style.overflow = 'auto';
-            menuTimeline.reverse();
-          });
-          newLink.addEventListener('mouseenter', () => {
-            let iteration = 0;
-            const originalText = newLink.dataset.text;
-            const interval = setInterval(() => {
-              newLink.textContent = originalText
-                .split("")
-                .map((char, index) => {
-                  if (index < iteration) return originalText[index];
-                  return letters[Math.floor(Math.random() * letters.length)];
-                })
-                .join("");
-              if (iteration >= originalText.length) clearInterval(interval);
-              iteration += 1 / 2;
-            }, 30);
-          });
-          newLink.addEventListener('mouseleave', () => {
-            setTimeout(() => {
-              newLink.textContent = newLink.dataset.text;
-            }, 500);
-          });
-          newLink.addEventListener('touchstart', () => {
-            let iteration = 0;
-            const originalText = newLink.dataset.text;
-            const interval = setInterval(() => {
-              newLink.textContent = originalText
-                .split("")
-                .map((char, index) => {
-                  if (index < iteration) return originalText[index];
-                  return letters[Math.floor(Math.random() * letters.length)];
-                })
-                .join("");
-              if (iteration >= originalText.length) clearInterval(interval);
-              iteration += 1 / 2;
-            }, 30);
-          });
-        }
-
-    
-
         // Envelope entry animation
         const envelope = document.querySelector('.envelope');
+        const header = document.querySelector('header');
         gsap.fromTo(envelope, 
           { yPercent: 100, rotateX: 20, autoAlpha: 0 },
-          { yPercent: 0, rotateX: 5, autoAlpha: 1, duration: 1.2, ease: 'power2.out' }
+          { 
+            yPercent: 0, 
+            rotateX: 5, 
+            autoAlpha: 1, 
+            duration: 1.2, 
+            ease: 'power2.out',
+            onComplete: () => {
+              // Header animation after envelope
+              gsap.to(header, {
+                autoAlpha: 1,
+                visibility: 'visible',
+                duration: 0.5,
+                ease: 'power2.out'
+              });
+            }
+          }
         );
 
         // Envelope flap animation
@@ -850,7 +434,7 @@
           onComplete: () => envelope.classList.add('flap-open')
         });
 
-        // Interactive hover tilt effect
+        // Interactive hover tilt effect for envelope
         envelope.addEventListener('mousemove', (e) => {
           const rect = envelope.getBoundingClientRect();
           const x = (e.clientX - rect.left) / rect.width - 0.5;
@@ -962,43 +546,6 @@
           });
         });
 
-        // Scroll indicator
-        window.addEventListener("scroll", () => {
-          const scrollTop = window.scrollY;
-          const docHeight = document.body.scrollHeight - window.innerHeight;
-          const scrollPercent = (scrollTop / docHeight) * 100;
-          document.querySelector(".scroll-indicator").style.setProperty('--scroll', scrollPercent + '%');
-        });
-
-        // ScrollTrigger animations
-        if (typeof ScrollTrigger !== 'undefined') {
-          gsap.to(".scroll-indicator", {
-            scaleY: 1,
-            scrollTrigger: {
-              scrub: true,
-              trigger: "body",
-              start: "top top",
-              end: "bottom bottom"
-            },
-            ease: "none",
-            transformOrigin: "top"
-          });
-
-          const textElements = gsap.utils.toArray('.text');
-          textElements.forEach(text => {
-            gsap.to(text, {
-              backgroundSize: '100%',
-              ease: 'none',
-              scrollTrigger: {
-                trigger: text,
-                start: 'center 80%',
-                end: 'center 20%',
-                scrub: true,
-              },
-            });
-          });
-        }
-
         // Section animations
         const section = document.querySelector(".contact");
         const outer = section.querySelector(".outer");
@@ -1010,38 +557,6 @@
         gsap.fromTo([outer, inner], { yPercent: 100 }, { yPercent: 0, duration: 1 });
         gsap.fromTo(bg, { yPercent: 15 }, { yPercent: 0, duration: 1 }, 0);
         gsap.fromTo(heading, { autoAlpha: 0, yPercent: 150 }, { autoAlpha: 1, yPercent: 0, duration: 1 }, 0.2);
-
-        // Custom cursor
-        const cursor = document.querySelector('.cursor');
-        const follower = document.querySelector('.cursor-follower');
-        let mouseX = 0, mouseY = 0;
-        let followerX = 0, followerY = 0;
-
-        document.addEventListener('mousemove', e => {
-          mouseX = e.clientX;
-          mouseY = e.clientY;
-          cursor.style.left = mouseX + 'px';
-          cursor.style.top = mouseY + 'px';
-        });
-
-        function animate() {
-          followerX += (mouseX - followerX) * 0.1;
-          followerY += (mouseY - followerY) * 0.1;
-          follower.style.left = followerX + 'px';
-          follower.style.top = followerY + 'px';
-          requestAnimationFrame(animate);
-        }
-
-        animate();
-
-        // Loading overlay
-        window.addEventListener('load', () => {
-          const loadingOverlay = document.getElementById('loadingOverlay');
-          loadingOverlay.style.opacity = 0;
-          setTimeout(() => {
-            loadingOverlay.style.display = 'none';
-          }, 500);
-        });
       });
     </script>
   </body>
