@@ -994,7 +994,15 @@ h1, h2, h3, h4, h5, h6 {
   opacity: 0;
   transform: translateY(50px);
 }
-
+ @media (max-width: 768px) {
+  .footer-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+    }
+     .logo-img {
+        height: 120px;
+      }
+  }
 .footer.visible { opacity: 1; transform: translateY(0); }
 
 .footer-grid {
@@ -1056,7 +1064,9 @@ h1, h2, h3, h4, h5, h6 {
 .footer-socials {
   display: flex;
   gap: 1.5rem;
-}</style>
+}
+
+</style>
 <script>document.addEventListener('DOMContentLoaded', () => {
   // Header Scroll Effect
   const header = document.querySelector('.header');
