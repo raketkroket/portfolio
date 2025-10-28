@@ -82,6 +82,8 @@
         <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg" alt="Apple Logo" class="logo">
       </div>
     </div>
+
+    
   </section>
 
   <!-- Bio Section -->
@@ -459,12 +461,14 @@ h1, h2, h3, h4, h5, h6 {
   opacity: 0;
   transform: translateX(-30px);
   animation: slideIn 0.8s forwards 1.3s;
+  box-shadow: #edd264;
+  
 }
 
 .hero-cta:hover {
   background-color: #facc15;
   transform: scale(1.05);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  box-shadow: #f3c81d;
 }
 
 .hero-cta .arrow {
@@ -654,7 +658,10 @@ h1, h2, h3, h4, h5, h6 {
 .bio-cta.visible { opacity: 1; transform: translateX(0); }
 
 .bio-cta:hover { color: #facc15; }
-.bio-cta:hover .arrow { transform: translate(4px, -4px); }
+.bio-cta:hover .arrow { transform: translate(4px, -4px); 
+}
+
+
 
 /* Services Section */
 .services-section {
@@ -1350,6 +1357,7 @@ h1, h2, h3, h4, h5, h6 {
   .connect-cta {
     padding: 0.75rem 1.5rem;
     font-size: 0.75rem;
+    box-shadow: #facc15;
   }
 
   .hamburger {
