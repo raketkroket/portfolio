@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mococha Events - Shop</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Lexend+Mega:wght@100..900&family=Lexend:wght@100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Poiret+One&family=Source+Sans+3:ital,wght@0,200..900;1,200..900&family=Tinos:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap');
+        @font-face {
+            font-family: 'Nalieta';
+            src: url('fonts/nalieta.woff2') format('woff2'),
+                 url('fonts/nalieta.woff') format('woff'),
+                 url('fonts/nalieta.otf') format('opentype');
+            font-weight: normal;
+            font-style: normal;
+        }
+        body {
+            font-family: "Montserrat", sans-serif;
+             background: linear-graadient(to right, #fff4e2, #e7f8ff);
+            color: #2D2D2D;
+            margin: 0;
+            overflow-x: hidden;
+        }
+        .header {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 1.5rem;
+            background-color: transparent;
+            position: fixed;
+            top: 0;
+            z-index: 40;
+        }
+        .nav-container {
+            display: flex;
+            align-items: center;
+            gap: 3rem;
+            position: relative;
+        }
+        .logo {
+            width: 220px;
+            z-index: 45;
+        }
+        :root {
+            --nav-font-size: 0.9rem;
+            --logo-width: 5rem;
+        }
+        @media (min-width: 768px) {
+            :root {
+                --nav-font-size: 0.85rem;
+                --logo-width: 6rem;
+            }
+        }
+        @media (min-width: 1024px) {
+            :root {
+                --nav-font-size: 0.8rem;
+            }
+        }
+        .nav-menu-left, .nav-menu-right {
+            display: flex;
+            gap: 0.5rem;
+            color: #ffffff;
+            font-family: "Tinos", serif;
+            font-weight: 400;
+            font-style: italic;
+            font-size: var(--nav-font-size);
+            align-items: center;
+            flex-wrap: nowrap;
+            justify-content: space-evenly;
+            overflow-x: auto;
+            white-space: nowrap;
+            scrollbar-width: none;
+        }
+        .nav-menu-left::-webkit-scrollbar, .nav-menu-right::-webkit-scrollbar {
+            display: none;
+        }
+        @media (min-width: 768px) {
+            .nav-menu-left, .nav-menu-right {
+                gap: 0.4rem;
+            }
+        }
+        .nav-item {
+            position: relative;
+            text-align: center;
+           color: #6B5E4A;
+           
+            flex: 0 0 auto;
+        }
+        .nav-item a,
+        .nav-item button {
+            cursor: pointer;
+            padding: 0.15rem 0.3rem;
+            transition: color 0.2s ease, background-color 0.2s ease;
+            display: block;
+            white-space: nowrap;
+            font-size: inherit;
+            border-radius: 0.3rem;
+            position: relative;
+            z-index: 1;
+        }
+        .nav-item a:hover,
+        .nav-item button:hover {
+            color: #6B5E4A;
+            background-color: #EDE9E3;
+            border-radius: 0.3rem;
+        }
+        .dropdown-item.active a,
+        .dropdown-item.active button {
+            background-color: #ffffff;
+            border-radius: 0.3rem;
+            color: #6B5E4A;
+        }
+        .dropdown-item.active::before {
+            content: '';
+            position: absolute;
+            top: -0.3rem;
+            left: -0.3rem;
+            right: -0.3rem;
+            bottom: -0.3rem;
+            border: 2px solid #6B5E4A;
+            border-radius: 0.5rem;
+            z-index: 0;
+        }
+        .nav-item.active a,
+        .nav-item.active button {
+            background-color: #ebf7fe;
+            border-radius: 0.3rem;
+            color: #6d6357;
+        }
+
+        .nav-item.active::before {
+            content: '';
+            position: absolute;
+            top: -0.3rem;
+            left: -0.3rem;
+            right: -0.3rem;
+            bottom: -0.3rem;
+            border: 2px solid #ceb28e;
+            border-radius: 0.5rem;
+            z-index: 0;
+        }
+        .dropdown {
+            visibility: hidden;
+            opacity: 0;
+            position: fixed;
+            background: white;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            border-radius: 0.5rem;
+            min-width: 200px;
+            z-index: 1000;
+            padding: 1rem;
+            transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease;
+            transform: translateY(10px);
+            pointer-events: none;
+        }
+        .nav-item:hover .dropdown,
+        .dropdown:hover {
+            visibility: visible;
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+        .mega-menu {
+            width: 600px;
+            max-width: 90vw;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+        }
+        .dropdown-item {
+            padding: 0.5rem;
+            color: #2D2D2D;
+            display: block;
+            transition: background 0.2s ease;
+        }
+        .dropdown-item:hover {
+            background: #EDE9E3;
+            color: #6B5E4A;
+        }
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 0.25rem;
+            cursor: pointer;
+            z-index: 50;
+        }
+        .hamburger div {
+            width: 25px;
+            height: 3px;
+            background: #2D2D2D;
+            transition: all 0.3s ease;
+        }
+        .hamburger.active div:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+        .hamburger.active div:nth-child(2) {
+            opacity: 0;
+        }
+        .hamburger.active div:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -7px);
+        }
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 35;
+            transition: opacity 0.3s ease;
+        }
+        .overlay.active {
+            display: block;
+            opacity: 1;
+        }
+        .section {
+            max-width: 1200px;
+            margin: 6rem auto;
+            padding: 0 1.5rem;
+        }
+        .section h2 {
+            font-size: 3.5rem;
+            font-family: 'Nalieta', sans-serif;
+            font-weight: 500;
+            text-align: center;
+            margin-bottom: 6rem;
+            padding-top: 80px;
+            color: #ab9985;
+        }
+        .shop-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        .product-card {
+            background: #d6d0be;
+            border-radius: 1rem;
+            box-shadow: 0 4px 12px rgba(95, 149, 230, 0.434);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .product-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 20px rgba(49, 124, 168, 0.3);
+        }
+        .product-card a.image-link {
+            display: block;
+            text-decoration: none;
+        }
+        .product-card img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        .product-card a.image-link:hover img {
+            transform: scale(1.15);
+        }
+        .product-content {
+            padding: 1.5rem;
+            text-align: center;
+        }
+        .product-content h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #897c6d;
+            font-family: 'Nalieta', sans-serif;
+        }
+        .product-content .price {
+            font-size: 1.25rem;
+            font-weight: 500;
+            color: #ffffff;
+            margin-bottom: 0.75rem;
+        }
+        .product-content .description {
+            font-size: 0.9rem;
+            color: #ffffff;
+            line-height: 1.5;
+            margin-bottom: 1rem;
+        }
+        .add-to-cart {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            background: #7e776d;
+            color: #FFFFFF;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 0.5rem;
+            font-family: 'Nalieta', sans-serif;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+        .add-to-cart:hover {
+            background: #cdc4b6;
+            transform: translateY(-2px);
+        }
+        .add-to-cart ion-icon {
+            font-size: 1.2rem;
+        }
+        @media (max-width: 767px) {
+            .nav-container {
+                justify-content: space-between;
+                width: 100%;
+                padding: 0 1rem;
+            }
+            .nav-menu-left, .nav-menu-right {
+                display: none;
+                flex-direction: column;
+                position: fixed;
+                top: 0;
+                right: -250px;
+                width: 250px;
+                height: 100vh;
+                background: white;
+                padding: 3rem 0.5rem 0.5rem;
+                box-shadow: -4px 0 6px rgba(0, 0, 0, 0.1);
+                transition: right 0.3s ease;
+                overflow-y: auto;
+                z-index: 40;
+                opacity: 1;
+                align-items: flex-start;
+                overflow-x: hidden;
+            }
+            .nav-menu-left.active, .nav-menu-right.active {
+                display: flex;
+                right: 0;
+            }
+            .nav-item {
+                width: 100%;
+                text-align: left;
+                flex: none;
+            }
+            .nav-item.active::before {
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                border: 2px solid #6B5E4A;
+                border-radius: 0.3rem;
+            }
+            .dropdown {
+                position: static;
+                box-shadow: none;
+                background: #F9FAFB;
+                visibility: visible;
+                opacity: 1;
+                display: none;
+                transform: none;
+                padding: 0.5rem 1rem;
+                z-index: 1000;
+            }
+            .dropdown.active {
+                display: block;
+            }
+            .nav-item:hover .dropdown,
+            .dropdown:hover {
+                visibility: hidden;
+                opacity: 0;
+                display: none;
+            }
+            .mega-menu {
+                grid-template-columns: 1fr;
+            }
+            .nav-item button {
+                width: 100%;
+                text-align: left;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                font-size: 0.9rem;
+                padding: 0.3rem 0.5rem;
+            }
+            .nav-item a {
+                font-size: 0.9rem;
+                padding: 0.3rem 0.5rem;
+            }
+            .nav-item button::after {
+                content: '▼';
+                font-size: 0.75rem;
+                transition: transform 0.3s ease;
+            }
+            .nav-item button.active::after {
+                transform: rotate(180deg);
+            }
+            .logo {
+                width: 150px;
+            }
+            .header {
+                justify-content: space-between;
+            }
+            .product-card img {
+                height: 200px;
+            }
+            .product-content h3 {
+                font-size: 1.25rem;
+            }
+            .section h2 {
+                font-size: 1.75rem;
+            }
+        }
+        @media (max-width: 640px) {
+            .section {
+                margin: 4rem auto;
+                padding: 0 1rem;
+            }
+            .shop-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Overlay for Mobile Menu -->
+    <div class="overlay" onclick="toggleNavMenu()"></div>
+    <!-- Header with Logo and Navigation -->
+    <div class="header">
+        <div class="nav-container">
+            <!-- Left Navigation Menu -->
+            <nav class="nav-menu-left" aria-label="Left navigation">
+                <div class="nav-item"><a href="index.html" aria-label="Home">HOME</a></div>
+                <div class="nav-item"><a href="overons.html" aria-label="Over ons">OVER ONS</a></div>
+                <div class="nav-item"><a href="contact.html" aria-label="Contact">CONTACT</a></div>
+                <div class="nav-item active"><a href="zaalverhuur.html" aria-haspopup="true" aria-expanded="false" aria-label="Zaalverhuur menu">ZAALVERHUUR</a>
+                    <div class="dropdown">
+                        <a class="dropdown-item active" href="all_in.html" aria-label="All In Pakketten">All In Pakketten</a>
+                    </div>
+                </div>
+                <div class="nav-item">
+                    <a href="party_styling.html" aria-haspopup="true" aria-expanded="false" aria-label="Party styling menu">PARTY STYLING</a>
+                    <div class="dropdown">
+                        <a class="dropdown-item" href="business_events.html" aria-label="Business events">Business events</a>
+                        <a class="dropdown-item" href="ballon_decoraties.html" aria-label="Ballon decoraties">Ballon decoraties</a>
+                        <a class="dropdown-item" href="offerte.html" aria-label="Offerte aanvraag">Offerte aanvraag</a>
+                    </div>
+                </div>
+                <div class="nav-item">
+                    <a href="rentals.html" aria-haspopup="true" aria-expanded="false" aria-label="Rentals (Verhuur) menu">RENTALS (VERHUUR)</a>
+                    <div class="dropdown mega-menu">
+                        <a class="dropdown-item" href="bar.html">Bar (Barren)</a>
+                        <a class="dropdown-item" href="backdrops.html">Backdrops</a>
+                        <a class="dropdown-item" href="bumper_cars.html">Bumper cars (Bots auto)</a>
+                        <a class="dropdown-item" href="bubble_house.html">Bubble house</a>
+                        <a class="dropdown-item" href="bloemen.html">Bloemen</a>
+                        <a class="dropdown-item" href="cutout_verhuur.html">Cutout verhuur</a>
+                        <a class="dropdown-item" href="dieren.html">Dieren</a>
+                        <a class="dropdown-item" href="groot_decoratie.html">Groot decoratie</a>
+                        <a class="dropdown-item" href="hout_decor.html">Hout Decor</a>
+                        <a class="dropdown-item" href="klein_decoratie.html">Klein decoratie</a>
+                        <a class="dropdown-item" href="lichtcijfers.html">Lichtcijfers & neon signs</a>
+                        <a class="dropdown-item" href="printed_backdrops.html">Printed backdrops</a>
+                        <a class="dropdown-item" href="popcorn.html">Popcorn & suikerspin</a>
+                        <a class="dropdown-item" href="reserveringen.html">Reserveringen</a>
+                        <a class="dropdown-item" href="springkussens.html">Springkussens & Softplayground</a>
+                        <a class="dropdown-item" href="stoelen_banken.html">Stoelen & Banken</a>
+                        <a class="dropdown-item" href="tafel_buffet.html">Tafel & buffet decor</a>
+                        <a class="dropdown-item" href="vlinder.html">Vlinder decoratie</a>
+                        <a class="dropdown-item" href="wanden.html">Wanden</a>
+                        <a class="dropdown-item" href="xl_piepschuim.html">XL piepschuim decor</a>
+                        <a class="dropdown-item" href="zuilen.html">Zuilen</a>
+                        <a class="dropdown-item" href="voorwaarden_verhuur.html">Algemene voorwaarden</a>
+                    </div>
+                </div>
+            </nav>
+            <!-- Logo -->
+            <img src="images/logo.png" alt="Mococha Logo" aria-label="Mococha Logo" class="logo">
+            <!-- Right Navigation Menu -->
+            <nav class="nav-menu-right" aria-label="Right navigation">
+                <div class="nav-item">
+                    <a href="kids_entertainment.html" aria-haspopup="true" aria-expanded="false" aria-label="Kids Entertainment menu">KIDS ENTERTAINMENT</a>
+                    <div class="dropdown">
+                        <a class="dropdown-item" href="cakebar.html">Cake bar</a>
+                        <a class="dropdown-item" href="schilderen.html">Schilderen (in thema)</a>
+                        <a class="dropdown-item" href="donuts.html">Donuts & Aardbeien versieren</a>
+                        <a class="dropdown-item" href="cupcake.html">Cupcake versieren</a>
+                        <a class="dropdown-item" href="slijm.html">Slijm maken</a>
+                    </div>
+                </div>
+                <div class="nav-item">
+                    <a href="belangrijke_informatie.html" aria-haspopup="true" aria-expanded="false" aria-label="Belangrijke informatie menu">BELANGRIJKE INFORMATIE</a>
+                    <div class="dropdown mega-menu">
+                        <a class="dropdown-item" href="werkwijze.html">Werkwijze & Voorwaarden</a>
+                        <a class="dropdown-item" href="spoed.html">Spoed aanvragen</a>
+                        <a class="dropdown-item" href="bestelregelement.html">Bestelregelement</a>
+                        <a class="dropdown-item" href="allergenen.html">Allergenen</a>
+                        <a class="dropdown-item" href="openingstijden.html">Openingstijden</a>
+                        <a class="dropdown-item" href="voorwaarden_verhuur.html">Algemene voorwaarden verhuur</a>
+                    </div>
+                </div>
+                <div class="nav-item"><a href="drukwerk.html">DRUKWERK & CUTOUTS</a></div>
+                <div class="nav-item"><a href="cursussen.html">CURSUSSEN</a></div>
+            </nav>
+            <!-- Hamburger Menu -->
+            <div class="hamburger" onclick="toggleNavMenu()">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+        </div>
+    </div>
+    <!-- Shop Section -->
+    <section class="section">
+        <h2>Shop Onze All In Pakketten</h2>
+        <div class="shop-grid">
+            <div class="product-card">
+                <a href="kids_white.html" class="image-link">
+                    <img src="https://i.pinimg.com/1200x/ec/6e/7d/ec6e7dc15bdcdbcc56fd4b8263261f81.jpg" alt="Kids Styling Pakket WHITE">
+                </a>
+                <div class="product-content">
+                    <h3>Zaalhuur incl. Kids Styling Pakket WHITE</h3>
+                    <p class="price">€1.850,00</p>
+                    <p class="description">Perfect voor een eenvoudige, elegante kinderparty met basisdecoraties en zaalhuur inbegrepen.</p>
+                    <button class="add-to-cart">
+                        <ion-icon name="cart-outline"></ion-icon> Toevoegen aan Winkelwagen
+                    </button>
+                </div>
+            </div>
+            <div class="product-card">
+                <a href="kids_silver.html" class="image-link">
+                    <img src="https://i.pinimg.com/736x/44/de/84/44de849d85cda69d6766e719fcbfe123.jpg" alt="Kids Styling Pakket SILVER">
+                </a>
+                <div class="product-content">
+                    <h3>Zaalhuur incl. Kids Styling Pakket SILVER</h3>
+                    <p class="price">€2.000,00</p>
+                    <p class="description">Een upgrade met extra decoraties voor een onvergetelijke kinderparty.</p>
+                    <button class="add-to-cart">
+                        <ion-icon name="cart-outline"></ion-icon> Toevoegen aan Winkelwagen
+                    </button>
+                </div>
+            </div>
+            <div class="product-card">
+                <a href="kids_gold.html" class="image-link">
+                    <img src="https://i.pinimg.com/736x/90/e4/85/90e48551734b10bd8dba354a04eb5be9.jpg" alt="Kids Styling Pakket GOLD">
+                </a>
+                <div class="product-content">
+                    <h3>Zaalhuur incl. Kids Styling Pakket GOLD</h3>
+                    <p class="price">€3.250,00</p>
+                    <p class="description">Luxe kinderparty met premium decoraties en uitgebreide styling.</p>
+                    <button class="add-to-cart">
+                        <ion-icon name="cart-outline"></ion-icon> Toevoegen aan Winkelwagen
+                    </button>
+                </div>
+            </div>
+            <div class="product-card">
+                <a href="kids_platinum.html" class="image-link">
+                    <img src="https://i.pinimg.com/736x/64/3f/f0/643ff06f065fe69c1d1e748343e0edb5.jpg" alt="Kids Styling Pakket PLATINUM">
+                </a>
+                <div class="product-content">
+                    <h3>Zaalhuur incl. Kids Styling Pakket PLATINUM</h3>
+                    <p class="price">€5.000,00</p>
+                    <p class="description">De ultieme kinderparty-ervaring met exclusieve decoraties en volledige styling.</p>
+                    <button class="add-to-cart">
+                        <ion-icon name="cart-outline"></ion-icon> Toevoegen aan Winkelwagen
+                    </button>
+                </div>
+            </div>
+            <div class="product-card">
+                <a href="babyshower_white.html" class="image-link">
+                    <img src="https://i.pinimg.com/1200x/ec/6e/7d/ec6e7dc15bdcdbcc56fd4b8263261f81.jpg" alt="Babyshower Styling Pakket WHITE">
+                </a>
+                <div class="product-content">
+                    <h3>Zaalhuur incl. Babyshower Styling Pakket WHITE</h3>
+                    <p class="price">€1.650,00</p>
+                    <p class="description">Een eenvoudige en stijlvolle babyshower met basisdecoraties en zaalhuur.</p>
+                    <button class="add-to-cart">
+                        <ion-icon name="cart-outline"></ion-icon> Toevoegen aan Winkelwagen
+                    </button>
+                </div>
+            </div>
+            <div class="product-card">
+                <a href="babyshower_silver.html" class="image-link">
+                    <img src="https://i.pinimg.com/736x/44/de/84/44de849d85cda69d6766e719fcbfe123.jpg" alt="Babyshower Styling Pakket SILVER">
+                </a>
+                <div class="product-content">
+                    <h3>Zaalhuur incl. Babyshower Styling Pakket SILVER</h3>
+                    <p class="price">€2.000,00</p>
+                    <p class="description">Een verfijnde babyshower met extra decoraties voor een speciale viering.</p>
+                    <button class="add-to-cart">
+                        <ion-icon name="cart-outline"></ion-icon> Toevoegen aan Winkelwagen
+                    </button>
+                </div>
+            </div>
+            <div class="product-card">
+                <a href="babyshower_gold.html" class="image-link">
+                    <img src="https://i.pinimg.com/736x/90/e4/85/90e48551734b10bd8dba354a04eb5be9.jpg" alt="Babyshower Styling Pakket GOLD">
+                </a>
+                <div class="product-content">
+                    <h3>Zaalhuur incl. Babyshower Styling Pakket GOLD</h3>
+                    <p class="price">€3.000,00</p>
+                    <p class="description">Een luxe babyshower met premium decoraties en uitgebreide styling.</p>
+                    <button class="add-to-cart">
+                        <ion-icon name="cart-outline"></ion-icon> Toevoegen aan Winkelwagen
+                    </button>
+                </div>
+            </div>
+            <div class="product-card">
+                <a href="babyshower_platinum.html" class="image-link">
+                    <img src="https://i.pinimg.com/736x/64/3f/f0/643ff06f065fe69c1d1e748343e0edb5.jpg" alt="Babyshower Styling Pakket PLATINUM">
+                </a>
+                <div class="product-content">
+                    <h3>Zaalhuur incl. Babyshower Styling Pakket PLATINUM</h3>
+                    <p class="price">€5.000,00</p>
+                    <p class="description">De ultieme babyshower-ervaring met exclusieve decoraties en volledige styling.</p>
+                    <button class="add-to-cart">
+                        <ion-icon name="cart-outline"></ion-icon> Toevoegen aan Winkelwagen
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script>
+        // GSAP Animations
+        gsap.registerPlugin(ScrollTrigger);
+        gsap.utils.toArray(".product-card").forEach(card => {
+            gsap.from(card, {
+                opacity: 0,
+                y: 50,
+                duration: 0.8,
+                ease: "power2.out",
+                scrollTrigger: {
+                    trigger: card,
+                    start: "top 80%",
+                }
+            });
+        });
+        // Mobile Menu Toggle
+        function toggleNavMenu() {
+            const navMenus = document.querySelectorAll('.nav-menu-left, .nav-menu-right');
+            const hamburger = document.querySelector('.hamburger');
+            const overlay = document.querySelector('.overlay');
+            const isActive = navMenus[0].classList.contains('active');
+            navMenus.forEach(menu => {
+                menu.classList.toggle('active');
+            });
+            hamburger.classList.toggle('active');
+            overlay.classList.toggle('active');
+            document.body.style.overflow = isActive ? '' : 'hidden';
+        }
+        // Dropdown Toggle for Mobile
+        document.querySelectorAll('.nav-item a[aria-haspopup="true"]').forEach(link => {
+            link.addEventListener('click', (e) => {
+                if (window.innerWidth < 768) {
+                    e.preventDefault();
+                    const dropdown = link.nextElementSibling;
+                    const isActive = dropdown.classList.contains('active');
+                    document.querySelectorAll('.dropdown.active').forEach(d => {
+                        if (d !== dropdown) {
+                            d.classList.remove('active');
+                            d.previousElementSibling.setAttribute('aria-expanded', 'false');
+                        }
+                    });
+                    dropdown.classList.toggle('active');
+                    link.setAttribute('aria-expanded', !isActive);
+                }
+            });
+        });
+        // Handle Dropdown for Desktop
+        document.querySelectorAll('.nav-item').forEach(item => {
+            const link = item.querySelector('a[aria-haspopup="true"]');
+            const dropdown = item.querySelector('.dropdown');
+            if (link && dropdown) {
+                item.addEventListener('mouseenter', () => {
+                    if (window.innerWidth >= 768) {
+                        const rect = link.getBoundingClientRect();
+                        dropdown.style.top = `${rect.bottom + window.scrollY}px`;
+                        dropdown.style.left = `${rect.left + window.scrollX}px`;
+                        dropdown.classList.add('active');
+                        link.setAttribute('aria-expanded', 'true');
+                    }
+                });
+                item.addEventListener('mouseleave', () => {
+                    if (window.innerWidth >= 768) {
+                        dropdown.classList.remove('active');
+                        link.setAttribute('aria-expanded', 'false');
+                    }
+                });
+            }
+        });
+        // Add to Cart Button Functionality (Placeholder)
+        document.querySelectorAll('.add-to-cart').forEach(button => {
+            button.addEventListener('click', () => {
+                alert('Product toegevoegd aan winkelwagen!');
+                // Add actual cart functionality here if needed
+            });
+        });
+    </script>
+</body>
+</html>
