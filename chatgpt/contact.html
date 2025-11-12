@@ -1,14 +1,13 @@
-<!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>CONTACT</title>
-  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter+Tight:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter+Tight:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet">
   <!-- GSAP -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-
   <style>
     :root {
       --gold: #6e6b61;
@@ -45,7 +44,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      background: linear-gradient(to bottom, rgba(0,0,0,0.8), transparent);
+      background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8), transparent);
       backdrop-filter: blur(8px);
       opacity: 0;
       visibility: hidden;
@@ -54,27 +53,86 @@
 
     .logo img {
       height: 90px;
-      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+      filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
     }
 
-    nav {
+    /* Nav styles extracted and adapted from portfolio */
+    .nav-menu {
+      display: flex;
+      align-items: center;
+    }
+
+    .background-navbar {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 8px;
+    }
+
+    .nav-square {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: var(--gold);
+      opacity: 0.2;
+      top: 10px;
+      left: 10px;
+    }
+
+    .nav-menu-content {
       display: flex;
       gap: 2rem;
     }
 
-    nav a {
-      color: #ccc;
+    .left-nav-menu,
+    .right-nav-menu {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .nav-link-overflow {
+      overflow: hidden;
+    }
+
+    .nav-link {
       text-decoration: none;
+      color: #ccc;
       font-weight: 500;
       font-size: 0.95rem;
       letter-spacing: 0.5px;
       transition: color 0.3s ease;
     }
 
-    nav a:hover {
+    .nav-link:hover {
       color: var(--gold);
     }
 
+    .nav-link-block {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.3s ease;
+    }
+
+    .nav-link:hover .nav-link-block {
+      transform: translateY(-100%);
+    }
+
+    .nav-text {
+      padding: 0.5rem 1rem;
+    }
+
+    .nav-text.is-hover {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      color: var(--gold);
+    }
+
+    /* Rest of original contact styles */
     .scene {
       position: absolute;
       width: 100%;
@@ -99,18 +157,18 @@
       width: 100%;
       height: 100%;
       background: var(--darker);
-      background-image: 
-        linear-gradient(45deg, rgba(255,255,255,0.02) 25%, transparent 25%),
-        linear-gradient(-45deg, rgba(255,255,255,0.02) 25%, transparent 25%),
-        linear-gradient(45deg, transparent 75%, rgba(255,255,255,0.02) 75%),
-        linear-gradient(-45deg, transparent 75%, rgba(255,255,255,0.02) 75%);
+      background-image:
+        linear-gradient(45deg, rgba(255, 255, 255, 0.02) 25%, transparent 25%),
+        linear-gradient(-45deg, rgba(255, 255, 255, 0.02) 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, rgba(255, 255, 255, 0.02) 75%),
+        linear-gradient(-45deg, transparent 75%, rgba(255, 255, 255, 0.02) 75%);
       background-size: 20px 20px;
       border: 1px solid #333;
       border-radius: 18px;
       padding: 3.2rem;
-      box-shadow: 
-        0 30px 60px rgba(0,0,0,0.7),
-        0 0 30px rgba(0,0,0,0.4) inset,
+      box-shadow:
+        0 30px 60px rgba(0, 0, 0, 0.7),
+        0 0 30px rgba(0, 0, 0, 0.4) inset,
         0 0 80px var(--glow);
       transform-style: preserve-3d;
       backface-visibility: hidden;
@@ -129,7 +187,7 @@
       z-index: 10;
       transform-origin: top;
       transform: rotateX(-100deg);
-      box-shadow: 0 8px 20px rgba(0,0,0,0.6);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
       transition: transform 0.6s ease;
     }
 
@@ -150,21 +208,21 @@
       padding: 1.1rem;
       border: 1px solid #444;
       border-radius: 12px;
-      background: rgba(30,30,30,0.9);
+      background: rgba(30, 30, 30, 0.9);
       color: white;
       font-size: 1.05rem;
       font-family: 'Inter Tight', sans-serif;
       transition: all 0.3s ease;
-      box-shadow: inset 0 2px 6px rgba(0,0,0,0.3);
+      box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.3);
     }
 
     .contact-form input:focus,
     .contact-form textarea:focus {
       outline: none;
       border-color: var(--gold);
-      box-shadow: 
+      box-shadow:
         0 0 20px var(--glow),
-        inset 0 2px 6px rgba(0,0,0,0.3);
+        inset 0 2px 6px rgba(0, 0, 0, 0.3);
       transform: translateY(-2px);
     }
 
@@ -179,10 +237,10 @@
       background: transparent;
     }
 
-    .contact-form input:focus + label,
-    .contact-form input:not(:placeholder-shown) + label,
-    .contact-form textarea:focus + label,
-    .contact-form textarea:not(:placeholder-shown) + label {
+    .contact-form input:focus+label,
+    .contact-form input:not(:placeholder-shown)+label,
+    .contact-form textarea:focus+label,
+    .contact-form textarea:not(:placeholder-shown)+label {
       top: -0.6rem;
       left: 0.9rem;
       font-size: 0.8rem;
@@ -203,7 +261,7 @@
       font-size: 1.1rem;
       cursor: pointer;
       transition: all 0.3s ease;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
       letter-spacing: 0.5px;
     }
 
@@ -224,7 +282,7 @@
       padding: 3rem;
       border-radius: 18px;
       background: var(--darker);
-      box-shadow: 0 30px 60px rgba(0,0,0,0.7);
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.7);
       transform-style: preserve-3d;
     }
 
@@ -304,16 +362,31 @@
     }
 
     @media (max-width: 768px) {
-      .envelope-wrapper { width: 92vw; height: 70vh; }
-      .envelope { padding: 2.5rem; }
-      .logo img { height: 70px; }
-      nav { gap: 1rem; }
-      nav a { font-size: 0.85rem; }
+      .envelope-wrapper {
+        width: 92vw;
+        height: 70vh;
+      }
+
+      .envelope {
+        padding: 2.5rem;
+      }
+
+      .logo img {
+        height: 70px;
+      }
+
+      nav {
+        gap: 1rem;
+      }
+
+      nav a {
+        font-size: 0.85rem;
+      }
     }
   </style>
 </head>
-<body>
 
+<body>
   <!-- Audio -->
   <audio id="whoosh" preload="auto">
     <source src="https://assets.mixkit.co/sfx/preview/mixkit-fast-rocket-whoosh-1338.mp3" type="audio/mpeg">
@@ -321,22 +394,52 @@
   <audio id="send" preload="auto">
     <source src="https://assets.mixkit.co/sfx/preview/mixkit-message-sent-1049.mp3" type="audio/mpeg">
   </audio>
-
   <header>
     <div class="logo">
       <img src="ch.png" alt="Logo">
     </div>
-    <nav>
-      <a href="main.html">Home</a>
-      <a href="about.html">About</a>
-      <a href="projects.html">Projects</a>
-      <a href="contact.html">Contact</a>
+    <nav role="navigation" id="w-node-_32a340cc-db54-e7ac-40fb-6a617fcec3f1-7fcec3e9" class="nav-menu w-nav-menu">
+      <div class="background-navbar">
+        <div class="nav-square"></div>
+      </div>
+      <div class="nav-menu-content">
+        <div class="left-nav-menu">
+          <div class="nav-link-overflow"><a href="main.html#home" data-w-id="32a340cc-db54-e7ac-40fb-6a617fcec3f7"
+              aria-current="page" class="nav-link w-inline-block w--current">
+              <div class="nav-link-block">
+                <div class="nav-text">Home</div>
+                <div class="nav-text is-hover">Home</div>
+              </div>
+            </a></div>
+          <div class="nav-link-overflow"><a href="main.html#about" data-w-id="32a340cc-db54-e7ac-40fb-6a617fcec3fe"
+              class="nav-link w-inline-block">
+              <div class="nav-link-block">
+                <div class="nav-text">About me</div>
+                <div class="nav-text is-hover">About me</div>
+              </div>
+            </a></div>
+        </div>
+        <div class="right-nav-menu">
+          <div class="nav-link-overflow"><a href="main.html#projects" data-w-id="32a340cc-db54-e7ac-40fb-6a617fcec414"
+              class="nav-link w-inline-block">
+              <div class="nav-link-block">
+                <div class="nav-text">Projects</div>
+                <div class="nav-text is-hover">Projects</div>
+              </div>
+            </a></div>
+          <div class="nav-link-overflow"><a href="contact.html" data-w-id="32a340cc-db54-e7ac-40fb-6a617fcec41b"
+              class="nav-link w-inline-block">
+              <div class="nav-link-block">
+                <div class="nav-text">Contact</div>
+                <div class="nav-text is-hover">Contact</div>
+              </div>
+            </a></div>
+        </div>
+      </div>
     </nav>
   </header>
-
   <div class="scene">
     <h1 class="title">Contact Me</h1>
-
     <div class="envelope-wrapper">
       <div class="envelope">
         <form class="contact-form" action="https://formspree.io/f/mldbvdlp" method="POST">
@@ -355,7 +458,6 @@
           <button type="submit">Send Message</button>
         </form>
       </div>
-
       <div class="thank-you">
         <div class="checkmark">Checkmark</div>
         <h2>Thank You</h2>
@@ -364,223 +466,197 @@
       </div>
     </div>
   </div>
-
   <div class="paper-plane">
     <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-      <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+      <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" />
     </svg>
   </div>
-
   <script>
-  const whoosh = document.getElementById('whoosh');
-  const send = document.getElementById('send');
-  let envelope, thankYou, wrapper, plane, header, title;
-
-  function play(sound) {
-    sound.currentTime = 0;
-    sound.play().catch(() => {});
-  }
-
-  function throttle(func, limit) {
-    let inThrottle;
-    return function() {
-      const args = arguments;
-      const context = this;
-      if (!inThrottle) {
-        func.apply(context, args);
-        inThrottle = true;
-        setTimeout(() => inThrottle = false, limit);
-      }
-    };
-  }
-
-  function resetForm() {
-    play(whoosh);
-    gsap.to(thankYou, { autoAlpha: 0, scale: 0.8, duration: 0.4 });
-    gsap.to(wrapper, {
-      scale: 0.3,
-      z: -1000,
-      rotationX: 35,
-      rotationY: -40,
-      duration: 1.4,
-      ease: "power2.inOut",
-      onComplete: () => {
-        thankYou.style.display = 'none';
-        envelope.style.display = 'block';
-        document.querySelector('.contact-form').reset();
-        flyInEnvelope();
-      }
-    });
-  }
-
-  function flyInEnvelope() {
-    gsap.fromTo(wrapper, {
-      scale: 0.25,
-      z: -1400,
-      rotationX: 45,
-      rotationY: -50,
-      autoAlpha: 0
-    }, {
-      scale: 1,
-      z: 0,
-      rotationX: 6,
-      rotationY: 0,
-      autoAlpha: 1,
-      duration: 2,
-      ease: "back.out(1.4)",
-      onStart: () => play(whoosh),
-      onComplete: () => {
-        gsap.to(header, { autoAlpha: 1, visibility: 'visible', duration: 0.6 });
-      }
-    });
-
-    gsap.fromTo(title, { y: 80, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 1.2, delay: 0.6 });
-  }
-
-  function sendMessage() {
-    play(send);
-    const rect = envelope.getBoundingClientRect();
-    const cx = rect.left + rect.width / 2;
-    const cy = rect.top + rect.height / 2;
-
-    // start smaller and centered
-    gsap.set(plane, {
-      x: cx - 45,
-      y: cy - 45,
-      rotation: 0,
-      scale: 0.55,
-      autoAlpha: 1,
-      z: 200
-    });
-
-    const tl = gsap.timeline();
-
-    // shrink envelope away
-    tl.to(envelope, {
-      scale: 0.35,
-      rotationX: -25,
-      rotationZ: -20,
-      autoAlpha: 0,
-      duration: 0.8,
-      ease: "power3.in"
-    });
-
-    // plane lift-off (subtle)
-    tl.to(plane, {
-      scale: 1.2,
-      rotation: -25,
-      duration: 0.6,
-      ease: "back.out(2)"
-    }, "-=0.6");
-
-    // fly toward viewer
-    tl.to(plane, {
-      z: 800,
-      scale: 2.2, // smaller than old 5x
-      rotationX: 25,
-      duration: 0.9,
-      ease: "power2.out"
-    }, "-=0.4");
-
-    // exit to top-right
-    tl.to(plane, {
-      x: window.innerWidth + 200,
-      y: -250,
-      rotation: 65,
-      scale: 1,
-      autoAlpha: 0,
-      duration: 1.8,
-      ease: "power1.out"
-    }, "-=0.5");
-
-    // show thank you
-    tl.call(() => {
-      envelope.style.display = 'none';
-      thankYou.style.display = 'flex';
-      gsap.fromTo(thankYou, { autoAlpha: 0, scale: 0.8 }, { autoAlpha: 1, scale: 1, duration: 0.7, ease: "back.out(1.8)" });
-      createConfetti();
-    });
-  }
-
-  function createConfetti() {
-    for (let i = 0; i < 20; i++) {
-      const c = document.createElement('div');
-      c.className = 'confetti';
-      c.style.left = Math.random() * 100 + '%';
-      c.style.background = `hsl(${30 + Math.random() * 40}, 80%, 60%)`;
-      thankYou.appendChild(c);
-
-      gsap.fromTo(c, {
-        y: -120,
-        autoAlpha: 1,
-        scale: 0.6 + Math.random() * 0.6,
-        rotation: Math.random() * 360
-      }, {
-        y: 500,
-        autoAlpha: 0,
-        rotation: '+=360',
-        duration: 1.8 + Math.random() * 0.8,
-        ease: "power2.out",
-        delay: Math.random() * 0.5,
-        onComplete: () => c.remove()
+    const whoosh = document.getElementById('whoosh');
+    const send = document.getElementById('send');
+    let envelope, thankYou, wrapper, plane, header, title;
+    function play(sound) {
+      sound.currentTime = 0;
+      sound.play().catch(() => { });
+    }
+    function throttle(func, limit) {
+      let inThrottle;
+      return function () {
+        const args = arguments;
+        const context = this;
+        if (!inThrottle) {
+          func.apply(context, args);
+          inThrottle = true;
+          setTimeout(() => inThrottle = false, limit);
+        }
+      };
+    }
+    function resetForm() {
+      play(whoosh);
+      gsap.to(thankYou, { autoAlpha: 0, scale: 0.8, duration: 0.4 });
+      gsap.to(wrapper, {
+        scale: 0.3,
+        z: -1000,
+        rotationX: 35,
+        rotationY: -40,
+        duration: 1.4,
+        ease: "power2.inOut",
+        onComplete: () => {
+          thankYou.style.display = 'none';
+          envelope.style.display = 'block';
+          document.querySelector('.contact-form').reset();
+          flyInEnvelope();
+        }
       });
     }
-  }
-
-  document.addEventListener("DOMContentLoaded", () => {
-    envelope = document.querySelector('.envelope');
-    thankYou = document.querySelector('.thank-you');
-    wrapper = document.querySelector('.envelope-wrapper');
-    plane = document.querySelector('.paper-plane');
-    header = document.querySelector('header');
-    title = document.querySelector('.title');
-
-    flyInEnvelope();
-
-    // 3D hover tilt (throttled for performance)
-    const handleTilt = (e) => {
-      const rect = wrapper.getBoundingClientRect();
-      const x = (e.clientX - rect.left) / rect.width - 0.5;
-      const y = (e.clientY - rect.top) / rect.height - 0.5;
-      gsap.to(wrapper, {
-        rotationY: x * 18,
-        rotationX: -y * 12 + 6,
-        duration: 0.7,
-        ease: "power2.out"
-      });
-    };
-
-    const throttledTilt = throttle(handleTilt, 16); // ~60fps
-
-    wrapper.addEventListener('mousemove', throttledTilt);
-
-    wrapper.addEventListener('mouseleave', () => {
-      gsap.to(wrapper, { rotationY: 0, rotationX: 6, duration: 0.9, ease: "power2.out" });
-    });
-
-    // Form submit
-    document.querySelector('.contact-form').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const formData = new FormData(e.target);
-
-      try {
-        const res = await fetch(e.target.action, {
-          method: 'POST',
-          body: formData,
-          headers: { 'Accept': 'application/json' }
-        });
-
-        if (res.ok) {
-          sendMessage();
-        } else {
-          alert("Failed. Try again.");
+    function flyInEnvelope() {
+      gsap.fromTo(wrapper, {
+        scale: 0.25,
+        z: -1400,
+        rotationX: 45,
+        rotationY: -50,
+        autoAlpha: 0
+      }, {
+        scale: 1,
+        z: 0,
+        rotationX: 6,
+        rotationY: 0,
+        autoAlpha: 1,
+        duration: 2,
+        ease: "back.out(1.4)",
+        onStart: () => play(whoosh),
+        onComplete: () => {
+          gsap.to(header, { autoAlpha: 1, visibility: 'visible', duration: 0.6 });
         }
-      } catch (err) {
-        alert("Network error.");
+      });
+      gsap.fromTo(title, { y: 80, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 1.2, delay: 0.6 });
+    }
+    function sendMessage() {
+      play(send);
+      const rect = envelope.getBoundingClientRect();
+      const cx = rect.left + rect.width / 2;
+      const cy = rect.top + rect.height / 2;
+      // start smaller and centered
+      gsap.set(plane, {
+        x: cx - 45,
+        y: cy - 45,
+        rotation: 0,
+        scale: 0.55,
+        autoAlpha: 1,
+        z: 200
+      });
+      const tl = gsap.timeline();
+      // shrink envelope away
+      tl.to(envelope, {
+        scale: 0.35,
+        rotationX: -25,
+        rotationZ: -20,
+        autoAlpha: 0,
+        duration: 0.8,
+        ease: "power3.in"
+      });
+      // plane lift-off (subtle)
+      tl.to(plane, {
+        scale: 1.2,
+        rotation: -25,
+        duration: 0.6,
+        ease: "back.out(2)"
+      }, "-=0.6");
+      // fly toward viewer
+      tl.to(plane, {
+        z: 800,
+        scale: 2.2, // smaller than old 5x
+        rotationX: 25,
+        duration: 0.9,
+        ease: "power2.out"
+      }, "-=0.4");
+      // exit to top-right
+      tl.to(plane, {
+        x: window.innerWidth + 200,
+        y: -250,
+        rotation: 65,
+        scale: 1,
+        autoAlpha: 0,
+        duration: 1.8,
+        ease: "power1.out"
+      }, "-=0.5");
+      // show thank you
+      tl.call(() => {
+        envelope.style.display = 'none';
+        thankYou.style.display = 'flex';
+        gsap.fromTo(thankYou, { autoAlpha: 0, scale: 0.8 }, { autoAlpha: 1, scale: 1, duration: 0.7, ease: "back.out(1.8)" });
+        createConfetti();
+      });
+    }
+    function createConfetti() {
+      for (let i = 0; i < 20; i++) {
+        const c = document.createElement('div');
+        c.className = 'confetti';
+        c.style.left = Math.random() * 100 + '%';
+        c.style.background = `hsl(${30 + Math.random() * 40}, 80%, 60%)`;
+        thankYou.appendChild(c);
+        gsap.fromTo(c, {
+          y: -120,
+          autoAlpha: 1,
+          scale: 0.6 + Math.random() * 0.6,
+          rotation: Math.random() * 360
+        }, {
+          y: 500,
+          autoAlpha: 0,
+          rotation: '+=360',
+          duration: 1.8 + Math.random() * 0.8,
+          ease: "power2.out",
+          delay: Math.random() * 0.5,
+          onComplete: () => c.remove()
+        });
       }
+    }
+    document.addEventListener("DOMContentLoaded", () => {
+      envelope = document.querySelector('.envelope');
+      thankYou = document.querySelector('.thank-you');
+      wrapper = document.querySelector('.envelope-wrapper');
+      plane = document.querySelector('.paper-plane');
+      header = document.querySelector('header');
+      title = document.querySelector('.title');
+      flyInEnvelope();
+      // 3D hover tilt (throttled for performance)
+      const handleTilt = (e) => {
+        const rect = wrapper.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / rect.width - 0.5;
+        const y = (e.clientY - rect.top) / rect.height - 0.5;
+        gsap.to(wrapper, {
+          rotationY: x * 18,
+          rotationX: -y * 12 + 6,
+          duration: 0.7,
+          ease: "power2.out"
+        });
+      };
+      const throttledTilt = throttle(handleTilt, 16); // ~60fps
+      wrapper.addEventListener('mousemove', throttledTilt);
+      wrapper.addEventListener('mouseleave', () => {
+        gsap.to(wrapper, { rotationY: 0, rotationX: 6, duration: 0.9, ease: "power2.out" });
+      });
+      // Form submit
+      document.querySelector('.contact-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const formData = new FormData(e.target);
+        try {
+          const res = await fetch(e.target.action, {
+            method: 'POST',
+            body: formData,
+            headers: { 'Accept': 'application/json' }
+          });
+          if (res.ok) {
+            sendMessage();
+          } else {
+            alert("Failed. Try again.");
+          }
+        } catch (err) {
+          alert("Network error.");
+        }
+      });
     });
-  });
-</script>
-
+  </script>
 </body>
+
 </html>

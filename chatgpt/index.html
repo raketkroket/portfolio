@@ -1,213 +1,171 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Imperial+Script&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Lexend+Mega:wght@100..900&family=Lexend:wght@100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Poiret+One&family=Source+Sans+3:ital,wght@0,200..900;1,200..900&family=Tinos:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CHAS</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CHAS- Loading</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
 
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #5a4b40;
-            color: #fff;
-            overflow: hidden;
-        }
-
-        .loading-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: #433933;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 9999;
-            transition: opacity 0.8s ease-out;
-            padding: 2rem;
-        }
-
-        .loading-overlay.fade-out {
-            opacity: 0;
-        }
-
-        .top-decor {
-            display: flex;
-            justify-content: space-between;
-            width: 100%;
-            max-width: 800px;
-            font-size: 1.2rem;
-            font-weight: 300;
-            letter-spacing: 0.5em; /* Elegant wide spacing */
-            opacity: 0;
-            animation: fadeSlideUp 0.6s ease-out 0.3s forwards;
-        }
-
-        .name-title {
-            font-size: 4.5rem; /* Adjust for screen size */
-            font-weight: 900;
-            text-transform: uppercase;
-            letter-spacing: 0.3em; /* Elegant kerning */
-            text-align: center;
-            margin: 2rem 0;
-  font-family: "Imperial Script", cursive;
-  font-weight: 400;
+      @font-face {
+  font-family: 'Nalieta';
+  src: url('/chatgpt/nalieta.otf') format('opentype');
+  font-weight: normal;
   font-style: normal;
+}
+      body {
+        font-family: 'Inter', sans-serif;
+        margin: 0;
+        padding: 0;
+        min-height: 100vh;
+      }
 
+      #app-loading {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: #000;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        z-index: 10000;
+        transition: opacity 0.5s ease;
+      }
 
-            opacity: 0;
-            animation: fadeSlideUp 0.8s ease-out 0.8s forwards;
+      #app-loading.fade-out {
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      .loading-logo {
+        width: clamp(120px, 20vw, 200px);
+        height: auto;
+        margin-bottom: 60px;
+      }
+
+      .loading-words {
+        position: relative;
+        height: 50px;
+        margin-bottom: 40px;
+      }
+
+      .loading-word {
+        position: absolute;
+        top: 10%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-family: 'nalieta', sans-serif;
+        font-size: clamp(40px, 7vw, 70px);
+        font-weight: 200;
+        color: #fff;
+        letter-spacing: -0.02em;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+
+      .loading-word.visible {
+        opacity: 0.3;
+      }
+
+      .loading-bar-container {
+        width: 280px;
+        height: 2px;
+        background: #333;
+        border-radius: 2px;
+        overflow: hidden;
+        margin-bottom: 12px;
+      }
+
+      .loading-bar {
+        width: 0%;
+        height: 100%;
+        background: #fff;
+        transition: width 0.3s ease;
+      }
+
+      .loading-percentage {
+        font-family: 'Inter', sans-serif;
+        font-size: 12px;
+        font-weight: 300;
+        letter-spacing: 2px;
+        color: #666;
+      }
+
+      @media (max-width: 640px) {
+        .loading-bar-container {
+          width: 200px;
         }
-
-        .progress-circle {
-            width: 200px;
-            height: 200px;
-            border-radius: 50%;
-            border: 4px solid rgba(206, 172, 146, 0.1); /* Subtle ring */
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            opacity: 0;
-            animation: fadeSlideUp 0.6s ease-out 1.2s forwards;
+        .loading-words {
+          height: 60px;
         }
-
-        .progress-inner {
-            width: 140px;
-            height: 140px;
-            border-radius: 50%;
-            background-color: #a9927e4f;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 3rem;
-            font-weight: 700;
-            color: #fff;
-        }
-
-        .subtitle {
-            font-size: 1.5rem;
-            font-weight: 400;
-            text-transform: uppercase;
-            letter-spacing: 0.2em;
-            text-align: center;
-            margin: 1rem 0;
-            opacity: 0;
-            animation: fadeSlideUp 0.6s ease-out 1.6s forwards;
-        }
-
-        .description {
-            font-size: 1rem;
-            font-weight: 300;
-            text-align: center;
-            max-width: 600px;
-            line-height: 1.6;
-            letter-spacing: 0.05em; /* Subtle elegance */
-            opacity: 0;
-            animation: fadeSlideUp 0.6s ease-out 2s forwards;
-        }
-
-        @keyframes fadeSlideUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .top-decor {
-                font-size: 1rem;
-                letter-spacing: 0.3em;
-            }
-            .name-title {
-                font-size: 3rem;
-                letter-spacing: 0.2em;
-            }
-            .progress-circle {
-                width: 150px;
-                height: 150px;
-            }
-            .progress-inner {
-                width: 100px;
-                height: 100px;
-                font-size: 2rem;
-            }
-            .subtitle {
-                font-size: 1.2rem;
-            }
-            .description {
-                font-size: 0.9rem;
-                padding: 0 1rem;
-            }
-        }
+      }
     </style>
-</head>
-<body>
-    <div id="loading-overlay" class="loading-overlay">
-        <div class="top-decor">
-            <span>( 2025</span>
-            <span>25 )</span>
-        </div>
-        
-        <h1 class="name-title">2025</h1>
-        
-        <div class="progress-circle">
-            <div class="progress-inner">
-                <span id="percentage">0%</span>
-            </div>
-        </div>
-        
-        <h2 class="subtitle">PORTFOLIO</h2>
-        
-        
+  </head>
+  
+  <body>
+    <div id="app-loading">
+      <img src="/chatgpt/Ch.png" alt="CHAS" class="loading-logo"> <!-- Note: Place your ch.png image in the same folder -->
+      <div class="loading-words">
+        <div class="loading-word visible">hello</div>
+        <div class="loading-word">bonjour</div>
+        <div class="loading-word">hola</div>
+        <div class="loading-word">ciao</div>
+        <div class="loading-word">hallo</div>
+        <div class="loading-word">你好</div>
+        <div class="loading-word">こんにちは</div>
+        <div class="loading-word">مرحبًا</div>
+        <div class="loading-word">olá</div>
+        <div class="loading-word">привет</div>
+      </div>
+      <div class="loading-bar-container">
+        <div class="loading-bar"></div>
+      </div>
+      <div class="loading-percentage">0%</div>
     </div>
-
-    <!-- Your main content here (hidden until load) -->
-    <div id="main-content" style="display: none;">
-        <!-- Page content goes here -->
-    </div>
-
+   
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const overlay = document.getElementById('loading-overlay');
-            const percentageEl = document.getElementById('percentage');
-            const mainContent = document.getElementById('main-content');
-            
-            let progress = 0;
-            const interval = setInterval(() => {
-                progress += Math.random() * 5; // Smooth increment
-                if (progress > 100) progress = 100;
-                
-                percentageEl.textContent = Math.floor(progress) + '%';
-                
-                if (progress >= 100) {
-                    clearInterval(interval);
-                    setTimeout(() => {
-                        overlay.classList.add('fade-out');
-                        mainContent.style.display = 'block';
-                        setTimeout(() => {
-                            overlay.remove();
-                        }, 800);
-                    }, 300); // Brief pause at 100%
-                }
-            }, 70); // ~2-3 second load
-        });
+      const loadingBar = document.querySelector('.loading-bar');
+      const loadingPercentage = document.querySelector('.loading-percentage');
+      const appLoading = document.getElementById('app-loading');
+      const words = document.querySelectorAll('.loading-word');
+
+      let currentWordIndex = 0;
+      let progress = 0;
+      const duration = 2000;
+      const interval = 20;
+      const increment = 100 / (duration / interval);
+
+      const wordTimer = setInterval(() => {
+        words[currentWordIndex].classList.remove('visible');
+        currentWordIndex = (currentWordIndex + 1) % words.length;
+        words[currentWordIndex].classList.add('visible');
+      }, 300);
+
+      const timer = setInterval(() => {
+        progress += increment;
+        if (progress >= 100) {
+          progress = 100;
+          clearInterval(timer);
+          clearInterval(wordTimer);
+          loadingBar.style.width = '100%';
+          loadingPercentage.textContent = '100%';
+
+          setTimeout(() => {
+            appLoading.classList.add('fade-out');
+            setTimeout(() => {
+              // Redirect to main.html after fade-out completes
+              window.location.href = 'main.html';
+            }, 500);
+          }, 300);
+        } else {
+          loadingBar.style.width = progress + '%';
+          loadingPercentage.textContent = Math.round(progress) + '%';
+        }
+      }, interval);
     </script>
-</body>
+  </body>
 </html>
