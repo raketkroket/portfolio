@@ -6,11 +6,17 @@
   <title>CONTACT</title>
   <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter+Tight:wght@300;400;500;600;700&display=swap"
     rel="stylesheet">
+    <meta property="og:type" content="website" />
+    <meta content="summary_large_image" name="twitter:card" />
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <meta content="Webflow" name="generator" />
+    <link href="https://cdn.prod.website-files.com/68e5aa4fcd20192116e3d367/css/craflow.webflow.shared.b431a5076.css"
+        rel="stylesheet" type="text/css" />
   <!-- GSAP -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <style>
     :root {
-      --gold: #6e6b61;
+      --gold: #c96ab0;
       --dark: #0a0a0a;
       --darker: #111;
       --light-gray: #888;
@@ -43,7 +49,8 @@
       padding: 1.8rem 2.5rem;
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      justify-content: center;
+      position: relative;
       background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8), transparent);
       backdrop-filter: blur(8px);
       opacity: 0;
@@ -57,9 +64,21 @@
     }
 
     /* Nav styles extracted and adapted from portfolio */
-    .nav-menu {
+    .left-nav-menu-wrapper,
+    .right-nav-menu-wrapper {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
       display: flex;
       align-items: center;
+    }
+
+    .left-nav-menu-wrapper {
+      left: 2.5rem;
+    }
+
+    .right-nav-menu-wrapper {
+      right: 2.5rem;
     }
 
     .background-navbar {
@@ -82,15 +101,12 @@
       left: 10px;
     }
 
-    .nav-menu-content {
-      display: flex;
-      gap: 2rem;
-    }
-
     .left-nav-menu,
     .right-nav-menu {
       display: flex;
       gap: 1rem;
+      position: relative;
+      z-index: 1;
     }
 
     .nav-link-overflow {
@@ -110,27 +126,7 @@
       color: var(--gold);
     }
 
-    .nav-link-block {
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      transition: transform 0.3s ease;
-    }
-
-    .nav-link:hover .nav-link-block {
-      transform: translateY(-100%);
-    }
-
-    .nav-text {
-      padding: 0.5rem 1rem;
-    }
-
-    .nav-text.is-hover {
-      position: absolute;
-      top: 100%;
-      left: 0;
-      color: var(--gold);
-    }
+    
 
     /* Rest of original contact styles */
     .scene {
@@ -312,7 +308,7 @@
       justify-content: center;
       margin-bottom: 1.5rem;
       font-size: 3rem;
-      color: black;
+      color: white;
       font-weight: bold;
       box-shadow: 0 0 30px var(--glow);
     }
@@ -383,6 +379,29 @@
         font-size: 0.85rem;
       }
     }
+
+    .navbar {
+  position: fixed !important; /* Ensures stickiness overrides any Webflow quirks */
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000; /* High to stay on top */
+  transition: box-shadow 0.6s ease; /* Smooth shadow add */
+}
+
+.navbar.scrolled {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.324); /* Subtle shadow when scrolled */
+}
+html {
+  scroll-behavior: smooth; /* Enables smooth scroll for anchor links */
+}
+
+/* Optional: Custom easing for smoother feel */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-padding-top: 80px; /* Offset for fixed nav height (adjust if needed) */
+  }
+}
   </style>
 </head>
 
@@ -395,48 +414,51 @@
     <source src="https://assets.mixkit.co/sfx/preview/mixkit-message-sent-1049.mp3" type="audio/mpeg">
   </audio>
   <header>
-    <div class="logo">
-      <img src="ch.png" alt="Logo">
-    </div>
-    <nav role="navigation" id="w-node-_32a340cc-db54-e7ac-40fb-6a617fcec3f1-7fcec3e9" class="nav-menu w-nav-menu">
+    <div class="left-nav-menu-wrapper">
       <div class="background-navbar">
         <div class="nav-square"></div>
       </div>
-      <div class="nav-menu-content">
-        <div class="left-nav-menu">
-          <div class="nav-link-overflow"><a href="main.html#home" data-w-id="32a340cc-db54-e7ac-40fb-6a617fcec3f7"
-              aria-current="page" class="nav-link w-inline-block w--current">
-              <div class="nav-link-block">
-                <div class="nav-text">Home</div>
-                <div class="nav-text is-hover">Home</div>
-              </div>
-            </a></div>
-          <div class="nav-link-overflow"><a href="main.html#about" data-w-id="32a340cc-db54-e7ac-40fb-6a617fcec3fe"
-              class="nav-link w-inline-block">
-              <div class="nav-link-block">
-                <div class="nav-text">About me</div>
-                <div class="nav-text is-hover">About me</div>
-              </div>
-            </a></div>
-        </div>
-        <div class="right-nav-menu">
-          <div class="nav-link-overflow"><a href="main.html#projects" data-w-id="32a340cc-db54-e7ac-40fb-6a617fcec414"
-              class="nav-link w-inline-block">
-              <div class="nav-link-block">
-                <div class="nav-text">Projects</div>
-                <div class="nav-text is-hover">Projects</div>
-              </div>
-            </a></div>
-          <div class="nav-link-overflow"><a href="contact.html" data-w-id="32a340cc-db54-e7ac-40fb-6a617fcec41b"
-              class="nav-link w-inline-block">
-              <div class="nav-link-block">
-                <div class="nav-text">Contact</div>
-                <div class="nav-text is-hover">Contact</div>
-              </div>
-            </a></div>
-        </div>
+      <div class="left-nav-menu">
+        <div class="nav-link-overflow"><a href="main.html#home" data-w-id="32a340cc-db54-e7ac-40fb-6a617fcec3f7"
+            class="nav-link w-inline-block">
+            <div class="nav-link-block">
+              <div class="nav-text">Home</div>
+              <div class="nav-text is-hover">Home</div>
+            </div>
+          </a></div>
+        <div class="nav-link-overflow"><a href="main.html#about" data-w-id="32a340cc-db54-e7ac-40fb-6a617fcec3fe"
+            class="nav-link w-inline-block">
+            <div class="nav-link-block">
+              <div class="nav-text">About me</div>
+              <div class="nav-text is-hover">About me</div>
+            </div>
+          </a></div>
       </div>
-    </nav>
+    </div>
+    <div class="logo">
+      <img src="ch.png" alt="Logo">
+    </div>
+    <div class="right-nav-menu-wrapper">
+      <div class="background-navbar">
+        <div class="nav-square"></div>
+      </div>
+      <div class="right-nav-menu">
+        <div class="nav-link-overflow"><a href="main.html#projects" data-w-id="32a340cc-db54-e7ac-40fb-6a617fcec414"
+            class="nav-link w-inline-block">
+            <div class="nav-link-block">
+              <div class="nav-text">Projects</div>
+              <div class="nav-text is-hover">Projects</div>
+            </div>
+          </a></div>
+        <div class="nav-link-overflow"><a href="contact.html" data-w-id="32a340cc-db54-e7ac-40fb-6a617fcec41b"
+            aria-current="page" class="nav-link w-inline-block w--current">
+            <div class="nav-link-block">
+              <div class="nav-text">Contact</div>
+              <div class="nav-text is-hover">Contact</div>
+            </div>
+          </a></div>
+      </div>
+    </div>
   </header>
   <div class="scene">
     <h1 class="title">Contact Me</h1>
@@ -459,10 +481,10 @@
         </form>
       </div>
       <div class="thank-you">
-        <div class="checkmark">Checkmark</div>
+        <div class="checkmark">&#10004;</div>
         <h2>Thank You</h2>
         <p>Your message has been sent!</p>
-        <button onclick="resetForm()">Send Another</button>
+        
       </div>
     </div>
   </div>
@@ -471,6 +493,25 @@
       <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" />
     </svg>
   </div>
+  <script src="https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=68e5aa4fcd20192116e3d367"
+        type="text/javascript" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.prod.website-files.com/68e5aa4fcd20192116e3d367/js/webflow.schunk.36b8fb49256177c8.js"
+        type="text/javascript"></script>
+    <script src="https://cdn.prod.website-files.com/68e5aa4fcd20192116e3d367/js/webflow.schunk.82f44582d86d1ea9.js"
+        type="text/javascript"></script>
+    <script src="https://cdn.prod.website-files.com/68e5aa4fcd20192116e3d367/js/webflow.schunk.f47e3a00747cd9e0.js"
+        type="text/javascript"></script>
+    <script src="https://cdn.prod.website-files.com/68e5aa4fcd20192116e3d367/js/webflow.2f7ec43a.68c66abe2a35965a.js"
+        type="text/javascript"></script>
+
+    <script>
+window.addEventListener('scroll', () => {
+  const navbar = document.querySelector('.navbar');
+  navbar.classList.toggle('scrolled', window.scrollY > 50);
+});
+</script>
+
   <script>
     const whoosh = document.getElementById('whoosh');
     const send = document.getElementById('send');
@@ -586,6 +627,15 @@
         thankYou.style.display = 'flex';
         gsap.fromTo(thankYou, { autoAlpha: 0, scale: 0.8 }, { autoAlpha: 1, scale: 1, duration: 0.7, ease: "back.out(1.8)" });
         createConfetti();
+        gsap.to(title, { autoAlpha: 0, duration: 0.5 });
+        setTimeout(() => {
+          gsap.to(document.body, { 
+            autoAlpha: 0, 
+            duration: 1, 
+            ease: "power2.inOut",
+            onComplete: () => { window.location.href = 'main.html'; } 
+          });
+        }, 3000);
       });
     }
     function createConfetti() {
