@@ -1,563 +1,586 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>CONTACT</title>
-    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter+Tight:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-      * {
-        box-sizing: border-box;
-        user-select: none;
-        margin: 0;
-        padding: 0;
-      }
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CONTACT</title>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter+Tight:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 
-      body {
-        height: 100vh;
-        background: black;
-        font-family: 'Inter Tight', sans-serif;
-        color: white;
-        text-transform: uppercase;
-        overflow: hidden;
-      }
+  <style>
+    :root {
+      --gold: #6e6b61;
+      --dark: #0a0a0a;
+      --darker: #111;
+      --light-gray: #888;
+      --glow: rgba(169, 162, 137, 0.3);
+    }
 
-      header {
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        z-index: 50;
-        padding: 1.5rem 2rem;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        background: rgba(0, 0, 0, 0.5);
-        backdrop-filter: blur(4px);
-        opacity: 0;
-        visibility: hidden;
-      }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      user-select: none;
+    }
 
-      .logo img {
-        height: 120px;
-      }
+    body {
+      height: 100vh;
+      background: var(--dark);
+      font-family: 'Inter Tight', sans-serif;
+      color: white;
+      overflow: hidden;
+      perspective: 1800px;
+      background: radial-gradient(circle at center, #111 0%, #000 100%);
+    }
 
-      nav {
-        display: flex;
-        align-items: center;
-        gap: 1.5rem;
-      }
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 1.8rem 2.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.8), transparent);
+      backdrop-filter: blur(8px);
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.4s ease;
+    }
 
-      nav a {
-        font-size: 0.875rem;
-        font-family: 'Inter Tight', sans-serif;
-        color: white;
-        text-decoration: none;
-        transition: color 0.3s ease;
-      }
+    .logo img {
+      height: 90px;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+    }
 
-      nav a:hover {
-        color: hsl(48, 94%, 68%);
-      }
+    nav {
+      display: flex;
+      gap: 2rem;
+    }
 
-      section {
-        position: fixed;
-        height: 100%;
-        width: 100%;
-        top: 0;
-        visibility: hidden;
-      }
+    nav a {
+      color: #ccc;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.95rem;
+      letter-spacing: 0.5px;
+      transition: color 0.3s ease;
+    }
 
-      .outer, .inner {
-        width: 100%;
-        height: 100%;
-        overflow-y: hidden;
-      }
+    nav a:hover {
+      color: var(--gold);
+    }
 
-      .bg {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        top: 0;
-        background-size: cover;
-        background-position: center;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-direction: column;
-        overflow: hidden;
-      }
+    .scene {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transform-style: preserve-3d;
+    }
 
-      .bg::before {
-        content: '';
-        position: absolute;
-        width: 200%;
-        height: 200%;
-        background: radial-gradient(circle, rgba(255,255,255,0.05) 2%, transparent 2.5%);
-        background-size: 20px 20px;
-        animation: driftBackground 20s linear infinite;
-        opacity: 0.3;
-      }
+    .envelope-wrapper {
+      transform-style: preserve-3d;
+      width: 650px;
+      height: 460px;
+      max-width: 92vw;
+      opacity: 0;
+      will-change: transform;
+    }
 
-      @keyframes driftBackground {
-        0% { transform: translate(0, 0); }
-        100% { transform: translate(-50%, -50%); }
-      }
+    .envelope {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: var(--darker);
+      background-image: 
+        linear-gradient(45deg, rgba(255,255,255,0.02) 25%, transparent 25%),
+        linear-gradient(-45deg, rgba(255,255,255,0.02) 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, rgba(255,255,255,0.02) 75%),
+        linear-gradient(-45deg, transparent 75%, rgba(255,255,255,0.02) 75%);
+      background-size: 20px 20px;
+      border: 1px solid #333;
+      border-radius: 18px;
+      padding: 3.2rem;
+      box-shadow: 
+        0 30px 60px rgba(0,0,0,0.7),
+        0 0 30px rgba(0,0,0,0.4) inset,
+        0 0 80px var(--glow);
+      transform-style: preserve-3d;
+      backface-visibility: hidden;
+      transition: box-shadow 0.4s ease;
+    }
 
-      h2.section-heading {
-        font-size: clamp(1rem, 5vw, 5rem);
-        font-weight: 400;
-        text-align: center;
-        letter-spacing: 0.5em;
-        margin-bottom: 2rem;
-        color: hsl(0, 0%, 100%);
-        font-family: 'Anton', sans-serif;
-      }
+    .envelope::before {
+      content: '';
+      position: absolute;
+      top: -38px;
+      left: 0;
+      right: 0;
+      height: 38px;
+      background: linear-gradient(180deg, #444 0%, #222 100%);
+      clip-path: polygon(0 100%, 50% 0, 100% 100%);
+      z-index: 10;
+      transform-origin: top;
+      transform: rotateX(-100deg);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.6);
+      transition: transform 0.6s ease;
+    }
 
-      .contact .bg {
-        background-color: black;
-        padding: 2em;
-      }
+    .contact-form {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      z-index: 2;
+    }
 
-      .contact-content {
-        max-width: 600px;
-        width: 100%;
-        text-align: center;
-        position: relative;
-        z-index: 2;
-      }
+    .form-group {
+      position: relative;
+    }
 
-      .envelope {
-        position: relative;
-        background: #111 url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAAG0lEQVQYV2NkYGD4z8DAwMgABXAGNgGwSgwVAFbmAgXQdTBAQAAAABJRU5ErkJggg==') repeat;
-        border: 1px solid #333;
-        border-radius: 10px;
-        padding: 2em;
-        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2), 
-                    0 0 10px rgba(0, 0, 0, 0.1) inset;
-        transform: perspective(1000px) rotateX(5deg);
-        transition: transform 0.3s ease;
-        max-width: 500px;
-        margin: 0 auto;
-      }
+    .contact-form input,
+    .contact-form textarea {
+      width: 100%;
+      padding: 1.1rem;
+      border: 1px solid #444;
+      border-radius: 12px;
+      background: rgba(30,30,30,0.9);
+      color: white;
+      font-size: 1.05rem;
+      font-family: 'Inter Tight', sans-serif;
+      transition: all 0.3s ease;
+      box-shadow: inset 0 2px 6px rgba(0,0,0,0.3);
+    }
 
-      .envelope::before {
-        content: '';
-        position: absolute;
-        top: -20px;
-        left: 0;
-        right: 0;
-        height: 20px;
-        background: linear-gradient(180deg, #333 0%, #111 100%);
-        clip-path: polygon(0 100%, 50% 0, 100% 100%);
-        z-index: 1;
-        transform-origin: top;
-      }
+    .contact-form input:focus,
+    .contact-form textarea:focus {
+      outline: none;
+      border-color: var(--gold);
+      box-shadow: 
+        0 0 20px var(--glow),
+        inset 0 2px 6px rgba(0,0,0,0.3);
+      transform: translateY(-2px);
+    }
 
-      .contact-form {
-        display: flex;
-        flex-direction: column;
-        gap: 1.5em;
-        position: relative;
-        z-index: 2;
-      }
+    .contact-form label {
+      position: absolute;
+      top: 1.1rem;
+      left: 1.1rem;
+      font-size: 1rem;
+      color: var(--light-gray);
+      pointer-events: none;
+      transition: all 0.3s ease;
+      background: transparent;
+    }
 
-      .form-group {
-        position: relative;
-      }
+    .contact-form input:focus + label,
+    .contact-form input:not(:placeholder-shown) + label,
+    .contact-form textarea:focus + label,
+    .contact-form textarea:not(:placeholder-shown) + label {
+      top: -0.6rem;
+      left: 0.9rem;
+      font-size: 0.8rem;
+      color: var(--gold);
+      background: var(--darker);
+      padding: 0 0.5rem;
+      font-weight: 500;
+    }
 
-      .contact-form input,
-      .contact-form textarea {
-        width: 100%;
-        padding: 0.75em;
-        border: none;
-        border-radius: 0.5em;
-        font-size: 1rem;
-        background-color: #222;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1) inset;
-        transition: transform 0.2s ease, box-shadow 0.2s ease;
-        animation: pulseGlow 2s infinite ease-in-out;
-        color: white;
-      }
+    .contact-form button {
+      margin-top: 1rem;
+      padding: 1.1rem;
+      background: white;
+      color: black;
+      border: none;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+      letter-spacing: 0.5px;
+    }
 
-      @keyframes pulseGlow {
-        0%, 100% { box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1) inset; }
-        50% { box-shadow: 0 2px 10px rgba(247, 209, 84, 0.2) inset, 0 0 5px rgba(247, 209, 84, 0.2); }
-      }
+    .contact-form button:hover {
+      background: var(--gold);
+      transform: translateY(-4px);
+      box-shadow: 0 15px 35px rgba(250, 204, 21, 0.4);
+    }
 
-      .contact-form input:focus,
-      .contact-form textarea:focus {
-        outline: none;
-        transform: scale(1.02);
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15) inset;
-        animation: none;
-      }
+    .thank-you {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+      text-align: center;
+      padding: 3rem;
+      border-radius: 18px;
+      background: var(--darker);
+      box-shadow: 0 30px 60px rgba(0,0,0,0.7);
+      transform-style: preserve-3d;
+    }
 
-      .contact-form label {
-        position: absolute;
-        top: 0.75em;
-        left: 0.75em;
-        font-size: 1rem;
-        color: rgb(141, 141, 141);
-        transition: all 0.2s ease;
-        pointer-events: none;
-      }
+    .thank-you h2 {
+      font-family: 'Anton', sans-serif;
+      font-size: clamp(2.5rem, 7vw, 4.5rem);
+      letter-spacing: 0.3em;
+      margin-bottom: 1rem;
+      background: linear-gradient(to right, #fff, var(--gold));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
 
-      .contact-form input:focus + label,
-      .contact-form input:not(:placeholder-shown) + label,
-      .contact-form textarea:focus + label,
-      .contact-form textarea:not(:placeholder-shown) + label {
-        top: -0.5em;
-        left: 0.5em;
-        font-size: 0.8rem;
-        color: hsl(48, 94%, 68%);
-      }
+    .thank-you p {
+      font-size: 1.3rem;
+      color: #ccc;
+      margin-bottom: 2rem;
+    }
 
-      .contact-form button {
-        padding: 0.75em;
-        border: none;
-        background: white;
-        color: black;
-        font-weight: bold;
-        border-radius: 0.5em;
-        cursor: pointer;
-        transition: background 0.3s ease, transform 0.2s ease;
-      }
+    .checkmark {
+      width: 90px;
+      height: 90px;
+      background: var(--gold);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+      font-size: 3rem;
+      color: black;
+      font-weight: bold;
+      box-shadow: 0 0 30px var(--glow);
+    }
 
-      .contact-form button:hover {
-        background: hsl(48, 94%, 68%);
-        transform: translateY(-2px);
-      }
+    .confetti {
+      position: absolute;
+      width: 14px;
+      height: 14px;
+      background: var(--gold);
+      border-radius: 50%;
+      pointer-events: none;
+      opacity: 0;
+      will-change: transform;
+    }
 
-      .thank-you {
-        display: none;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        max-width: 500px;
-        width: 100%;
-        text-align: center;
-        padding: 2em;
-        background: #111 url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAAG0lEQVQYV2NkYGD4z8DAwMgABXAGNgGwSgwVAFbmAgXQdTBAQAAAABJRU5ErkJggg==') repeat;
-        border: 1px solid #333;
-        border-radius: 10px;
-        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-        transform: perspective(1000px) rotateX(5deg);
-        transition: transform 0.3s ease;
-        position: relative;
-        overflow: hidden;
-      }
+    .paper-plane {
+      position: fixed;
+      width: 140px;
+      height: 140px;
+      pointer-events: none;
+      z-index: 1000;
+      opacity: 0;
+      filter: drop-shadow(0 15px 30px rgba(255, 255, 255, 0.6));
+      transform-style: preserve-3d;
+      will-change: transform;
+    }
 
-      .thank-you h2 {
-        font-size: clamp(1.5rem, 4vw, 3rem);
-        font-weight: 400;
-        letter-spacing: 0.5em;
-        color: white;
-        margin-bottom: 1rem;
-        font-family: 'Anton', sans-serif;
-      }
+    .paper-plane svg {
+      width: 100%;
+      height: 100%;
+      fill: var(--gold);
+    }
 
-      .thank-you p {
-        font-size: 1.2rem;
-        color: rgb(141, 141, 141);
-        margin-bottom: 1rem;
-      }
+    .title {
+      position: absolute;
+      top: 20%;
+      font-family: 'Anton', sans-serif;
+      font-size: clamp(2rem, 6vw, 5rem);
+      letter-spacing: 0.4em;
+      text-align: center;
+      width: 100%;
+      opacity: 0;
+      transform: translateY(60px);
+      background: linear-gradient(to bottom, #fff, #aaa);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
 
-      .thank-you .checkmark {
-        width: 50px;
-        height: 50px;
-        background: hsl(48, 94%, 68%);
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin-bottom: 1rem;
-      }
+    @media (max-width: 768px) {
+      .envelope-wrapper { width: 92vw; height: 70vh; }
+      .envelope { padding: 2.5rem; }
+      .logo img { height: 70px; }
+      nav { gap: 1rem; }
+      nav a { font-size: 0.85rem; }
+    }
+  </style>
+</head>
+<body>
 
-      .thank-you .checkmark::after {
-        content: '\2713';
-        color: black;
-        font-size: 1.5rem;
-        font-weight: bold;
-      }
+  <!-- Audio -->
+  <audio id="whoosh" preload="auto">
+    <source src="https://assets.mixkit.co/sfx/preview/mixkit-fast-rocket-whoosh-1338.mp3" type="audio/mpeg">
+  </audio>
+  <audio id="send" preload="auto">
+    <source src="https://assets.mixkit.co/sfx/preview/mixkit-message-sent-1049.mp3" type="audio/mpeg">
+  </audio>
 
-      .thank-you button {
-        padding: 0.75em 1.5em;
-        border: none;
-        background: white;
-        color: black;
-        font-weight: bold;
-        border-radius: 0.5em;
-        cursor: pointer;
-        margin-top: 1rem;
-        text-transform: uppercase;
-        transition: background 0.3s ease, transform 0.2s ease;
-      }
+  <header>
+    <div class="logo">
+      <img src="ch.png" alt="Logo">
+    </div>
+    <nav>
+      <a href="main.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="projects.html">Projects</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
 
-      .thank-you button:hover {
-        background: hsl(48, 94%, 68%);
-        transform: translateY(-2px);
-      }
+  <div class="scene">
+    <h1 class="title">Contact Me</h1>
 
-      .confetti {
-        position: absolute;
-        width: 10px;
-        height: 10px;
-        background: hsl(48, 94%, 68%);
-        border-radius: 50%;
-        opacity: 0;
-      }
-
-      @media (max-width: 600px) {
-        .envelope, .thank-you {
-          max-width: 90%;
-          padding: 1.5em;
-          transform: perspective(800px) rotateX(3deg);
-        }
-        .envelope::before {
-          top: -15px;
-          height: 15px;
-        }
-        .contact-form label {
-          font-size: 0.9rem;
-        }
-        .contact-form input:focus + label,
-        .contact-form input:not(:placeholder-shown) + label,
-        .contact-form textarea:focus + label,
-        .contact-form textarea:not(:placeholder-shown) + label {
-          font-size: 0.7rem;
-          top: -0.6em;
-        }
-        .contact-form input,
-        .contact-form textarea {
-          animation-duration: 3s;
-        }
-        .logo img {
-          height: 60px;
-        }
-        nav a {
-          font-size: 0.75rem;
-        }
-      }
-    </style>
-  </head>
-  <body>
-    <!-- Header -->
-    <header>
-      <div class="logo">
-        <img src="ch.png" alt="Logo">
-      </div>
-      <nav>
-        <a href="main.html">Home</a>
-        <a href="about.html">About</a>
-        <a href="projects.html">Projects</a>
-        <a href="contact.html">Contact</a>
-      </nav>
-    </header>
-
-    <section class="contact">
-      <div class="outer">
-        <div class="inner">
-          <div class="bg">
-            <div class="contact-content">
-              <h2 class="section-heading">Contact me</h2>
-              <div class="envelope">
-                <form class="contact-form" action="https://formspree.io/f/mldbvdlp" method="POST">
-                  <div class="form-group">
-                    <input type="text" name="name" placeholder=" " required />
-                    <label>Your name</label>
-                  </div>
-                  <div class="form-group">
-                    <input type="email" name="email" placeholder=" " required />
-                    <label>Your email</label>
-                  </div>
-                  <div class="form-group">
-                    <textarea name="message" placeholder=" " rows="5" required></textarea>
-                    <label>Your message</label>
-                  </div>
-                  <button type="submit">Send</button>
-                </form>
-              </div>
-              <div class="thank-you" style="display: none;">
-                <div class="checkmark"></div>
-                <h2>Thank You</h2>
-                <p>Your message has been sent successfully!</p>
-                <button onclick="document.querySelector('.thank-you').style.display='none';document.querySelector('.envelope').style.display='block';">Back to Form</button>
-              </div>
-            </div>
+    <div class="envelope-wrapper">
+      <div class="envelope">
+        <form class="contact-form" action="https://formspree.io/f/mldbvdlp" method="POST">
+          <div class="form-group">
+            <input type="text" name="name" placeholder=" " required />
+            <label>Name</label>
           </div>
-        </div>
+          <div class="form-group">
+            <input type="email" name="email" placeholder=" " required />
+            <label>Email</label>
+          </div>
+          <div class="form-group">
+            <textarea name="message" placeholder=" " rows="5" required></textarea>
+            <label>Message</label>
+          </div>
+          <button type="submit">Send Message</button>
+        </form>
       </div>
-    </section>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/Observer.min.js"></script>
-    <script>
-      document.addEventListener("DOMContentLoaded", () => {
-        // Ensure GSAP and plugins are loaded
-        if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined' || typeof Observer === 'undefined') {
-          console.error('GSAP, ScrollTrigger, or Observer failed to load');
-        } else {
-          gsap.registerPlugin(ScrollTrigger, Observer);
-        }
+      <div class="thank-you">
+        <div class="checkmark">Checkmark</div>
+        <h2>Thank You</h2>
+        <p>Your message has been sent!</p>
+        <button onclick="resetForm()">Send Another</button>
+      </div>
+    </div>
+  </div>
 
-        // Envelope entry animation
-        const envelope = document.querySelector('.envelope');
-        const header = document.querySelector('header');
-        gsap.fromTo(envelope, 
-          { yPercent: 100, rotateX: 20, autoAlpha: 0 },
-          { 
-            yPercent: 0, 
-            rotateX: 5, 
-            autoAlpha: 1, 
-            duration: 1.2, 
-            ease: 'power2.out',
-            onComplete: () => {
-              // Header animation after envelope
-              gsap.to(header, {
-                autoAlpha: 1,
-                visibility: 'visible',
-                duration: 0.5,
-                ease: 'power2.out'
-              });
-            }
-          }
-        );
+  <div class="paper-plane">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+    </svg>
+  </div>
 
-        // Envelope flap animation
-        gsap.to('.envelope::before', {
-          transform: 'rotateX(-100deg)',
-          duration: 1,
-          ease: 'back.out(1.4)',
-          delay: 0.5,
-          onComplete: () => envelope.classList.add('flap-open')
-        });
+  <script>
+  const whoosh = document.getElementById('whoosh');
+  const send = document.getElementById('send');
+  let envelope, thankYou, wrapper, plane, header, title;
 
-        // Interactive hover tilt effect for envelope
-        envelope.addEventListener('mousemove', (e) => {
-          const rect = envelope.getBoundingClientRect();
-          const x = (e.clientX - rect.left) / rect.width - 0.5;
-          const y = (e.clientY - rect.top) / rect.height - 0.5;
-          gsap.to(envelope, {
-            transform: `perspective(1000px) rotateX(${5 - y * 10}deg) rotateY(${x * 10}deg)`,
-            duration: 0.3,
-            ease: 'power2.out'
-          });
-          gsap.to('.envelope::before', {
-            transform: `rotateX(-100deg) translateZ(${Math.abs(x * 10)}px)`,
-            duration: 0.3,
-            ease: 'power2.out'
-          });
-        });
+  function play(sound) {
+    sound.currentTime = 0;
+    sound.play().catch(() => {});
+  }
 
-        envelope.addEventListener('mouseleave', () => {
-          gsap.to(envelope, {
-            transform: 'perspective(1000px) rotateX(5deg) rotateY(0deg)',
-            duration: 0.5,
-            ease: 'power2.out'
-          });
-          gsap.to('.envelope::before', {
-            transform: 'rotateX(-100deg)',
-            duration: 0.5,
-            ease: 'power2.out'
-          });
-        });
+  function throttle(func, limit) {
+    let inThrottle;
+    return function() {
+      const args = arguments;
+      const context = this;
+      if (!inThrottle) {
+        func.apply(context, args);
+        inThrottle = true;
+        setTimeout(() => inThrottle = false, limit);
+      }
+    };
+  }
 
-        // Form submission handling
-        const form = document.querySelector('.contact-form');
-        const thankYou = document.querySelector('.thank-you');
-        form.addEventListener('submit', async (e) => {
-          e.preventDefault();
-          const formData = new FormData(form);
-          try {
-            const response = await fetch(form.action, {
-              method: form.method,
-              body: formData,
-              headers: {
-                'Accept': 'application/json'
-              }
-            });
+  function resetForm() {
+    play(whoosh);
+    gsap.to(thankYou, { autoAlpha: 0, scale: 0.8, duration: 0.4 });
+    gsap.to(wrapper, {
+      scale: 0.3,
+      z: -1000,
+      rotationX: 35,
+      rotationY: -40,
+      duration: 1.4,
+      ease: "power2.inOut",
+      onComplete: () => {
+        thankYou.style.display = 'none';
+        envelope.style.display = 'block';
+        document.querySelector('.contact-form').reset();
+        flyInEnvelope();
+      }
+    });
+  }
 
-            if (response.ok) {
-              envelope.style.display = 'none';
-              thankYou.style.display = 'flex';
-              gsap.fromTo(thankYou, 
-                { autoAlpha: 0, yPercent: 50 }, 
-                { autoAlpha: 1, yPercent: 0, duration: 0.5 }
-              );
-              gsap.fromTo('.checkmark', 
-                { scale: 0, autoAlpha: 0 }, 
-                { scale: 1, autoAlpha: 1, duration: 0.7, ease: 'back.out(2)' }
-              );
-              gsap.fromTo('.thank-you h2', 
-                { autoAlpha: 0, y: 20 }, 
-                { autoAlpha: 1, y: 0, duration: 0.5, delay: 0.2 }
-              );
-              gsap.fromTo('.thank-you p', 
-                { autoAlpha: 0, y: 20 }, 
-                { autoAlpha: 1, y: 0, duration: 0.5, delay: 0.4 }
-              );
+  function flyInEnvelope() {
+    gsap.fromTo(wrapper, {
+      scale: 0.25,
+      z: -1400,
+      rotationX: 45,
+      rotationY: -50,
+      autoAlpha: 0
+    }, {
+      scale: 1,
+      z: 0,
+      rotationX: 6,
+      rotationY: 0,
+      autoAlpha: 1,
+      duration: 2,
+      ease: "back.out(1.4)",
+      onStart: () => play(whoosh),
+      onComplete: () => {
+        gsap.to(header, { autoAlpha: 1, visibility: 'visible', duration: 0.6 });
+      }
+    });
 
-              for (let i = 0; i < 20; i++) {
-                const confetti = document.createElement('div');
-                confetti.classList.add('confetti');
-                confetti.style.left = `${Math.random() * 100}%`;
-                confetti.style.background = `hsl(${Math.random() * 360}, 70%, 50%)`;
-                thankYou.appendChild(confetti);
-                gsap.fromTo(confetti, 
-                  { y: -50, autoAlpha: 1, scale: Math.random() * 0.5 + 0.5 },
-                  { 
-                    y: 300, 
-                    autoAlpha: 0, 
-                    rotation: Math.random() * 360, 
-                    duration: 1 + Math.random(), 
-                    ease: 'power1.out',
-                    delay: Math.random() * 0.5,
-                    onComplete: () => confetti.remove()
-                  }
-                );
-              }
-            } else {
-              alert('There was an error submitting the form. Please try again.');
-            }
-          } catch (error) {
-            alert('There was an error submitting the form. Please try again.');
-          }
-        });
+    gsap.fromTo(title, { y: 80, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 1.2, delay: 0.6 });
+  }
 
-        // Thank-you hover tilt effect
-        thankYou.addEventListener('mousemove', (e) => {
-          const rect = thankYou.getBoundingClientRect();
-          const x = (e.clientX - rect.left) / rect.width - 0.5;
-          const y = (e.clientY - rect.top) / rect.height - 0.5;
-          gsap.to(thankYou, {
-            transform: `perspective(1000px) rotateX(${5 - y * 10}deg) rotateY(${x * 10}deg)`,
-            duration: 0.3,
-            ease: 'power2.out'
-          });
-        });
+  function sendMessage() {
+    play(send);
+    const rect = envelope.getBoundingClientRect();
+    const cx = rect.left + rect.width / 2;
+    const cy = rect.top + rect.height / 2;
 
-        thankYou.addEventListener('mouseleave', () => {
-          gsap.to(thankYou, {
-            transform: 'perspective(1000px) rotateX(5deg) rotateY(0deg)',
-            duration: 0.5,
-            ease: 'power2.out'
-          });
-        });
+    // start smaller and centered
+    gsap.set(plane, {
+      x: cx - 45,
+      y: cy - 45,
+      rotation: 0,
+      scale: 0.55,
+      autoAlpha: 1,
+      z: 200
+    });
 
-        // Section animations
-        const section = document.querySelector(".contact");
-        const outer = section.querySelector(".outer");
-        const inner = section.querySelector(".inner");
-        const heading = section.querySelector(".section-heading");
-        const bg = section.querySelector(".bg");
+    const tl = gsap.timeline();
 
-        gsap.set(section, { autoAlpha: 1, zIndex: 1 });
-        gsap.fromTo([outer, inner], { yPercent: 100 }, { yPercent: 0, duration: 1 });
-        gsap.fromTo(bg, { yPercent: 15 }, { yPercent: 0, duration: 1 }, 0);
-        gsap.fromTo(heading, { autoAlpha: 0, yPercent: 150 }, { autoAlpha: 1, yPercent: 0, duration: 1 }, 0.2);
+    // shrink envelope away
+    tl.to(envelope, {
+      scale: 0.35,
+      rotationX: -25,
+      rotationZ: -20,
+      autoAlpha: 0,
+      duration: 0.8,
+      ease: "power3.in"
+    });
+
+    // plane lift-off (subtle)
+    tl.to(plane, {
+      scale: 1.2,
+      rotation: -25,
+      duration: 0.6,
+      ease: "back.out(2)"
+    }, "-=0.6");
+
+    // fly toward viewer
+    tl.to(plane, {
+      z: 800,
+      scale: 2.2, // smaller than old 5x
+      rotationX: 25,
+      duration: 0.9,
+      ease: "power2.out"
+    }, "-=0.4");
+
+    // exit to top-right
+    tl.to(plane, {
+      x: window.innerWidth + 200,
+      y: -250,
+      rotation: 65,
+      scale: 1,
+      autoAlpha: 0,
+      duration: 1.8,
+      ease: "power1.out"
+    }, "-=0.5");
+
+    // show thank you
+    tl.call(() => {
+      envelope.style.display = 'none';
+      thankYou.style.display = 'flex';
+      gsap.fromTo(thankYou, { autoAlpha: 0, scale: 0.8 }, { autoAlpha: 1, scale: 1, duration: 0.7, ease: "back.out(1.8)" });
+      createConfetti();
+    });
+  }
+
+  function createConfetti() {
+    for (let i = 0; i < 20; i++) {
+      const c = document.createElement('div');
+      c.className = 'confetti';
+      c.style.left = Math.random() * 100 + '%';
+      c.style.background = `hsl(${30 + Math.random() * 40}, 80%, 60%)`;
+      thankYou.appendChild(c);
+
+      gsap.fromTo(c, {
+        y: -120,
+        autoAlpha: 1,
+        scale: 0.6 + Math.random() * 0.6,
+        rotation: Math.random() * 360
+      }, {
+        y: 500,
+        autoAlpha: 0,
+        rotation: '+=360',
+        duration: 1.8 + Math.random() * 0.8,
+        ease: "power2.out",
+        delay: Math.random() * 0.5,
+        onComplete: () => c.remove()
       });
-    </script>
-  </body>
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    envelope = document.querySelector('.envelope');
+    thankYou = document.querySelector('.thank-you');
+    wrapper = document.querySelector('.envelope-wrapper');
+    plane = document.querySelector('.paper-plane');
+    header = document.querySelector('header');
+    title = document.querySelector('.title');
+
+    flyInEnvelope();
+
+    // 3D hover tilt (throttled for performance)
+    const handleTilt = (e) => {
+      const rect = wrapper.getBoundingClientRect();
+      const x = (e.clientX - rect.left) / rect.width - 0.5;
+      const y = (e.clientY - rect.top) / rect.height - 0.5;
+      gsap.to(wrapper, {
+        rotationY: x * 18,
+        rotationX: -y * 12 + 6,
+        duration: 0.7,
+        ease: "power2.out"
+      });
+    };
+
+    const throttledTilt = throttle(handleTilt, 16); // ~60fps
+
+    wrapper.addEventListener('mousemove', throttledTilt);
+
+    wrapper.addEventListener('mouseleave', () => {
+      gsap.to(wrapper, { rotationY: 0, rotationX: 6, duration: 0.9, ease: "power2.out" });
+    });
+
+    // Form submit
+    document.querySelector('.contact-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const formData = new FormData(e.target);
+
+      try {
+        const res = await fetch(e.target.action, {
+          method: 'POST',
+          body: formData,
+          headers: { 'Accept': 'application/json' }
+        });
+
+        if (res.ok) {
+          sendMessage();
+        } else {
+          alert("Failed. Try again.");
+        }
+      } catch (err) {
+        alert("Network error.");
+      }
+    });
+  });
+</script>
+
+</body>
 </html>
