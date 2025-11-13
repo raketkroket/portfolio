@@ -1,171 +1,218 @@
-<!doctype html>
+@ -1,217 +0,0 @@
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>CHAS- Loading</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
-    <style>
+<head>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Serif+SC&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <title>Loading</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-      @font-face {
-  font-family: 'Nalieta';
-  src: url('/chatgpt/nalieta.otf') format('opentype');
-  font-weight: normal;
-  font-style: normal;
-}
-      body {
-        font-family: 'Inter', sans-serif;
-        margin: 0;
-        padding: 0;
-        min-height: 100vh;
-      }
+    body {
+      background-color: #4f4f4f; /* Dark grey */
+      overflow: hidden;
+    }
+ 
+    .container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1000;
+    }
 
-      #app-loading {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: #000;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        z-index: 10000;
-        transition: opacity 0.5s ease;
-      }
+    .screen-section {
+      position: absolute;
+      left: 0;
+      width: 100%;
+      height: 50%;
+      background-color: #4f4f4f; /* Dark grey */
+      overflow: hidden;
+    }
 
-      #app-loading.fade-out {
-        opacity: 0;
-        pointer-events: none;
-      }
+    .screen-section.top {
+      top: 0;
+    }
 
-      .loading-logo {
-        width: clamp(120px, 20vw, 200px);
-        height: auto;
-        margin-bottom: 60px;
-      }
+    .screen-section.bottom {
+      bottom: 0;
+    }
 
-      .loading-words {
-        position: relative;
-        height: 50px;
-        margin-bottom: 40px;
-      }
+    .reveal-background {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #2b2b2b; /* White screen */
+      z-index: 500;
+      opacity: 0;
+    }
 
-      .loading-word {
-        position: absolute;
-        top: 10%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        font-family: 'nalieta', sans-serif;
-        font-size: clamp(40px, 7vw, 70px);
-        font-weight: 200;
-        color: #fff;
-        letter-spacing: -0.02em;
-        opacity: 0;
-        transition: opacity 0.3s ease;
-      }
+    .loading-bar-container {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 200px;
+      height: 4px;
+      background-color: #898989;
+      z-index: 2000;
+    }
 
-      .loading-word.visible {
-        opacity: 0.3;
-      }
+    .loading-bar {
+      width: 0%;
+      height: 100%;
+      background: linear-gradient(180deg, #0d00fe, #003ffb); /* Blue gradient */
+    }
 
+    .hello-bonjour {
+      position: fixed;
+      top: 40%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 10vw;
+      letter-spacing: -.01em;
+      line-height: 100%;
+      margin: 0;
+      width: auto;
+      color: rgba(255, 255, 255, 0.806);
+      font-family: 'Bebas Neue', 'Noto Serif SC', sans-serif;
+      z-index: 2000;
+      text-align: center;
+    }
+
+    .hello-bonjour .word {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    .hello-bonjour .word.visible {
+      opacity: 1;
+      transform: translate(-50%, 0);
+    }
+
+    @media (max-width: 800px) {
       .loading-bar-container {
-        width: 280px;
-        height: 2px;
-        background: #333;
-        border-radius: 2px;
-        overflow: hidden;
-        margin-bottom: 12px;
+        width: 150px;
+        height: 3px;
       }
-
-      .loading-bar {
-        width: 0%;
-        height: 100%;
-        background: #fff;
-        transition: width 0.3s ease;
+      .hello-bonjour {
+        font-size: 15vw;
       }
+    }
+  </style>
+</head>
+<body>
+  <div class="reveal-background"></div>
+  <div class="container">
+    <div class="screen-section top"></div>
+    <div class="screen-section bottom"></div>
+  </div>
+  <div class="hello-bonjour">
+    <div class="word visible">hello</div>
+    <div class="word hidden">bonjour</div>
+    <div class="word hidden">hola</div>
+    <div class="word hidden">ciao</div>
+    <div class="word hidden">hallo</div>
+    <div class="word hidden">你好</div>
+    <div class="word hidden">konnichiwa</div>
+    <div class="word hidden">مرحبًا</div>
+    <div class="word hidden">hallo</div>
+    <div class="word hidden">ola</div>
+  </div>
+  <div class="loading-bar-container">
+    <div class="loading-bar"></div>
+  </div>
 
-      .loading-percentage {
-        font-family: 'Inter', sans-serif;
-        font-size: 12px;
-        font-weight: 300;
-        letter-spacing: 2px;
-        color: #666;
-      }
+  <script src="https://unpkg.com/gsap@3/dist/gsap.min.js" onerror="console.error('GSAP failed to load'); setTimeout(() => window.location.href = 'main.html', 3500);"></script>
+  <script>
+    const sections = document.querySelectorAll('.screen-section');
+    const loadingBar = document.querySelector('.loading-bar');
+    const words = document.querySelectorAll('.hello-bonjour .word');
+    let currentWordIndex = 0;
+    const wordCount = words.length;
+    let currentTime = 0;
+    const totalCycleTime = 3000; // 3s for greetings cycle
 
-      @media (max-width: 640px) {
-        .loading-bar-container {
-          width: 200px;
+    function animateWords() {
+      if (currentTime >= totalCycleTime) return;
+      const currentWord = words[currentWordIndex];
+      const nextWordIndex = (currentWordIndex + 1) % wordCount;
+      const nextWord = words[nextWordIndex];
+
+      const interval = 300; // 300ms per greeting
+
+      gsap.to(currentWord, {
+        opacity: 0,
+        y: -20,
+        duration: 0.15,
+        ease: "power2.out",
+        onComplete: () => {
+          currentWord.classList.remove('visible');
+          currentWord.classList.add('hidden');
+          nextWord.classList.remove('hidden');
+          nextWord.classList.add('visible');
+          gsap.fromTo(nextWord, 
+            { opacity: 0, y: 20 },
+            { opacity: 1, y: 0, duration: 0.15, ease: "power2.out" }
+          );
+          currentWordIndex += 1;
+          currentTime += interval;
+
+          if (currentTime < totalCycleTime) {
+            setTimeout(animateWords, interval);
+          }
         }
-        .loading-words {
-          height: 60px;
-        }
+      });
+    }
+
+    gsap.to(loadingBar, {
+      width: '100%',
+      duration: 3, // 3s total duration
+      ease: "power2.inOut",
+      onComplete: () => {
+        gsap.to('.reveal-background', {
+          opacity: 1,
+          duration: 0.2,
+          ease: "power2.out"
+        });
+
+        gsap.to('.screen-section.top', {
+          y: '-100%', // Top panel moves up
+          duration: 0.8,
+          ease: "power2.out"
+        });
+
+        gsap.to('.screen-section.bottom', {
+          y: '100%', // Bottom panel moves down
+          duration: 0.8,
+          ease: "power2.out"
+        });
+
+        gsap.to(['.container', '.hello-bonjour', '.loading-bar-container'], {
+          opacity: 0,
+          duration: 0.2,
+          delay: 0.6,
+          ease: "power2.out",
+          onComplete: () => {
+            window.location.href = 'main.html';
+          }
+        });
       }
-    </style>
-  </head>
-  
-  <body>
-    <div id="app-loading">
-      <img src="/chatgpt/Ch.png" alt="CHAS" class="loading-logo"> <!-- Note: Place your ch.png image in the same folder -->
-      <div class="loading-words">
-        <div class="loading-word visible">hello</div>
-        <div class="loading-word">bonjour</div>
-        <div class="loading-word">hola</div>
-        <div class="loading-word">ciao</div>
-        <div class="loading-word">hallo</div>
-        <div class="loading-word">你好</div>
-        <div class="loading-word">こんにちは</div>
-        <div class="loading-word">مرحبًا</div>
-        <div class="loading-word">olá</div>
-        <div class="loading-word">привет</div>
-      </div>
-      <div class="loading-bar-container">
-        <div class="loading-bar"></div>
-      </div>
-      <div class="loading-percentage">0%</div>
-    </div>
-   
-    <script>
-      const loadingBar = document.querySelector('.loading-bar');
-      const loadingPercentage = document.querySelector('.loading-percentage');
-      const appLoading = document.getElementById('app-loading');
-      const words = document.querySelectorAll('.loading-word');
+    });
 
-      let currentWordIndex = 0;
-      let progress = 0;
-      const duration = 2000;
-      const interval = 20;
-      const increment = 100 / (duration / interval);
-
-      const wordTimer = setInterval(() => {
-        words[currentWordIndex].classList.remove('visible');
-        currentWordIndex = (currentWordIndex + 1) % words.length;
-        words[currentWordIndex].classList.add('visible');
-      }, 300);
-
-      const timer = setInterval(() => {
-        progress += increment;
-        if (progress >= 100) {
-          progress = 100;
-          clearInterval(timer);
-          clearInterval(wordTimer);
-          loadingBar.style.width = '100%';
-          loadingPercentage.textContent = '100%';
-
-          setTimeout(() => {
-            appLoading.classList.add('fade-out');
-            setTimeout(() => {
-              // Redirect to main.html after fade-out completes
-              window.location.href = 'main.html';
-            }, 500);
-          }, 300);
-        } else {
-          loadingBar.style.width = progress + '%';
-          loadingPercentage.textContent = Math.round(progress) + '%';
-        }
-      }, interval);
-    </script>
-  </body>
+    animateWords();
+  </script>
+</body>
 </html>
+</xai>
