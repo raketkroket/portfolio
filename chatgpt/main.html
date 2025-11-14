@@ -605,7 +605,7 @@
 
         .text-color-secondary-2 {
             color: #85dee4b5;
-            font-size: 190px;
+           
 
             font-weight: 300;
             font-style: normal;
@@ -675,6 +675,13 @@
                 width: 120px;
                 opacity: 0.4;
             }
+
+            .subtitle {
+                font-size: 50px;
+            }
+            .partner-image {
+                height: 4.5rem;
+            }
         }
 
         .navbar {
@@ -724,31 +731,8 @@
             }
         }
 
-        /* CV Download Button Styles */
-.cv-download-button {
-  display: inline-block;
-  padding: 12px 24px;
-  background-color: #3d3d3d; /* Geel, past bij je thema */
-  color: #000 !important; /* Donkere tekst */
-  text-decoration: none;
-  border-radius: 8px;
-  font-family: "Poiret One", sans-serif; /* Past bij je fonts */
-  font-size: 18px;
-  font-weight: 400;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(207, 112, 170, 0.582);
-  margin-top: 20px; /* Extra ruimte boven de knop */
-}
 
-.cv-download-button:hover {
-  background-color: #eab308; /* Donkerder geel op hover */
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(250, 204, 21, 0.4);
-}
 
-.cv-download-button .button-text {
-  margin: 0;
-}
     </style>
 
     <script></script>
@@ -1695,10 +1679,7 @@
                                     </p>
                                     <!-- Nieuwe CV-downloadknop hier -->
                                     <div class="spacer-medium"></div> <!-- Extra ruimte boven de knop -->
-                                    <a href="cv.pdf" download class="cv-download-button w-inline-block" target="_blank">
-                                        <div class="button-text-wrap">
-                                            <div class="button-text">Download mijn CV</div>
-                                        </div>
+                                    
                                     </a>
                                 </div>
                                 <!-- Right side: image with floating elements (unchanged) -->
