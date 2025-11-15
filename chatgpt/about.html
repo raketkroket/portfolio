@@ -1,591 +1,1163 @@
 <!DOCTYPE html>
-<html lang="en">
+
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ABOUT ME</title>
-  <script type="module" src="https://unpkg.com/@splinetool/viewer@1.9.96/build/spline-viewer.js"></script>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cormorant+Garamond&display=swap" rel="stylesheet">
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      height: 100vh;
-      background: rgb(255, 255, 255);
-      font-family: 'Cormorant Garamond', serif;
-      color: rgb(141, 141, 141);
-      text-transform: uppercase;
-      overflow: hidden;
-    }
-
-    header {
-      position: fixed;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      width: 100%;
-      padding: 0 5%;
-      height: 7em;
-      z-index: 10;
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(0.66rem, 2vw, 1rem);
-      letter-spacing: 0.5em;
-    }
-
-    .logo img {
-      height: 140px;
-      margin: 1rem;
-    }
-
-    .hamburger {
-      display: none;
-      flex-direction: column;
-      justify-content: space-between;
-      width: 45px;
-      height: 40px;
-      background-color: transparent;
-      border: none;
-      cursor: pointer;
-      z-index: 10001;
-      position: fixed;
-      top: 30px;
-      right: 30px;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
-
-    .hamburger span {
-      display: block;
-      height: 3px;
-      width: 100%;
-      background: linear-gradient(to right, #d3d3d3, #4a4aff);
-      border-radius: 3px;
-      transition: all 0.3s ease;
-    }
-
-    .hamburger.active span:nth-child(1) {
-      transform: rotate(45deg) translate(5px, 5px);
-      background: #0741ff;
-    }
-
-    .hamburger.active span:nth-child(2) {
-      opacity: 0;
-    }
-
-    .hamburger.active span:nth-child(3) {
-      transform: rotate(-45deg) translate(6px, -6px);
-      background: #0741ff;
-    }
-
-    .menu-panel {
-      position: fixed;
-      top: 0;
-      right: 0;
-      height: 100vh;
-      width: 100%;
-      max-width: 400px;
-      background: rgba(180, 180, 181, 0.85);
-      backdrop-filter: blur(10px);
-      border-left: 1px solid #444;
-      transform: translateX(100%);
-      opacity: 0;
-      transition: transform 0.6s cubic-bezier(0.7, 0, 0.3, 1), opacity 0.4s ease;
-      z-index: 1000;
-      pointer-events: none;
-      box-shadow: 0 4px 20px rgba(201, 201, 201, 0.4);
-    }
-
-    .menu-panel.active {
-      transform: translateX(0);
-      opacity: 0.98;
-      pointer-events: auto;
-    }
-
-    .menu-panel ul {
-      list-style: none;
-      padding: 2rem;
-      margin-top: 5rem;
-      display: flex;
-      flex-direction: column;
-      gap: 2rem;
-      align-items: center;
-    }
-
-    .menu-panel a {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 3rem;
-      color: white;
-      text-decoration: none;
-      position: relative;
-      transition: color 0.3s ease;
-    }
-
-    .menu-panel a::after {
-      content: '';
-      position: absolute;
-      left: 0;
-      bottom: -4px;
-      width: 0%;
-      height: 2px;
-      background-color: #0800a2;
-      transition: width 0.3s ease;
-    }
-
-    .menu-panel a:hover::after {
-      width: 100%;
-    }
-
-    .menu-panel a:hover {
-      color: #1100ff;
-    }
-
-    .menu-footer {
-      position: absolute;
-      bottom: 2rem;
-      width: 100%;
-      text-align: center;
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 0.9rem;
-      color: white;
-      opacity: 0.6;
-    }
-
-    nav {
-      position: fixed;
-      top: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: rgba(180, 180, 181, 0.85);
-      backdrop-filter: blur(10px);
-      border: 1px solid #444;
-      border-radius: 999px;
-      padding: 0.6rem 2rem;
-      display: flex;
-      gap: 2rem;
-      z-index: 1000;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
-    }
-
-    nav a {
-      color: white;
-      text-decoration: none;
-      font-weight: 500;
-      font-size: 1.3rem;
-      transition: all 0.3s ease;
-      position: relative;
-      cursor: pointer;
-      user-select: none;
-    }
-
-    nav a::after {
-      content: '';
-      position: absolute;
-      left: 0;
-      bottom: -4px;
-      width: 0%;
-      height: 2px;
-      background-color: #0800a2;
-      transition: width 0.3s ease;
-    }
-
-    nav a:hover::after {
-      width: 100%;
-    }
-
-    nav a:hover {
-      color: #1100ff;
-    }
-
-    @media (max-width: 1100px) {
-      .hamburger {
-        display: flex !important;
-      }
-
-      nav {
-        display: none;
-      }
-    }
-
-    .loading-overlay {
-      position: fixed;
-      inset: 0;
-      background-color: #252525;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 9999;
-      transition: opacity 1s ease;
-    }
-
-    .loading {
-      width: 75px;
-      height: 75px;
-      background-color: #ffffff;
-      animation: logoSpin 6s infinite;
-      clip-path: polygon(
-        0% 0%, 0 100%, 44% 100%, 44% 58%, 67% 58%, 68% 13%, 85% 13%, 
-        76% 100%, 100% 100%, 100% 0, 54% 0%, 54% 38%, 32% 38%, 32% 87%, 13% 87%, 24% 0);
-    }
-
-    @keyframes logoSpin {
-      0%, 100% {
-        transform: rotate(0deg);
-      }
-      50% {
-        transform: rotate(180deg);
-      }
-    }
-
-    .cursor, .cursor-follower {
-      position: fixed;
-      top: 0;
-      left: 0;
-      pointer-events: none;
-      border-radius: 50%;
-      transform: translate(-50%, -50%);
-      transition: background-color 0.3s ease;
-      z-index: 10000;
-    }
-
-    .cursor {
-      width: 8px;
-      height: 8px;
-      background-color: black;
-      mix-blend-mode: difference;
-    }
-
-    .cursor-follower {
-      width: 30px;
-      height: 30px;
-      border: 2px solid black;
-      opacity: 0.4;
-      transition: opacity 0.3s ease;
-    }
-
-    .scroll-indicator {
-      position: fixed;
-      top: 50%;
-      right: 40px;
-      transform: translateY(-50%);
-      width: 8px;
-      height: 100px;
-      background: white;
-      border-radius: 10px;
-      overflow: hidden;
-      z-index: 1000;
-    }
-
-    .scroll-indicator::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      background: #003cff;
-      height: var(--scroll, 0%);
-      transition: height 0.2s ease-out;
-    }
-
-    .coming-soon {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      text-align: center;
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 3rem;
-      color: #1100ff;
-      z-index: 5;
-    }
-
-    .coming-soon p {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.5rem;
-      color: rgb(141, 141, 141);
-      text-transform: none;
-    }
-
-    .coming-soon a {
-      color: #0800a2;
-      text-decoration: none;
-      transition: color 0.3s ease;
-    }
-
-    .coming-soon a:hover {
-      color: #1100ff;
-    }
-  </style>
+    <meta charset="utf-8" />
+    <title>CHAS</title>
+    
+    <link
+        href="about.css"
+        rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin="anonymous" />
+    <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js" type="text/javascript"></script>
+    <script
+        type="text/javascript">WebFont.load({ google: { families: ["Inter:100,200,300,regular,500,600,100italic,200italic,300italic,italic,500italic,600italic"] } });</script>
+    <script
+        type="text/javascript">!function (o, c) { var n = c.documentElement, t = " w-mod-"; n.className += t + "js", ("ontouchstart" in o || o.DocumentTouch && c instanceof DocumentTouch) && (n.className += t + "touch") }(window, document);</script>
+    <link href="https://cdn.prod.website-files.com/689989c2270f878736e77521/68a4769e6c34a27237e2c939_StylerFavicon.png"
+        rel="shortcut icon" type="image/x-icon" />
+    <link href="https://cdn.prod.website-files.com/689989c2270f878736e77521/68a476a305fa568c496e3e02_StylerWebclip.png"
+        rel="apple-touch-icon" />
+    <script
+        type="text/javascript">window.__WEBFLOW_CURRENCY_SETTINGS = { "currencyCode": "USD", "symbol": "$", "decimal": ".", "fractionDigits": 2, "group": ",", "template": "{{wf {\"path\":\"symbol\",\"type\":\"PlainText\"} }} {{wf {\"path\":\"amount\",\"type\":\"CommercePrice\"} }} {{wf {\"path\":\"currencyCode\",\"type\":\"PlainText\"} }}", "hideDecimalForWholeNumbers": false };</script>
 </head>
-<body>
-  <div class="loading-overlay" id="loadingOverlay">
-    <div class="loading"></div>
-  </div>
-  <header>
-    <div class="logo">
-      <img src="Ch.png" alt="Logo Chassidy Doest" />
+
+<body class="body">
+    <div data-animation="default" data-collapse="medium" data-duration="400" data-easing="ease" data-easing2="ease"
+        data-doc-height="1" role="banner" class="navbar w-nav">
+        <div class="nav-container w-container"><a href="/" aria-current="page"
+                class="logo-link-wrapper show-on-tab w-nav-brand w--current"><img width="Auto" height="Auto"
+                    alt="icon styler"
+                    src="https://cdn.prod.website-files.com/689989c2270f878736e77521/689ef50f877065195c75d892_IconStyler.svg"
+                    loading="eager" class="logo" /></a>
+            <div class="menu-button w-nav-button">
+                <div data-w-id="e761150b-2a00-09ba-e378-4a0cc8b6e205" data-is-ix2-target="1" class="menu-burger"
+                    data-animation-type="lottie"
+                    data-src="https://cdn.prod.website-files.com/689989c2270f878736e77521/689989c2270f878736e775c4_Nav-lottie.json"
+                    data-loop="0" data-direction="1" data-autoplay="0" data-renderer="svg" data-default-duration="2"
+                    data-duration="0"></div>
+            </div>
+            <nav role="navigation" class="nav-menu w-nav-menu"><a href="/" aria-current="page"
+                    class="nav-link-wrapper show-on-tab w-inline-block w--current">
+                    <div class="nav-link-block">
+                        <p StaggerText="" class="nav-link-text">Home</p>
+                    </div>
+                </a><a href="/about-us" class="nav-link-wrapper w-inline-block">
+                    <div class="nav-link-block">
+                        <p StaggerText="" class="nav-link-text">About</p>
+                    </div>
+                </a>
+                <div data-delay="300" data-hover="true" NavDropdown01="" class="nav-dropdown w-dropdown">
+                    <div class="nav-dropdown-toggle w-dropdown-toggle">
+                        <div class="nav-more-links-wrapper">
+                            <div StaggerText="" class="nav-more-flex">
+                                <p class="nav-link-text">Services</p><img
+                                    src="https://cdn.prod.website-files.com/689989c2270f878736e77521/689ef81ca1a696f2ff732946_keyboard_arrow.svg"
+                                    loading="lazy" alt="keyboard arrow" class="nav-arrow" />
+                            </div>
+                        </div>
+                    </div>
+                    <nav Dropdown01="" class="dropdown-wrapper w-dropdown-list">
+                        <div class="more-links-grid-3-col left-margin">
+                            <div NavDropdownItems="" id="w-node-e761150b-2a00-09ba-e378-4a0cc8b6e218-c8b6e202"
+                                class="w-dyn-list">
+                                <div role="list" class="w-dyn-items">
+                                    <div role="listitem" class="w-dyn-item"><a href="/services/design"
+                                            class="nav-image-link w-inline-block"><img
+                                                src="https://cdn.prod.website-files.com/689989c2270f878736e77534/68a2d10d0123c0be15052ede_Glossy%20Tote%20Bags%20on%20Vibrant%20Background.webp"
+                                                loading="lazy" alt="" sizes="100vw"
+                                                srcset="https://cdn.prod.website-files.com/689989c2270f878736e77534/68a2d10d0123c0be15052ede_Glossy%20Tote%20Bags%20on%20Vibrant%20Background-p-500.webp 500w, https://cdn.prod.website-files.com/689989c2270f878736e77534/68a2d10d0123c0be15052ede_Glossy%20Tote%20Bags%20on%20Vibrant%20Background-p-800.webp 800w, https://cdn.prod.website-files.com/689989c2270f878736e77534/68a2d10d0123c0be15052ede_Glossy%20Tote%20Bags%20on%20Vibrant%20Background.webp 960w"
+                                                class="nav-image" />
+                                            <div class="nav-title-flex">
+                                                <h5 class="nav-dropdown-title">•</h5>
+                                                <h5 class="nav-dropdown-title">Design</h5>
+                                            </div>
+                                        </a></div>
+                                </div>
+                            </div>
+                            <div NavDropdownItems="" id="w-node-e761150b-2a00-09ba-e378-4a0cc8b6e221-c8b6e202"
+                                class="w-dyn-list">
+                                <div role="list" class="w-dyn-items">
+                                    <div role="listitem" class="w-dyn-item"><a href="/services/prototype"
+                                            class="nav-image-link w-inline-block"><img
+                                                src="https://cdn.prod.website-files.com/689989c2270f878736e77534/68a2d16b259fd242a0ee6c1e_Modern%20Device%20Close-Up.webp"
+                                                loading="lazy" alt="" sizes="100vw"
+                                                srcset="https://cdn.prod.website-files.com/689989c2270f878736e77534/68a2d16b259fd242a0ee6c1e_Modern%20Device%20Close-Up-p-500.webp 500w, https://cdn.prod.website-files.com/689989c2270f878736e77534/68a2d16b259fd242a0ee6c1e_Modern%20Device%20Close-Up-p-800.webp 800w, https://cdn.prod.website-files.com/689989c2270f878736e77534/68a2d16b259fd242a0ee6c1e_Modern%20Device%20Close-Up.webp 992w"
+                                                class="nav-image" />
+                                            <div class="nav-title-flex">
+                                                <h5 class="nav-dropdown-title">•</h5>
+                                                <h5 class="nav-dropdown-title">Prototype</h5>
+                                            </div>
+                                        </a></div>
+                                </div>
+                            </div><a href="/services" StaggerText="" NavDropdownItems=""
+                                class="nav-view-all w-inline-block">
+                                <div class="nav-link-block">
+                                    <p class="nav-link-text">View All Services</p>
+                                </div>
+                            </a>
+                        </div>
+                    </nav>
+                </div><a href="/services" class="nav-link-wrapper show-on-tab w-inline-block">
+                    <div class="nav-link-block">
+                        <p StaggerText="" class="nav-link-text">Services</p>
+                    </div>
+                </a><a href="/" aria-current="page" class="logo-link-wrapper hide-on-tab w-nav-brand w--current"><img
+                        width="Auto" height="Auto" alt="icon styler"
+                        src="https://cdn.prod.website-files.com/689989c2270f878736e77521/689ef50f877065195c75d892_IconStyler.svg"
+                        loading="eager" class="logo" /></a><a href="/works"
+                    class="nav-link-wrapper show-on-tab w-inline-block">
+                    <div class="nav-link-block">
+                        <p StaggerText="" class="nav-link-text">Works</p>
+                    </div>
+                </a>
+                <div data-delay="300" data-hover="true" NavDropdown02="" class="nav-dropdown w-dropdown">
+                    <div class="nav-dropdown-toggle w-dropdown-toggle">
+                        <div class="nav-more-links-wrapper">
+                            <div class="nav-more-flex">
+                                <p StaggerText="" class="nav-link-text">Works</p><img
+                                    src="https://cdn.prod.website-files.com/689989c2270f878736e77521/689ef81ca1a696f2ff732946_keyboard_arrow.svg"
+                                    loading="lazy" alt="keyboard arrow" class="nav-arrow" />
+                            </div>
+                        </div>
+                    </div>
+                    <nav Dropdown02="" class="dropdown-wrapper w-dropdown-list">
+                        <div class="more-links-grid right-margin">
+                            <div NavDropdownItems="" id="w-node-e761150b-2a00-09ba-e378-4a0cc8b6e241-c8b6e202"
+                                class="w-dyn-list">
+                                <div role="list" class="w-dyn-items">
+                                    <div role="listitem" class="w-dyn-item"><a href="/works/elegant"
+                                            class="nav-image-link-02 w-inline-block"><img
+                                                src="https://cdn.prod.website-files.com/689989c2270f878736e77534/68a07c52d7ac585cdfd6fa7e_Elegant%20Blonde%20Profile.webp"
+                                                loading="lazy" alt="" sizes="100vw"
+                                                srcset="https://cdn.prod.website-files.com/689989c2270f878736e77534/68a07c52d7ac585cdfd6fa7e_Elegant%20Blonde%20Profile-p-500.webp 500w, https://cdn.prod.website-files.com/689989c2270f878736e77534/68a07c52d7ac585cdfd6fa7e_Elegant%20Blonde%20Profile-p-800.webp 800w, https://cdn.prod.website-files.com/689989c2270f878736e77534/68a07c52d7ac585cdfd6fa7e_Elegant%20Blonde%20Profile-p-1080.webp 1080w, https://cdn.prod.website-files.com/689989c2270f878736e77534/68a07c52d7ac585cdfd6fa7e_Elegant%20Blonde%20Profile.webp 1600w"
+                                                class="nav-image" />
+                                            <div class="nav-title-flex">
+                                                <h5 class="nav-dropdown-title">•</h5>
+                                                <h5 class="nav-dropdown-title">Elegant</h5>
+                                            </div>
+                                        </a></div>
+                                </div>
+                            </div>
+                            <div NavDropdownItems="" id="w-node-e761150b-2a00-09ba-e378-4a0cc8b6e24a-c8b6e202"
+                                class="w-dyn-list">
+                                <div role="list" class="w-dyn-items">
+                                    <div role="listitem" class="w-dyn-item"><a href="/works/vibrant"
+                                            class="nav-image-link-02 w-inline-block"><img
+                                                src="https://cdn.prod.website-files.com/689989c2270f878736e77534/68a07c6aeaa832d6e630e0ef_Vibrant%20Sports%20Jersey.webp"
+                                                loading="lazy" alt="" sizes="100vw"
+                                                srcset="https://cdn.prod.website-files.com/689989c2270f878736e77534/68a07c6aeaa832d6e630e0ef_Vibrant%20Sports%20Jersey-p-500.webp 500w, https://cdn.prod.website-files.com/689989c2270f878736e77534/68a07c6aeaa832d6e630e0ef_Vibrant%20Sports%20Jersey-p-800.webp 800w, https://cdn.prod.website-files.com/689989c2270f878736e77534/68a07c6aeaa832d6e630e0ef_Vibrant%20Sports%20Jersey-p-1080.webp 1080w, https://cdn.prod.website-files.com/689989c2270f878736e77534/68a07c6aeaa832d6e630e0ef_Vibrant%20Sports%20Jersey-p-1600.webp 1600w, https://cdn.prod.website-files.com/689989c2270f878736e77534/68a07c6aeaa832d6e630e0ef_Vibrant%20Sports%20Jersey-p-2000.webp 2000w, https://cdn.prod.website-files.com/689989c2270f878736e77534/68a07c6aeaa832d6e630e0ef_Vibrant%20Sports%20Jersey.webp 2400w"
+                                                class="nav-image" />
+                                            <div class="nav-title-flex">
+                                                <h5 class="nav-dropdown-title">•</h5>
+                                                <h5 class="nav-dropdown-title">Vibrant</h5>
+                                            </div>
+                                        </a></div>
+                                </div>
+                            </div>
+                            <div NavDropdownItems="" id="w-node-e761150b-2a00-09ba-e378-4a0cc8b6e253-c8b6e202"
+                                class="w-dyn-list">
+                                <div role="list" class="w-dyn-items">
+                                    <div role="listitem" class="w-dyn-item"><a href="/works/texture"
+                                            class="nav-image-link-02 w-inline-block"><img
+                                                src="https://cdn.prod.website-files.com/689989c2270f878736e77534/68a07c8e09898fa9493b1bbc_Modern%20Elegance%20Tech%20%26%20Texture.webp"
+                                                loading="lazy" alt="" sizes="100vw"
+                                                srcset="https://cdn.prod.website-files.com/689989c2270f878736e77534/68a07c8e09898fa9493b1bbc_Modern%20Elegance%20Tech%20%26%20Texture-p-500.webp 500w, https://cdn.prod.website-files.com/689989c2270f878736e77534/68a07c8e09898fa9493b1bbc_Modern%20Elegance%20Tech%20%26%20Texture-p-800.webp 800w, https://cdn.prod.website-files.com/689989c2270f878736e77534/68a07c8e09898fa9493b1bbc_Modern%20Elegance%20Tech%20%26%20Texture-p-1080.webp 1080w, https://cdn.prod.website-files.com/689989c2270f878736e77534/68a07c8e09898fa9493b1bbc_Modern%20Elegance%20Tech%20%26%20Texture.webp 1600w"
+                                                class="nav-image" />
+                                            <div class="nav-title-flex">
+                                                <h5 class="nav-dropdown-title">•</h5>
+                                                <h5 class="nav-dropdown-title">Texture</h5>
+                                            </div>
+                                        </a></div>
+                                </div>
+                            </div><a href="/works" StaggerText="" NavDropdownItems=""
+                                class="nav-view-all w-inline-block">
+                                <div class="nav-link-block">
+                                    <p class="nav-link-text">View All Works</p>
+                                </div>
+                            </a>
+                        </div>
+                    </nav>
+                </div><a href="/contact" class="nav-link-wrapper w-inline-block">
+                    <div class="nav-link-block">
+                        <p StaggerText="" class="nav-link-text">Contact</p>
+                    </div>
+                </a>
+            </nav>
+        </div>
     </div>
-    <button class="hamburger" aria-label="Menu">
-      <span></span>
-      <span></span>
-      <span></span>
-    </button>
-    <nav class="floating-nav">
-      <a href="/main.html" data-text="HOME">HOME</a>
-      <a href="/about.html" data-text="ABOUT ME">ABOUT ME</a>
-      <a href="/projects.html" data-text="PROJECTS">PROJECTS</a>
-      <a href="/contact.html" data-text="CONTACT">CONTACT</a>
-    </nav>
-    <div class="menu-panel" id="menuPanel">
-      <ul>
-        <li><a href="/main.html" data-text="HOME" alt="Home">HOME</a></li>
-        <li><a href="/about.html" data-text="ABOUT ME" alt="About Me">ABOUT ME</a></li>
-        <li><a href="/projects.html" data-text="PROJECTS" alt="Projects">PROJECTS</a></li>
-        <li><a href="/contact.html" data-text="CONTACT" alt="Contact">CONTACT</a></li>
-      </ul>
-      <div class="menu-footer">© 2025 Chassidy Doest. All rights reserved.</div>
+    <div data-w-id="355065fb-6520-0a1f-949e-98567b8e7525" class="mouse-wrapper">
+        <div data-w-id="355065fb-6520-0a1f-949e-98567b8e7526" class="mouse"></div>
     </div>
-  </header>
-  <div class="cursor"></div>
-  <div class="cursor-follower"></div>
-  <div class="scroll-indicator"></div>
-
-  <!-- Coming Soon Message -->
-  <div class="coming-soon">
-    <h1>Coming Soon!</h1>
-    <p>You can <a href="contact.html">contact me</a>.</p>
-  </div>
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      // Ensure GSAP is loaded
-      if (typeof gsap === 'undefined') {
-        console.error('GSAP failed to load');
-      }
-
-      // Hamburger menu functionality "..": {
-        const hamburger = document.querySelector('.hamburger');
-        const menuPanel = document.querySelector('.menu-panel');
-        const navLinks = document.querySelectorAll('nav a');
-        const menuLinks = document.querySelectorAll('.menu-panel a');
-        const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-
-        // GSAP timeline for menu items
-        const menuTimeline = gsap.timeline({ paused: true });
-        menuTimeline.fromTo(
-          '.menu-panel li',
-          { opacity: 0, x: 50 },
-          { opacity: 1, x: 0, duration: 0.5, stagger: 0.1, ease: "power3.out" }
-        );
-
-        hamburger.addEventListener('click', () => {
-          const isActive = menuPanel.classList.toggle('active');
-          hamburger.classList.toggle('active');
-          document.body.style.overflow = isActive ? 'hidden' : 'auto';
-          if (isActive) {
-            menuTimeline.restart();
-          } else {
-            menuTimeline.reverse();
-          }
-        });
-
-        // Desktop nav link interactions
-        navLinks.forEach(link => {
-          link.addEventListener('click', () => {
-            menuPanel.classList.remove('active');
-            hamburger.classList.remove('active');
-            document.body.style.overflow = 'auto';
-          });
-
-          link.addEventListener('mouseenter', () => {
-            let iteration = 0;
-            const originalText = link.dataset.text;
-            const interval = setInterval(() => {
-              link.textContent = originalText
-                .split("")
-                .map((char, index) => {
-                  if (index < iteration) return originalText[index];
-                  return letters[Math.floor(Math.random() * letters.length)];
-                })
-                .join("");
-              if (iteration >= originalText.length) clearInterval(interval);
-              iteration += 1 / 2;
-            }, 30);
-          });
-
-          link.addEventListener('mouseleave', () => {
-            setTimeout(() => {
-              link.textContent = link.dataset.text;
-            }, 500);
-          });
-
-          link.addEventListener('touchstart', () => {
-            let iteration = 0;
-            const originalText = link.dataset.text;
-            const interval = setInterval(() => {
-              link.textContent = originalText
-                .split("")
-                .map((char, index) => {
-                  if (index < iteration) return originalText[index];
-                  return letters[Math.floor(Math.random() * letters.length)];
-                })
-                .join("");
-              if (iteration >= originalText.length) clearInterval(interval);
-              iteration += 1 / 2;
-            }, 30);
-          });
-        });
-
-        // Mobile menu link interactions
-        menuLinks.forEach(link => {
-          link.addEventListener('click', () => {
-            menuPanel.classList.remove('active');
-            hamburger.classList.remove('active');
-            document.body.style.overflow = 'auto';
-            menuTimeline.reverse();
-          });
-
-          link.addEventListener('mouseenter', () => {
-            let iteration = 0;
-            const originalText = link.dataset.text;
-            const interval = setInterval(() => {
-              link.textContent = originalText
-                .split("")
-                .map((char, index) => {
-                  if (index < iteration) return originalText[index];
-                  return letters[Math.floor(Math.random() * letters.length)];
-                })
-                .join("");
-              if (iteration >= originalText.length) clearInterval(interval);
-              iteration += 1 / 2;
-            }, 30);
-          });
-
-          link.addEventListener('mouseleave', () => {
-            setTimeout(() => {
-              link.textContent = link.dataset.text;
-            }, 500);
-          });
-
-          link.addEventListener('touchstart', () => {
-            let iteration = 0;
-            const originalText = link.dataset.text;
-            const interval = setInterval(() => {
-              link.textContent = originalText
-                .split("")
-                .map((char, index) => {
-                  if (index < iteration) return originalText[index];
-                  return letters[Math.floor(Math.random() * letters.length)];
-                })
-                .join("");
-              if (iteration >= originalText.length) clearInterval(interval);
-              iteration += 1 / 2;
-            }, 30);
-          });
-        });
-
-        // Keyboard accessibility for mobile menu
-        document.addEventListener('keydown', (e) => {
-          if (e.key === 'Escape' && menuPanel.classList.contains('active')) {
-            menuPanel.classList.remove('active');
-            hamburger.classList.remove('active');
-            document.body.style.overflow = 'auto';
-            menuTimeline.reverse();
-          }
-        });
-
-        // Dynamic menu item addition
-        function addMenuItem(text, href = '#') {
-          const li = document.createElement('li');
-          li.innerHTML = `<a href="${href}" data-text="${text}" alt="${text}">${text}</a>`;
-          menuPanel.querySelector('ul').appendChild(li);
-          menuTimeline.fromTo(
-            li,
-            { opacity: 0, x: 50 },
-            { opacity: 1, x: 0, duration: 0.5, ease: "power3.out" },
-            "-=0.3"
-          );
-          const newLink = li.querySelector('a');
-          newLink.addEventListener('click', () => {
-            menuPanel.classList.remove('active');
-            hamburger.classList.remove('active');
-            document.body.style.overflow = 'auto';
-            menuTimeline.reverse();
-          });
-          newLink.addEventListener('mouseenter', () => {
-            let iteration = 0;
-            const originalText = newLink.dataset.text;
-            const interval = setInterval(() => {
-              newLink.textContent = originalText
-                .split("")
-                .map((char, index) => {
-                  if (index < iteration) return originalText[index];
-                  return letters[Math.floor(Math.random() * letters.length)];
-                })
-                .join("");
-              if (iteration >= originalText.length) clearInterval(interval);
-              iteration += 1 / 2;
-            }, 30);
-          });
-          newLink.addEventListener('mouseleave', () => {
-            setTimeout(() => {
-              newLink.textContent = newLink.dataset.text;
-            }, 500);
-          });
-          newLink.addEventListener('touchstart', () => {
-            let iteration = 0;
-            const originalText = newLink.dataset.text;
-            const interval = setInterval(() => {
-              newLink.textContent = originalText
-                .split("")
-                .map((char, index) => {
-                  if (index < iteration) return originalText[index];
-                  return letters[Math.floor(Math.random() * letters.length)];
-                })
-                .join("");
-              if (iteration >= originalText.length) clearInterval(interval);
-              iteration += 1 / 2;
-            }, 30);
-          });
-        }
-
-        // Loading overlay
-        window.addEventListener('load', () => {
-          const loadingOverlay = document.getElementById('loadingOverlay');
-          loadingOverlay.style.opacity = 0;
-          setTimeout(() => {
-            loadingOverlay.style.display = 'none';
-          }, 500);
-        });
-
-        // Custom cursor
-        const cursor = document.querySelector('.cursor');
-        const follower = document.querySelector('.cursor-follower');
-        let mouseX = 0, mouseY = 0;
-        let followerX = 0, followerY = 0;
-
-        document.addEventListener('mousemove', e => {
-          mouseX = e.clientX;
-          mouseY = e.clientY;
-          cursor.style.left = mouseX + 'px';
-          cursor.style.top = mouseY + 'px';
-        });
-
-        function animate() {
-          followerX += (mouseX - followerX) * 0.1;
-          followerY += (mouseY - followerY) * 0.1;
-          follower.style.left = followerX + 'px';
-          follower.style.top = followerY + 'px';
-          requestAnimationFrame(animate);
-        }
-
-        animate();
-      });
-  </script>
+    <section class="hero-section">
+        <div class="w-layout-blockcontainer hero-container w-container">
+            <h1 class="hero-title">CHAS</h1>
+            <div class="hero-center"><img loading="lazy"
+                    src="https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66a24a7a04635323b86_Cheerful%20Young%20Woman%20with%20Colorful%20Attire.webp"
+                    alt="Cheerful Young Woman with Colorful Attire"
+                    sizes="(max-width: 767px) 100vw, (max-width: 991px) 727.9921875px, 750px"
+                    srcset="https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66a24a7a04635323b86_Cheerful%20Young%20Woman%20with%20Colorful%20Attire-p-500.webp 500w, https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66a24a7a04635323b86_Cheerful%20Young%20Woman%20with%20Colorful%20Attire.webp 750w"
+                    class="hero-image-01" /><img loading="lazy"
+                    src="https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66bbac017f6a400b614_Stylized%20Graffiti-Inspired%20Robot.webp"
+                    alt="Stylized Graffiti-Inspired Robot"
+                    sizes="(max-width: 767px) 100vw, (max-width: 991px) 728px, 940px"
+                    srcset="https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66bbac017f6a400b614_Stylized%20Graffiti-Inspired%20Robot-p-500.webp 500w, https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66bbac017f6a400b614_Stylized%20Graffiti-Inspired%20Robot-p-800.webp 800w, https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66bbac017f6a400b614_Stylized%20Graffiti-Inspired%20Robot.webp 960w"
+                    class="hero-image-03" /><img loading="lazy"
+                    src="https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66bdd829a2fb5a6dc35_Fashion%20Portrait%20with%20Vibrant%20Hat.webp"
+                    alt="Fashion Portrait with Vibrant Hat"
+                    sizes="(max-width: 767px) 100vw, (max-width: 991px) 727.9921875px, 904px"
+                    srcset="https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66bdd829a2fb5a6dc35_Fashion%20Portrait%20with%20Vibrant%20Hat-p-500.webp 500w, https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66bdd829a2fb5a6dc35_Fashion%20Portrait%20with%20Vibrant%20Hat-p-800.webp 800w, https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66bdd829a2fb5a6dc35_Fashion%20Portrait%20with%20Vibrant%20Hat.webp 904w"
+                    class="hero-image-02" /></div><img id="HeroImageMax01" loading="lazy"
+                alt="Vivid Portrait with Bold Colors"
+                src="https://cdn.prod.website-files.com/689989c2270f878736e77521/68a05fd7ef83f7891c8de8cf_Vivid%20Portrait%20with%20Bold%20Colors.webp"
+                sizes="(max-width: 767px) 100vw, (max-width: 991px) 728px, 940px"
+                srcset="https://cdn.prod.website-files.com/689989c2270f878736e77521/68a05fd7ef83f7891c8de8cf_Vivid%20Portrait%20with%20Bold%20Colors-p-500.webp 500w, https://cdn.prod.website-files.com/689989c2270f878736e77521/68a05fd7ef83f7891c8de8cf_Vivid%20Portrait%20with%20Bold%20Colors-p-800.webp 800w, https://cdn.prod.website-files.com/689989c2270f878736e77521/68a05fd7ef83f7891c8de8cf_Vivid%20Portrait%20with%20Bold%20Colors-p-1080.webp 1080w, https://cdn.prod.website-files.com/689989c2270f878736e77521/68a05fd7ef83f7891c8de8cf_Vivid%20Portrait%20with%20Bold%20Colors-p-1600.webp 1600w, https://cdn.prod.website-files.com/689989c2270f878736e77521/68a05fd7ef83f7891c8de8cf_Vivid%20Portrait%20with%20Bold%20Colors-p-2000.webp 2000w, https://cdn.prod.website-files.com/689989c2270f878736e77521/68a05fd7ef83f7891c8de8cf_Vivid%20Portrait%20with%20Bold%20Colors.webp 2400w"
+                class="hero-image-max w-node-c3b56dc0-985d-b320-bd01-e71ddd3ccc72-ba3cb9d8" /><img id="HeroImageMax02"
+                loading="lazy" alt="Modern Digital Alarm Clock"
+                src="https://cdn.prod.website-files.com/689989c2270f878736e77521/68a06008abba88ce9c298e21_Modern%20Digital%20Alarm%20Clock.webp"
+                sizes="(max-width: 767px) 100vw, (max-width: 991px) 728px, 940px"
+                srcset="https://cdn.prod.website-files.com/689989c2270f878736e77521/68a06008abba88ce9c298e21_Modern%20Digital%20Alarm%20Clock-p-500.webp 500w, https://cdn.prod.website-files.com/689989c2270f878736e77521/68a06008abba88ce9c298e21_Modern%20Digital%20Alarm%20Clock-p-800.webp 800w, https://cdn.prod.website-files.com/689989c2270f878736e77521/68a06008abba88ce9c298e21_Modern%20Digital%20Alarm%20Clock-p-1080.webp 1080w, https://cdn.prod.website-files.com/689989c2270f878736e77521/68a06008abba88ce9c298e21_Modern%20Digital%20Alarm%20Clock-p-1600.webp 1600w, https://cdn.prod.website-files.com/689989c2270f878736e77521/68a06008abba88ce9c298e21_Modern%20Digital%20Alarm%20Clock-p-2000.webp 2000w, https://cdn.prod.website-files.com/689989c2270f878736e77521/68a06008abba88ce9c298e21_Modern%20Digital%20Alarm%20Clock.webp 2400w"
+                class="hero-image-max w-node-_8247e181-b376-cae8-c5f7-a981d691011e-ba3cb9d8" /><img id="HeroImageMax03"
+                loading="lazy" alt="Dapper Young Man with Stylish Attire and Joyful Smile"
+                src="https://cdn.prod.website-files.com/689989c2270f878736e77521/68a06151478c76ab4363e948_Dapper%20Young%20Man%20with%20Stylish%20Attire%20and%20Joyful%20Smile.webp"
+                sizes="(max-width: 767px) 100vw, (max-width: 991px) 728px, 940px"
+                srcset="https://cdn.prod.website-files.com/689989c2270f878736e77521/68a06151478c76ab4363e948_Dapper%20Young%20Man%20with%20Stylish%20Attire%20and%20Joyful%20Smile-p-500.webp 500w, https://cdn.prod.website-files.com/689989c2270f878736e77521/68a06151478c76ab4363e948_Dapper%20Young%20Man%20with%20Stylish%20Attire%20and%20Joyful%20Smile-p-800.webp 800w, https://cdn.prod.website-files.com/689989c2270f878736e77521/68a06151478c76ab4363e948_Dapper%20Young%20Man%20with%20Stylish%20Attire%20and%20Joyful%20Smile-p-1080.webp 1080w, https://cdn.prod.website-files.com/689989c2270f878736e77521/68a06151478c76ab4363e948_Dapper%20Young%20Man%20with%20Stylish%20Attire%20and%20Joyful%20Smile-p-1600.webp 1600w, https://cdn.prod.website-files.com/689989c2270f878736e77521/68a06151478c76ab4363e948_Dapper%20Young%20Man%20with%20Stylish%20Attire%20and%20Joyful%20Smile-p-2000.webp 2000w, https://cdn.prod.website-files.com/689989c2270f878736e77521/68a06151478c76ab4363e948_Dapper%20Young%20Man%20with%20Stylish%20Attire%20and%20Joyful%20Smile.webp 2400w"
+                class="hero-image-max w-node-d4dc2051-4ae7-26bd-fb6c-68434de6ecb4-ba3cb9d8" /><img id="HeroImageMax04"
+                loading="lazy" alt="Tennis Court Smiley"
+                src="https://cdn.prod.website-files.com/689989c2270f878736e77521/68a061f4c6476b52f101c546_Tennis%20Court%20Smiley.webp"
+                sizes="(max-width: 767px) 100vw, (max-width: 991px) 728px, 940px"
+                srcset="https://cdn.prod.website-files.com/689989c2270f878736e77521/68a061f4c6476b52f101c546_Tennis%20Court%20Smiley-p-500.webp 500w, https://cdn.prod.website-files.com/689989c2270f878736e77521/68a061f4c6476b52f101c546_Tennis%20Court%20Smiley-p-800.webp 800w, https://cdn.prod.website-files.com/689989c2270f878736e77521/68a061f4c6476b52f101c546_Tennis%20Court%20Smiley-p-1080.webp 1080w, https://cdn.prod.website-files.com/689989c2270f878736e77521/68a061f4c6476b52f101c546_Tennis%20Court%20Smiley.webp 1600w"
+                class="hero-image-max w-node-c5b0b754-0594-2fb2-f571-774adc7e4feb-ba3cb9d8" /><img id="HeroImageMax05"
+                loading="lazy" alt="Striking Fashion Portrait"
+                src="https://cdn.prod.website-files.com/689989c2270f878736e77521/68a06273d7ac585cdfd38aff_Striking%20Fashion%20Portrait.webp"
+                sizes="(max-width: 767px) 100vw, (max-width: 991px) 728px, 940px"
+                srcset="https://cdn.prod.website-files.com/689989c2270f878736e77521/68a06273d7ac585cdfd38aff_Striking%20Fashion%20Portrait-p-500.webp 500w, https://cdn.prod.website-files.com/689989c2270f878736e77521/68a06273d7ac585cdfd38aff_Striking%20Fashion%20Portrait-p-800.webp 800w, https://cdn.prod.website-files.com/689989c2270f878736e77521/68a06273d7ac585cdfd38aff_Striking%20Fashion%20Portrait-p-1080.webp 1080w, https://cdn.prod.website-files.com/689989c2270f878736e77521/68a06273d7ac585cdfd38aff_Striking%20Fashion%20Portrait-p-1600.webp 1600w, https://cdn.prod.website-files.com/689989c2270f878736e77521/68a06273d7ac585cdfd38aff_Striking%20Fashion%20Portrait-p-2000.webp 2000w, https://cdn.prod.website-files.com/689989c2270f878736e77521/68a06273d7ac585cdfd38aff_Striking%20Fashion%20Portrait.webp 2400w"
+                class="hero-image-max w-node-_960740b5-50c7-411d-8a9a-984aa3ab8d9f-ba3cb9d8" /><img id="HeroImageMax06"
+                loading="lazy" alt="Minimalist Object Display"
+                src="https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66a45215a4a12e56b42_Minimalist%20Object%20Display.webp"
+                sizes="(max-width: 767px) 100vw, (max-width: 991px) 727.9921875px, 939.9921875px"
+                srcset="https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66a45215a4a12e56b42_Minimalist%20Object%20Display-p-500.webp 500w, https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66a45215a4a12e56b42_Minimalist%20Object%20Display-p-800.webp 800w, https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66a45215a4a12e56b42_Minimalist%20Object%20Display-p-1080.webp 1080w, https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66a45215a4a12e56b42_Minimalist%20Object%20Display.webp 1200w"
+                class="hero-image-max w-node-a24c7def-9f7a-b2ad-9350-4dc154960dcf-ba3cb9d8" /><img id="HeroImageMax07"
+                loading="lazy" alt="Dynamic Basketball Action"
+                src="https://cdn.prod.website-files.com/689989c2270f878736e77521/68a0644e4273b79085a54536_Dynamic%20Basketball%20Action.webp"
+                sizes="(max-width: 767px) 100vw, (max-width: 991px) 728px, 940px"
+                srcset="https://cdn.prod.website-files.com/689989c2270f878736e77521/68a0644e4273b79085a54536_Dynamic%20Basketball%20Action-p-500.webp 500w, https://cdn.prod.website-files.com/689989c2270f878736e77521/68a0644e4273b79085a54536_Dynamic%20Basketball%20Action-p-800.webp 800w, https://cdn.prod.website-files.com/689989c2270f878736e77521/68a0644e4273b79085a54536_Dynamic%20Basketball%20Action-p-1080.webp 1080w, https://cdn.prod.website-files.com/689989c2270f878736e77521/68a0644e4273b79085a54536_Dynamic%20Basketball%20Action-p-1600.webp 1600w, https://cdn.prod.website-files.com/689989c2270f878736e77521/68a0644e4273b79085a54536_Dynamic%20Basketball%20Action-p-2000.webp 2000w, https://cdn.prod.website-files.com/689989c2270f878736e77521/68a0644e4273b79085a54536_Dynamic%20Basketball%20Action.webp 2400w"
+                class="hero-image-max w-node-_14827828-73c1-2062-87ef-7f3ffc135aa8-ba3cb9d8" /><img id="HeroImageMax08"
+                loading="lazy" alt="Baseball Armchair Concept"
+                src="https://cdn.prod.website-files.com/689989c2270f878736e77521/68a064a3345c18200dff8cbf_Baseball%20Armchair%20Concept.webp"
+                sizes="(max-width: 767px) 100vw, (max-width: 991px) 728px, 940px"
+                srcset="https://cdn.prod.website-files.com/689989c2270f878736e77521/68a064a3345c18200dff8cbf_Baseball%20Armchair%20Concept-p-500.webp 500w, https://cdn.prod.website-files.com/689989c2270f878736e77521/68a064a3345c18200dff8cbf_Baseball%20Armchair%20Concept-p-800.webp 800w, https://cdn.prod.website-files.com/689989c2270f878736e77521/68a064a3345c18200dff8cbf_Baseball%20Armchair%20Concept-p-1080.webp 1080w, https://cdn.prod.website-files.com/689989c2270f878736e77521/68a064a3345c18200dff8cbf_Baseball%20Armchair%20Concept-p-1600.webp 1600w, https://cdn.prod.website-files.com/689989c2270f878736e77521/68a064a3345c18200dff8cbf_Baseball%20Armchair%20Concept-p-2000.webp 2000w, https://cdn.prod.website-files.com/689989c2270f878736e77521/68a064a3345c18200dff8cbf_Baseball%20Armchair%20Concept.webp 2400w"
+                class="hero-image-max w-node-_00232106-95d6-23a5-6aa8-365e28214c26-ba3cb9d8" /><img id="HeroImageMax09"
+                loading="lazy" alt="Minimalist Fashion Pose"
+                src="https://cdn.prod.website-files.com/689989c2270f878736e77521/68a05e16480e875b283de085_Minimalist%20Fashion%20Pose.webp"
+                sizes="(max-width: 767px) 100vw, (max-width: 991px) 728px, 940px"
+                srcset="https://cdn.prod.website-files.com/689989c2270f878736e77521/68a05e16480e875b283de085_Minimalist%20Fashion%20Pose-p-500.webp 500w, https://cdn.prod.website-files.com/689989c2270f878736e77521/68a05e16480e875b283de085_Minimalist%20Fashion%20Pose-p-800.webp 800w, https://cdn.prod.website-files.com/689989c2270f878736e77521/68a05e16480e875b283de085_Minimalist%20Fashion%20Pose-p-1080.webp 1080w, https://cdn.prod.website-files.com/689989c2270f878736e77521/68a05e16480e875b283de085_Minimalist%20Fashion%20Pose-p-1600.webp 1600w, https://cdn.prod.website-files.com/689989c2270f878736e77521/68a05e16480e875b283de085_Minimalist%20Fashion%20Pose-p-2000.webp 2000w, https://cdn.prod.website-files.com/689989c2270f878736e77521/68a05e16480e875b283de085_Minimalist%20Fashion%20Pose.webp 2400w"
+                class="hero-image-max w-node-a203dcb4-9fa3-9c12-2c9a-935e5c2b7287-ba3cb9d8" /><img id="HeroImageMax10"
+                loading="lazy" alt="Geometric Object Display"
+                src="https://cdn.prod.website-files.com/689989c2270f878736e77521/68a0635361fda760fd73dd59_Geometric%20Object%20Display.webp"
+                sizes="(max-width: 767px) 100vw, (max-width: 991px) 728px, 940px"
+                srcset="https://cdn.prod.website-files.com/689989c2270f878736e77521/68a0635361fda760fd73dd59_Geometric%20Object%20Display-p-500.webp 500w, https://cdn.prod.website-files.com/689989c2270f878736e77521/68a0635361fda760fd73dd59_Geometric%20Object%20Display-p-800.webp 800w, https://cdn.prod.website-files.com/689989c2270f878736e77521/68a0635361fda760fd73dd59_Geometric%20Object%20Display-p-1080.webp 1080w, https://cdn.prod.website-files.com/689989c2270f878736e77521/68a0635361fda760fd73dd59_Geometric%20Object%20Display.webp 1200w"
+                class="hero-image-max w-node-d907cded-ce80-82a0-7cf4-2d96b714eb1f-ba3cb9d8" /><img id="HeroImageMax11"
+                loading="lazy" alt="Vibrant Portrait Style"
+                src="https://cdn.prod.website-files.com/689989c2270f878736e77521/68a0652e9342e48ac7b62412_Vibrant%20Portrait%20Style.webp"
+                sizes="(max-width: 767px) 100vw, (max-width: 991px) 728px, 940px"
+                srcset="https://cdn.prod.website-files.com/689989c2270f878736e77521/68a0652e9342e48ac7b62412_Vibrant%20Portrait%20Style-p-500.webp 500w, https://cdn.prod.website-files.com/689989c2270f878736e77521/68a0652e9342e48ac7b62412_Vibrant%20Portrait%20Style-p-800.webp 800w, https://cdn.prod.website-files.com/689989c2270f878736e77521/68a0652e9342e48ac7b62412_Vibrant%20Portrait%20Style-p-1080.webp 1080w, https://cdn.prod.website-files.com/689989c2270f878736e77521/68a0652e9342e48ac7b62412_Vibrant%20Portrait%20Style.webp 1600w"
+                class="hero-image-max w-node-e067b623-aa5f-3df0-8946-a77ac83c3e7c-ba3cb9d8" /><img id="HeroImageMax12"
+                loading="lazy" alt=""
+                src="https://cdn.prod.website-files.com/6873ffaff3ec7143803bf75e/6873ffaff3ec7143803bfab2_A_stylish_woman3Flip.webp"
+                class="hero-image-max w-node-_41a2c83b-2ea7-ea04-f49e-abe68f8f6f85-ba3cb9d8" />
+            <div class="hero-images">
+                <div class="cards-wrapper">
+                    <div class="hero-thumb _01"><img
+                            src="https://cdn.prod.website-files.com/689989c2270f878736e77521/68a05fd7ef83f7891c8de8cf_Vivid%20Portrait%20with%20Bold%20Colors.webp"
+                            loading="eager" id="HeroThumb01" alt="Vivid Portrait with Bold Colors"
+                            sizes="(max-width: 767px) 100vw, (max-width: 991px) 728px, 940px"
+                            srcset="https://cdn.prod.website-files.com/689989c2270f878736e77521/68a05fd7ef83f7891c8de8cf_Vivid%20Portrait%20with%20Bold%20Colors-p-500.webp 500w, https://cdn.prod.website-files.com/689989c2270f878736e77521/68a05fd7ef83f7891c8de8cf_Vivid%20Portrait%20with%20Bold%20Colors-p-800.webp 800w, https://cdn.prod.website-files.com/689989c2270f878736e77521/68a05fd7ef83f7891c8de8cf_Vivid%20Portrait%20with%20Bold%20Colors-p-1080.webp 1080w, https://cdn.prod.website-files.com/689989c2270f878736e77521/68a05fd7ef83f7891c8de8cf_Vivid%20Portrait%20with%20Bold%20Colors-p-1600.webp 1600w, https://cdn.prod.website-files.com/689989c2270f878736e77521/68a05fd7ef83f7891c8de8cf_Vivid%20Portrait%20with%20Bold%20Colors-p-2000.webp 2000w, https://cdn.prod.website-files.com/689989c2270f878736e77521/68a05fd7ef83f7891c8de8cf_Vivid%20Portrait%20with%20Bold%20Colors.webp 2400w"
+                            class="hero-thumb-image w-node-e36e4e71-abca-d539-3eee-010fdc5d1637-ba3cb9d8" /></div>
+                    <div class="hero-thumb _02"><img
+                            src="https://cdn.prod.website-files.com/689989c2270f878736e77521/68a06008abba88ce9c298e21_Modern%20Digital%20Alarm%20Clock.webp"
+                            loading="eager" id="HeroThumb02" alt="Modern Digital Alarm Clock"
+                            sizes="(max-width: 767px) 100vw, (max-width: 991px) 728px, 940px"
+                            srcset="https://cdn.prod.website-files.com/689989c2270f878736e77521/68a06008abba88ce9c298e21_Modern%20Digital%20Alarm%20Clock-p-500.webp 500w, https://cdn.prod.website-files.com/689989c2270f878736e77521/68a06008abba88ce9c298e21_Modern%20Digital%20Alarm%20Clock-p-800.webp 800w, https://cdn.prod.website-files.com/689989c2270f878736e77521/68a06008abba88ce9c298e21_Modern%20Digital%20Alarm%20Clock-p-1080.webp 1080w, https://cdn.prod.website-files.com/689989c2270f878736e77521/68a06008abba88ce9c298e21_Modern%20Digital%20Alarm%20Clock-p-1600.webp 1600w, https://cdn.prod.website-files.com/689989c2270f878736e77521/68a06008abba88ce9c298e21_Modern%20Digital%20Alarm%20Clock-p-2000.webp 2000w, https://cdn.prod.website-files.com/689989c2270f878736e77521/68a06008abba88ce9c298e21_Modern%20Digital%20Alarm%20Clock.webp 2400w"
+                            class="hero-thumb-image w-node-e7cbd8fa-8047-29ae-1a04-3e31a923a7bb-ba3cb9d8" /></div>
+                    <div class="hero-thumb _03"><img
+                            src="https://cdn.prod.website-files.com/689989c2270f878736e77521/68a06151478c76ab4363e948_Dapper%20Young%20Man%20with%20Stylish%20Attire%20and%20Joyful%20Smile.webp"
+                            loading="eager" id="HeroThumb03" alt="Dapper Young Man with Stylish Attire and Joyful Smile"
+                            sizes="(max-width: 767px) 100vw, (max-width: 991px) 728px, 940px"
+                            srcset="https://cdn.prod.website-files.com/689989c2270f878736e77521/68a06151478c76ab4363e948_Dapper%20Young%20Man%20with%20Stylish%20Attire%20and%20Joyful%20Smile-p-500.webp 500w, https://cdn.prod.website-files.com/689989c2270f878736e77521/68a06151478c76ab4363e948_Dapper%20Young%20Man%20with%20Stylish%20Attire%20and%20Joyful%20Smile-p-800.webp 800w, https://cdn.prod.website-files.com/689989c2270f878736e77521/68a06151478c76ab4363e948_Dapper%20Young%20Man%20with%20Stylish%20Attire%20and%20Joyful%20Smile-p-1080.webp 1080w, https://cdn.prod.website-files.com/689989c2270f878736e77521/68a06151478c76ab4363e948_Dapper%20Young%20Man%20with%20Stylish%20Attire%20and%20Joyful%20Smile-p-1600.webp 1600w, https://cdn.prod.website-files.com/689989c2270f878736e77521/68a06151478c76ab4363e948_Dapper%20Young%20Man%20with%20Stylish%20Attire%20and%20Joyful%20Smile-p-2000.webp 2000w, https://cdn.prod.website-files.com/689989c2270f878736e77521/68a06151478c76ab4363e948_Dapper%20Young%20Man%20with%20Stylish%20Attire%20and%20Joyful%20Smile.webp 2400w"
+                            class="hero-thumb-image w-node-_05d90e17-6445-1ca4-83f0-22ef61c2aea2-ba3cb9d8" /></div>
+                    <div class="hero-thumb _04"><img
+                            src="https://cdn.prod.website-files.com/689989c2270f878736e77521/68a061f4c6476b52f101c546_Tennis%20Court%20Smiley.webp"
+                            loading="eager" id="HeroThumb04" alt="Tennis Court Smiley"
+                            sizes="(max-width: 767px) 100vw, (max-width: 991px) 728px, 940px"
+                            srcset="https://cdn.prod.website-files.com/689989c2270f878736e77521/68a061f4c6476b52f101c546_Tennis%20Court%20Smiley-p-500.webp 500w, https://cdn.prod.website-files.com/689989c2270f878736e77521/68a061f4c6476b52f101c546_Tennis%20Court%20Smiley-p-800.webp 800w, https://cdn.prod.website-files.com/689989c2270f878736e77521/68a061f4c6476b52f101c546_Tennis%20Court%20Smiley-p-1080.webp 1080w, https://cdn.prod.website-files.com/689989c2270f878736e77521/68a061f4c6476b52f101c546_Tennis%20Court%20Smiley.webp 1600w"
+                            class="hero-thumb-image w-node-_7596ddd1-0627-5929-758a-c6f9252ba6f7-ba3cb9d8" /></div>
+                    <div class="hero-thumb _05"><img
+                            src="https://cdn.prod.website-files.com/689989c2270f878736e77521/68a06273d7ac585cdfd38aff_Striking%20Fashion%20Portrait.webp"
+                            loading="eager" id="HeroThumb05" alt="Striking Fashion Portrait"
+                            sizes="(max-width: 767px) 100vw, (max-width: 991px) 728px, 940px"
+                            srcset="https://cdn.prod.website-files.com/689989c2270f878736e77521/68a06273d7ac585cdfd38aff_Striking%20Fashion%20Portrait-p-500.webp 500w, https://cdn.prod.website-files.com/689989c2270f878736e77521/68a06273d7ac585cdfd38aff_Striking%20Fashion%20Portrait-p-800.webp 800w, https://cdn.prod.website-files.com/689989c2270f878736e77521/68a06273d7ac585cdfd38aff_Striking%20Fashion%20Portrait-p-1080.webp 1080w, https://cdn.prod.website-files.com/689989c2270f878736e77521/68a06273d7ac585cdfd38aff_Striking%20Fashion%20Portrait-p-1600.webp 1600w, https://cdn.prod.website-files.com/689989c2270f878736e77521/68a06273d7ac585cdfd38aff_Striking%20Fashion%20Portrait-p-2000.webp 2000w, https://cdn.prod.website-files.com/689989c2270f878736e77521/68a06273d7ac585cdfd38aff_Striking%20Fashion%20Portrait.webp 2400w"
+                            class="hero-thumb-image w-node-_7596ddd1-0627-5929-758a-c6f9252ba6f9-ba3cb9d8" /></div>
+                    <div class="hero-thumb _06"><img
+                            src="https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66a45215a4a12e56b42_Minimalist%20Object%20Display.webp"
+                            loading="eager" id="HeroThumb06" alt="Minimalist Object Display"
+                            sizes="(max-width: 767px) 100vw, (max-width: 991px) 727.9921875px, 939.9921875px"
+                            srcset="https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66a45215a4a12e56b42_Minimalist%20Object%20Display-p-500.webp 500w, https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66a45215a4a12e56b42_Minimalist%20Object%20Display-p-800.webp 800w, https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66a45215a4a12e56b42_Minimalist%20Object%20Display-p-1080.webp 1080w, https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66a45215a4a12e56b42_Minimalist%20Object%20Display.webp 1200w"
+                            class="hero-thumb-image w-node-_7596ddd1-0627-5929-758a-c6f9252ba6fb-ba3cb9d8" /></div>
+                    <div class="hero-thumb _07"><img
+                            src="https://cdn.prod.website-files.com/689989c2270f878736e77521/68a0644e4273b79085a54536_Dynamic%20Basketball%20Action.webp"
+                            loading="eager" id="HeroThumb07" alt="Dynamic Basketball Action"
+                            sizes="(max-width: 767px) 100vw, (max-width: 991px) 728px, 940px"
+                            srcset="https://cdn.prod.website-files.com/689989c2270f878736e77521/68a0644e4273b79085a54536_Dynamic%20Basketball%20Action-p-500.webp 500w, https://cdn.prod.website-files.com/689989c2270f878736e77521/68a0644e4273b79085a54536_Dynamic%20Basketball%20Action-p-800.webp 800w, https://cdn.prod.website-files.com/689989c2270f878736e77521/68a0644e4273b79085a54536_Dynamic%20Basketball%20Action-p-1080.webp 1080w, https://cdn.prod.website-files.com/689989c2270f878736e77521/68a0644e4273b79085a54536_Dynamic%20Basketball%20Action-p-1600.webp 1600w, https://cdn.prod.website-files.com/689989c2270f878736e77521/68a0644e4273b79085a54536_Dynamic%20Basketball%20Action-p-2000.webp 2000w, https://cdn.prod.website-files.com/689989c2270f878736e77521/68a0644e4273b79085a54536_Dynamic%20Basketball%20Action.webp 2400w"
+                            class="hero-thumb-image w-node-_7596ddd1-0627-5929-758a-c6f9252ba6fd-ba3cb9d8" /></div>
+                    <div class="hero-thumb _08"><img
+                            src="https://cdn.prod.website-files.com/689989c2270f878736e77521/68a064a3345c18200dff8cbf_Baseball%20Armchair%20Concept.webp"
+                            loading="eager" id="HeroThumb08" alt="Baseball Armchair Concept"
+                            sizes="(max-width: 767px) 100vw, (max-width: 991px) 728px, 940px"
+                            srcset="https://cdn.prod.website-files.com/689989c2270f878736e77521/68a064a3345c18200dff8cbf_Baseball%20Armchair%20Concept-p-500.webp 500w, https://cdn.prod.website-files.com/689989c2270f878736e77521/68a064a3345c18200dff8cbf_Baseball%20Armchair%20Concept-p-800.webp 800w, https://cdn.prod.website-files.com/689989c2270f878736e77521/68a064a3345c18200dff8cbf_Baseball%20Armchair%20Concept-p-1080.webp 1080w, https://cdn.prod.website-files.com/689989c2270f878736e77521/68a064a3345c18200dff8cbf_Baseball%20Armchair%20Concept-p-1600.webp 1600w, https://cdn.prod.website-files.com/689989c2270f878736e77521/68a064a3345c18200dff8cbf_Baseball%20Armchair%20Concept-p-2000.webp 2000w, https://cdn.prod.website-files.com/689989c2270f878736e77521/68a064a3345c18200dff8cbf_Baseball%20Armchair%20Concept.webp 2400w"
+                            class="hero-thumb-image w-node-_7596ddd1-0627-5929-758a-c6f9252ba701-ba3cb9d8" /></div>
+                    <div class="hero-thumb _09"><img
+                            src="https://cdn.prod.website-files.com/689989c2270f878736e77521/68a05e16480e875b283de085_Minimalist%20Fashion%20Pose.webp"
+                            loading="eager" id="HeroThumb09" alt="Minimalist Fashion Pose"
+                            sizes="(max-width: 767px) 100vw, (max-width: 991px) 728px, 940px"
+                            srcset="https://cdn.prod.website-files.com/689989c2270f878736e77521/68a05e16480e875b283de085_Minimalist%20Fashion%20Pose-p-500.webp 500w, https://cdn.prod.website-files.com/689989c2270f878736e77521/68a05e16480e875b283de085_Minimalist%20Fashion%20Pose-p-800.webp 800w, https://cdn.prod.website-files.com/689989c2270f878736e77521/68a05e16480e875b283de085_Minimalist%20Fashion%20Pose-p-1080.webp 1080w, https://cdn.prod.website-files.com/689989c2270f878736e77521/68a05e16480e875b283de085_Minimalist%20Fashion%20Pose-p-1600.webp 1600w, https://cdn.prod.website-files.com/689989c2270f878736e77521/68a05e16480e875b283de085_Minimalist%20Fashion%20Pose-p-2000.webp 2000w, https://cdn.prod.website-files.com/689989c2270f878736e77521/68a05e16480e875b283de085_Minimalist%20Fashion%20Pose.webp 2400w"
+                            class="hero-thumb-image w-node-_7596ddd1-0627-5929-758a-c6f9252ba703-ba3cb9d8" /></div>
+                    <div class="hero-thumb _10"><img
+                            src="https://cdn.prod.website-files.com/689989c2270f878736e77521/68a0635361fda760fd73dd59_Geometric%20Object%20Display.webp"
+                            loading="eager" id="HeroThumb10" alt="Geometric Object Display"
+                            sizes="(max-width: 767px) 100vw, (max-width: 991px) 728px, 940px"
+                            srcset="https://cdn.prod.website-files.com/689989c2270f878736e77521/68a0635361fda760fd73dd59_Geometric%20Object%20Display-p-500.webp 500w, https://cdn.prod.website-files.com/689989c2270f878736e77521/68a0635361fda760fd73dd59_Geometric%20Object%20Display-p-800.webp 800w, https://cdn.prod.website-files.com/689989c2270f878736e77521/68a0635361fda760fd73dd59_Geometric%20Object%20Display-p-1080.webp 1080w, https://cdn.prod.website-files.com/689989c2270f878736e77521/68a0635361fda760fd73dd59_Geometric%20Object%20Display.webp 1200w"
+                            class="hero-thumb-image w-node-_7596ddd1-0627-5929-758a-c6f9252ba705-ba3cb9d8" /></div>
+                    <div class="hero-thumb _11"><img
+                            src="https://cdn.prod.website-files.com/689989c2270f878736e77521/68a0652e9342e48ac7b62412_Vibrant%20Portrait%20Style.webp"
+                            loading="eager" id="HeroThumb11" alt="Vibrant Portrait Style"
+                            sizes="(max-width: 767px) 100vw, (max-width: 991px) 728px, 940px"
+                            srcset="https://cdn.prod.website-files.com/689989c2270f878736e77521/68a0652e9342e48ac7b62412_Vibrant%20Portrait%20Style-p-500.webp 500w, https://cdn.prod.website-files.com/689989c2270f878736e77521/68a0652e9342e48ac7b62412_Vibrant%20Portrait%20Style-p-800.webp 800w, https://cdn.prod.website-files.com/689989c2270f878736e77521/68a0652e9342e48ac7b62412_Vibrant%20Portrait%20Style-p-1080.webp 1080w, https://cdn.prod.website-files.com/689989c2270f878736e77521/68a0652e9342e48ac7b62412_Vibrant%20Portrait%20Style.webp 1600w"
+                            class="hero-thumb-image w-node-_7596ddd1-0627-5929-758a-c6f9252ba707-ba3cb9d8" /></div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="section">
+        <div class="w-layout-blockcontainer intro-container w-container">
+            <div class="space-large"></div>
+            <div id="Scroll" class="text-with-images">
+                <h2>We</h2>
+                <h2>blend</h2><img sizes="(max-width: 767px) 100vw, (max-width: 991px) 728px, 940px"
+                    srcset="https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66bbac017f6a400b614_Stylized%20Graffiti-Inspired%20Robot-p-500.webp 500w, https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66bbac017f6a400b614_Stylized%20Graffiti-Inspired%20Robot-p-800.webp 800w, https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66bbac017f6a400b614_Stylized%20Graffiti-Inspired%20Robot.webp 960w"
+                    alt="Stylized Graffiti-Inspired Robot"
+                    src="https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66bbac017f6a400b614_Stylized%20Graffiti-Inspired%20Robot.webp"
+                    loading="lazy" class="text-image" />
+                <h2>creativity </h2>
+                <h2>with </h2>
+                <h2>technology</h2>
+                <h2>to </h2><img sizes="(max-width: 767px) 100vw, (max-width: 991px) 728px, 940px"
+                    srcset="https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66ced2610f6911fafcf_Glossy%20Tote%20Bags%20on%20Vibrant%20Background-p-500.webp 500w, https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66ced2610f6911fafcf_Glossy%20Tote%20Bags%20on%20Vibrant%20Background-p-800.webp 800w, https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66ced2610f6911fafcf_Glossy%20Tote%20Bags%20on%20Vibrant%20Background.webp 960w"
+                    alt="Glossy Tote Bags on Vibrant Background"
+                    src="https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66ced2610f6911fafcf_Glossy%20Tote%20Bags%20on%20Vibrant%20Background.webp"
+                    loading="lazy" class="text-image" />
+                <h2>revolutionize</h2>
+                <h2>how</h2>
+                <h2>design</h2><img sizes="(max-width: 767px) 100vw, (max-width: 991px) 727.9921875px, 904px"
+                    srcset="https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66bdd829a2fb5a6dc35_Fashion%20Portrait%20with%20Vibrant%20Hat-p-500.webp 500w, https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66bdd829a2fb5a6dc35_Fashion%20Portrait%20with%20Vibrant%20Hat-p-800.webp 800w, https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66bdd829a2fb5a6dc35_Fashion%20Portrait%20with%20Vibrant%20Hat.webp 904w"
+                    alt="Fashion Portrait with Vibrant Hat"
+                    src="https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66bdd829a2fb5a6dc35_Fashion%20Portrait%20with%20Vibrant%20Hat.webp"
+                    loading="lazy" class="text-image" />
+                <h2>meets</h2>
+                <h2>reality.</h2>
+            </div>
+            <div class="space-large"></div>
+        </div>
+    </section>
+    <section data-w-id="fb358458-e6db-200b-8fdd-2f9263c6fcb9" class="section">
+        <div class="w-layout-blockcontainer container-full w-container">
+            <div class="scroll-wrapper">
+                <div class="scroll-block">
+                    <div class="scroll-flex"><img
+                            sizes="(max-width: 767px) 100vw, (max-width: 991px) 727.9921875px, 906px"
+                            srcset="https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66baf162b757a39b091_Tennis%20Net%20Close-Up-p-500.webp 500w, https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66baf162b757a39b091_Tennis%20Net%20Close-Up-p-800.webp 800w, https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66baf162b757a39b091_Tennis%20Net%20Close-Up.webp 906w"
+                            alt="Tennis Net Close-Up"
+                            src="https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66baf162b757a39b091_Tennis%20Net%20Close-Up.webp"
+                            loading="lazy" class="card-image" /><img sizes="100vw"
+                            srcset="https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66b1580d9ca27b80500_Dapper%20Young%20Man%20with%20Stylish%20Attire%20and%20Joyful%20Smile-p-500.webp 500w, https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66b1580d9ca27b80500_Dapper%20Young%20Man%20with%20Stylish%20Attire%20and%20Joyful%20Smile.webp 800w"
+                            alt="Dapper Young Man with Stylish Attire and Joyful Smile"
+                            src="https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66b1580d9ca27b80500_Dapper%20Young%20Man%20with%20Stylish%20Attire%20and%20Joyful%20Smile.webp"
+                            loading="lazy" class="card-image" /><img
+                            id="w-node-fb358458-e6db-200b-8fdd-2f9263c6fcd1-36e774f9"
+                            sizes="(max-width: 767px) 100vw, (max-width: 991px) 728px, 940px" alt="Color Block Tote Bag"
+                            src="https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66c64dc19cb7248b949_Color%20Block%20Tote%20Bag.webp"
+                            loading="lazy"
+                            srcset="https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66c64dc19cb7248b949_Color%20Block%20Tote%20Bag-p-500.webp 500w, https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66c64dc19cb7248b949_Color%20Block%20Tote%20Bag-p-800.webp 800w, https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66c64dc19cb7248b949_Color%20Block%20Tote%20Bag.webp 960w"
+                            class="card-image" /><img
+                            sizes="(max-width: 767px) 100vw, (max-width: 991px) 727.9921875px, 750px"
+                            srcset="https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66a24a7a04635323b86_Cheerful%20Young%20Woman%20with%20Colorful%20Attire-p-500.webp 500w, https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66a24a7a04635323b86_Cheerful%20Young%20Woman%20with%20Colorful%20Attire.webp 750w"
+                            alt="Cheerful Young Woman with Colorful Attire"
+                            src="https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66a24a7a04635323b86_Cheerful%20Young%20Woman%20with%20Colorful%20Attire.webp"
+                            loading="lazy" class="card-image" /><img
+                            id="w-node-fb358458-e6db-200b-8fdd-2f9263c6fcd3-36e774f9" sizes="100vw"
+                            alt="Matte Black Circular Object on Red"
+                            src="https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66bd60d48c5c5315745_Matte%20Black%20Circular%20Object%20on%20Red.webp"
+                            loading="lazy"
+                            srcset="https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66bd60d48c5c5315745_Matte%20Black%20Circular%20Object%20on%20Red-p-500.webp 500w, https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66bd60d48c5c5315745_Matte%20Black%20Circular%20Object%20on%20Red-p-800.webp 800w, https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66bd60d48c5c5315745_Matte%20Black%20Circular%20Object%20on%20Red-p-1080.webp 1080w, https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66bd60d48c5c5315745_Matte%20Black%20Circular%20Object%20on%20Red.webp 1200w"
+                            class="card-image" /><img id="w-node-fb358458-e6db-200b-8fdd-2f9263c6fcd4-36e774f9"
+                            sizes="(max-width: 767px) 100vw, (max-width: 991px) 727.9921875px, 939.9921875px"
+                            alt="Pristine White Sneakers on Light Blue Background"
+                            src="https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66b451619260e657a43_Pristine%20White%20Sneakers%20on%20Light%20Blue%20Background.webp"
+                            loading="lazy"
+                            srcset="https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66b451619260e657a43_Pristine%20White%20Sneakers%20on%20Light%20Blue%20Background-p-500.webp 500w, https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66b451619260e657a43_Pristine%20White%20Sneakers%20on%20Light%20Blue%20Background-p-800.webp 800w, https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66b451619260e657a43_Pristine%20White%20Sneakers%20on%20Light%20Blue%20Background-p-1080.webp 1080w, https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66b451619260e657a43_Pristine%20White%20Sneakers%20on%20Light%20Blue%20Background.webp 1200w"
+                            class="card-image" /><img id="w-node-fb358458-e6db-200b-8fdd-2f9263c6fcd5-36e774f9"
+                            sizes="100vw" alt="Modern Gaming Controller"
+                            src="https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66a260387e191729798_Modern%20Gaming%20Controller.webp"
+                            loading="lazy"
+                            srcset="https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66a260387e191729798_Modern%20Gaming%20Controller-p-500.webp 500w, https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66a260387e191729798_Modern%20Gaming%20Controller-p-800.webp 800w, https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66a260387e191729798_Modern%20Gaming%20Controller.webp 992w"
+                            class="card-image" /><img id="w-node-fb358458-e6db-200b-8fdd-2f9263c6fcd6-36e774f9"
+                            sizes="100vw" alt="Mini Car Flower Vase"
+                            src="https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f669754b169a3dbd5c7f_Mini%20Car%20Flower%20Vase.webp"
+                            loading="lazy"
+                            srcset="https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f669754b169a3dbd5c7f_Mini%20Car%20Flower%20Vase-p-500.webp 500w, https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f669754b169a3dbd5c7f_Mini%20Car%20Flower%20Vase-p-800.webp 800w, https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f669754b169a3dbd5c7f_Mini%20Car%20Flower%20Vase.webp 967w"
+                            class="card-image" /></div>
+                    <div class="scroll-flex bottom"><img id="w-node-fb358458-e6db-200b-8fdd-2f9263c6fcd8-36e774f9"
+                            sizes="100vw" alt="Modern Control Panel (1)"
+                            src="https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66ba0856be611f01282_Modern%20Control%20Panel%20(1).webp"
+                            loading="lazy"
+                            srcset="https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66ba0856be611f01282_Modern%20Control%20Panel%20(1)-p-500.webp 500w, https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66ba0856be611f01282_Modern%20Control%20Panel%20(1)-p-800.webp 800w, https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66ba0856be611f01282_Modern%20Control%20Panel%20(1).webp 992w"
+                            class="card-image" /><img id="w-node-fb358458-e6db-200b-8fdd-2f9263c6fcd9-36e774f9"
+                            sizes="100vw" alt="Dynamic Basketball Action"
+                            src="https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66a0d1bd4d5f7d23f0f_Dynamic%20Basketball%20Action.webp"
+                            loading="lazy"
+                            srcset="https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66a0d1bd4d5f7d23f0f_Dynamic%20Basketball%20Action-p-500.webp 500w, https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66a0d1bd4d5f7d23f0f_Dynamic%20Basketball%20Action-p-800.webp 800w, https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66a0d1bd4d5f7d23f0f_Dynamic%20Basketball%20Action.webp 840w"
+                            class="card-image" /><img id="w-node-fb358458-e6db-200b-8fdd-2f9263c6fcda-36e774f9"
+                            sizes="(max-width: 767px) 100vw, (max-width: 991px) 727.9921875px, 904px"
+                            alt="Portrait of a Young Woman"
+                            src="https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66d6417165e842c0883_Portrait%20of%20a%20Young%20Woman.webp"
+                            loading="lazy"
+                            srcset="https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66d6417165e842c0883_Portrait%20of%20a%20Young%20Woman-p-500.webp 500w, https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66d6417165e842c0883_Portrait%20of%20a%20Young%20Woman-p-800.webp 800w, https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66d6417165e842c0883_Portrait%20of%20a%20Young%20Woman.webp 904w"
+                            class="card-image" /><img id="w-node-fb358458-e6db-200b-8fdd-2f9263c6fcdb-36e774f9"
+                            sizes="(max-width: 767px) 100vw, (max-width: 991px) 728px, 940px"
+                            alt="Colorful Tote Bag on Turquoise Background"
+                            src="https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66bdce0b19c84f285d2_Colorful%20Tote%20Bag%20on%20Turquoise%20Background.webp"
+                            loading="lazy"
+                            srcset="https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66bdce0b19c84f285d2_Colorful%20Tote%20Bag%20on%20Turquoise%20Background-p-500.webp 500w, https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66bdce0b19c84f285d2_Colorful%20Tote%20Bag%20on%20Turquoise%20Background-p-800.webp 800w, https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66bdce0b19c84f285d2_Colorful%20Tote%20Bag%20on%20Turquoise%20Background.webp 960w"
+                            class="card-image" /><img sizes="100vw"
+                            srcset="https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66b1594a697a2ef4c3e_Modern%20Digital%20Alarm%20Clock-p-500.webp 500w, https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66b1594a697a2ef4c3e_Modern%20Digital%20Alarm%20Clock-p-800.webp 800w, https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66b1594a697a2ef4c3e_Modern%20Digital%20Alarm%20Clock.webp 992w"
+                            alt="Modern Digital Alarm Clock"
+                            src="https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66b1594a697a2ef4c3e_Modern%20Digital%20Alarm%20Clock.webp"
+                            loading="lazy" class="card-image" /><img
+                            sizes="(max-width: 767px) 100vw, (max-width: 991px) 728px, 940px"
+                            srcset="https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66b06111c31635d3d3b_Floral%20Leather%20Boots-p-500.webp 500w, https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66b06111c31635d3d3b_Floral%20Leather%20Boots-p-800.webp 800w, https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66b06111c31635d3d3b_Floral%20Leather%20Boots.webp 960w"
+                            alt="Floral Leather Boots"
+                            src="https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66b06111c31635d3d3b_Floral%20Leather%20Boots.webp"
+                            loading="lazy" class="card-image" /><img sizes="100vw"
+                            srcset="https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66c8a33c757a0215ed7_Vibrant%20Fashion%20Portrait-p-500.webp 500w, https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66c8a33c757a0215ed7_Vibrant%20Fashion%20Portrait.webp 800w"
+                            alt="Vibrant Fashion Portrait"
+                            src="https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66c8a33c757a0215ed7_Vibrant%20Fashion%20Portrait.webp"
+                            loading="lazy" class="card-image" /><img
+                            sizes="(max-width: 767px) 100vw, (max-width: 991px) 727.9921875px, 906px"
+                            srcset="https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66ab75d6d51921c4cd4_Blue%20Stadium%20Seats-p-500.webp 500w, https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66ab75d6d51921c4cd4_Blue%20Stadium%20Seats-p-800.webp 800w, https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66ab75d6d51921c4cd4_Blue%20Stadium%20Seats.webp 906w"
+                            alt="Blue Stadium Seats"
+                            src="https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66ab75d6d51921c4cd4_Blue%20Stadium%20Seats.webp"
+                            loading="lazy" class="card-image" /></div>
+                </div>
+            </div>
+            <div class="space-large"></div>
+        </div>
+    </section>
+    <section class="section">
+        <div class="w-layout-blockcontainer container-full padding-4-5rem w-container">
+            <div class="works-title-block">
+                <h3 ScrollTitleStagger="" class="section-title">Featured Works for Our Incredible Clients.</h3>
+            </div>
+            <div class="space"></div>
+        </div>
+    </section>
+    <section class="section">
+        <div class="w-layout-blockcontainer container-full padding-4-5rem w-container">
+            <div class="works-wrapper">
+                <div class="works-left w-dyn-list">
+                    <div role="list" class="works-block w-dyn-items">
+                        <div data-w-id="eb42e4a9-2704-5b6e-03f8-8a936e16cf8a" role="listitem" class="w-dyn-item"><a
+                                href="/works/elegant" class="works-link-wrapper-02 w-inline-block">
+                                <div class="works-thumb">
+                                    <div class="works-card"><img loading="lazy"
+                                            src="https://cdn.prod.website-files.com/689989c2270f878736e77534/68a07c52d7ac585cdfd6fa7e_Elegant%20Blonde%20Profile.webp"
+                                            alt=""
+                                            sizes="(max-width: 767px) 100vw, (max-width: 991px) 727.4140625px, 939.9375px"
+                                            srcset="https://cdn.prod.website-files.com/689989c2270f878736e77534/68a07c52d7ac585cdfd6fa7e_Elegant%20Blonde%20Profile-p-500.webp 500w, https://cdn.prod.website-files.com/689989c2270f878736e77534/68a07c52d7ac585cdfd6fa7e_Elegant%20Blonde%20Profile-p-800.webp 800w, https://cdn.prod.website-files.com/689989c2270f878736e77534/68a07c52d7ac585cdfd6fa7e_Elegant%20Blonde%20Profile-p-1080.webp 1080w, https://cdn.prod.website-files.com/689989c2270f878736e77534/68a07c52d7ac585cdfd6fa7e_Elegant%20Blonde%20Profile.webp 1600w"
+                                            class="work-image-thumb" /></div>
+                                </div>
+                                <div class="image-works-wrapper-02">
+                                    <div class="work-blur-overlay"></div>
+                                    <div class="work-blur-overlay"></div>
+                                    <div class="work-blur-overlay"></div>
+                                    <div class="work-blur-overlay"></div>
+                                    <div class="work-blur-overlay"></div>
+                                    <div class="work-blur-overlay"></div>
+                                    <div class="work-blur-overlay"></div>
+                                    <div class="work-blur-overlay"></div>
+                                    <div class="work-blur-overlay"></div>
+                                    <div class="work-blur-overlay"></div><img loading="lazy"
+                                        src="https://cdn.prod.website-files.com/689989c2270f878736e77534/68a07c52d7ac585cdfd6fa7e_Elegant%20Blonde%20Profile.webp"
+                                        alt=""
+                                        sizes="(max-width: 767px) 100vw, (max-width: 991px) 727.4140625px, 939.9375px"
+                                        srcset="https://cdn.prod.website-files.com/689989c2270f878736e77534/68a07c52d7ac585cdfd6fa7e_Elegant%20Blonde%20Profile-p-500.webp 500w, https://cdn.prod.website-files.com/689989c2270f878736e77534/68a07c52d7ac585cdfd6fa7e_Elegant%20Blonde%20Profile-p-800.webp 800w, https://cdn.prod.website-files.com/689989c2270f878736e77534/68a07c52d7ac585cdfd6fa7e_Elegant%20Blonde%20Profile-p-1080.webp 1080w, https://cdn.prod.website-files.com/689989c2270f878736e77534/68a07c52d7ac585cdfd6fa7e_Elegant%20Blonde%20Profile.webp 1600w"
+                                        class="work-image _01" />
+                                </div>
+                            </a>
+                            <div data-w-id="eb42e4a9-2704-5b6e-03f8-8a936e16cf9b" class="works-text-block">
+                                <div style="-webkit-transform:translate3d(0, 8rem, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(0, 8rem, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(0, 8rem, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(0, 8rem, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)"
+                                    class="works-tags">
+                                    <p class="normal">Design</p>
+                                    <p class="normal">•</p>
+                                    <p class="normal">2024</p>
+                                </div>
+                                <h4 style="-webkit-transform:translate3d(0, 8rem, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(0, 8rem, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(0, 8rem, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(0, 8rem, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)"
+                                    class="works-title">Elegant</h4>
+                            </div>
+                        </div>
+                        <div data-w-id="eb42e4a9-2704-5b6e-03f8-8a936e16cf8a" role="listitem" class="w-dyn-item"><a
+                                href="/works/digital" class="works-link-wrapper-02 w-inline-block">
+                                <div class="works-thumb">
+                                    <div class="works-card"><img loading="lazy"
+                                            src="https://cdn.prod.website-files.com/689989c2270f878736e77534/68a07c0514986ec265bcd4e7_Modern%20Design%20Objects.webp"
+                                            alt=""
+                                            sizes="(max-width: 767px) 100vw, (max-width: 991px) 727.4140625px, 939.9375px"
+                                            srcset="https://cdn.prod.website-files.com/689989c2270f878736e77534/68a07c0514986ec265bcd4e7_Modern%20Design%20Objects-p-500.webp 500w, https://cdn.prod.website-files.com/689989c2270f878736e77534/68a07c0514986ec265bcd4e7_Modern%20Design%20Objects-p-800.webp 800w, https://cdn.prod.website-files.com/689989c2270f878736e77534/68a07c0514986ec265bcd4e7_Modern%20Design%20Objects-p-1080.webp 1080w, https://cdn.prod.website-files.com/689989c2270f878736e77534/68a07c0514986ec265bcd4e7_Modern%20Design%20Objects-p-1600.webp 1600w, https://cdn.prod.website-files.com/689989c2270f878736e77534/68a07c0514986ec265bcd4e7_Modern%20Design%20Objects-p-2000.webp 2000w, https://cdn.prod.website-files.com/689989c2270f878736e77534/68a07c0514986ec265bcd4e7_Modern%20Design%20Objects.webp 2400w"
+                                            class="work-image-thumb" /></div>
+                                </div>
+                                <div class="image-works-wrapper-02">
+                                    <div class="work-blur-overlay"></div>
+                                    <div class="work-blur-overlay"></div>
+                                    <div class="work-blur-overlay"></div>
+                                    <div class="work-blur-overlay"></div>
+                                    <div class="work-blur-overlay"></div>
+                                    <div class="work-blur-overlay"></div>
+                                    <div class="work-blur-overlay"></div>
+                                    <div class="work-blur-overlay"></div>
+                                    <div class="work-blur-overlay"></div>
+                                    <div class="work-blur-overlay"></div><img loading="lazy"
+                                        src="https://cdn.prod.website-files.com/689989c2270f878736e77534/68a07c0514986ec265bcd4e7_Modern%20Design%20Objects.webp"
+                                        alt=""
+                                        sizes="(max-width: 767px) 100vw, (max-width: 991px) 727.4140625px, 939.9375px"
+                                        srcset="https://cdn.prod.website-files.com/689989c2270f878736e77534/68a07c0514986ec265bcd4e7_Modern%20Design%20Objects-p-500.webp 500w, https://cdn.prod.website-files.com/689989c2270f878736e77534/68a07c0514986ec265bcd4e7_Modern%20Design%20Objects-p-800.webp 800w, https://cdn.prod.website-files.com/689989c2270f878736e77534/68a07c0514986ec265bcd4e7_Modern%20Design%20Objects-p-1080.webp 1080w, https://cdn.prod.website-files.com/689989c2270f878736e77534/68a07c0514986ec265bcd4e7_Modern%20Design%20Objects-p-1600.webp 1600w, https://cdn.prod.website-files.com/689989c2270f878736e77534/68a07c0514986ec265bcd4e7_Modern%20Design%20Objects-p-2000.webp 2000w, https://cdn.prod.website-files.com/689989c2270f878736e77534/68a07c0514986ec265bcd4e7_Modern%20Design%20Objects.webp 2400w"
+                                        class="work-image _01" />
+                                </div>
+                            </a>
+                            <div data-w-id="eb42e4a9-2704-5b6e-03f8-8a936e16cf9b" class="works-text-block">
+                                <div style="-webkit-transform:translate3d(0, 8rem, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(0, 8rem, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(0, 8rem, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(0, 8rem, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)"
+                                    class="works-tags">
+                                    <p class="normal">Marketing</p>
+                                    <p class="normal">•</p>
+                                    <p class="normal">2024</p>
+                                </div>
+                                <h4 style="-webkit-transform:translate3d(0, 8rem, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(0, 8rem, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(0, 8rem, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(0, 8rem, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)"
+                                    class="works-title">Digital</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="works-right w-dyn-list">
+                    <div role="list" class="works-block w-dyn-items">
+                        <div data-w-id="eb42e4a9-2704-5b6e-03f8-8a936e16cfa7" role="listitem" class="w-dyn-item"><a
+                                data-w-id="eb42e4a9-2704-5b6e-03f8-8a936e16cfa8" href="/works/vibrant"
+                                class="works-link-wrapper-02 w-inline-block">
+                                <div class="works-thumb">
+                                    <div class="works-card"><img style="opacity:0" loading="lazy" alt=""
+                                            src="https://cdn.prod.website-files.com/689989c2270f878736e77534/68a07c6aeaa832d6e630e0ef_Vibrant%20Sports%20Jersey.webp"
+                                            sizes="(max-width: 767px) 100vw, (max-width: 991px) 727.4140625px, 939.9375px"
+                                            srcset="https://cdn.prod.website-files.com/689989c2270f878736e77534/68a07c6aeaa832d6e630e0ef_Vibrant%20Sports%20Jersey-p-500.webp 500w, https://cdn.prod.website-files.com/689989c2270f878736e77534/68a07c6aeaa832d6e630e0ef_Vibrant%20Sports%20Jersey-p-800.webp 800w, https://cdn.prod.website-files.com/689989c2270f878736e77534/68a07c6aeaa832d6e630e0ef_Vibrant%20Sports%20Jersey-p-1080.webp 1080w, https://cdn.prod.website-files.com/689989c2270f878736e77534/68a07c6aeaa832d6e630e0ef_Vibrant%20Sports%20Jersey-p-1600.webp 1600w, https://cdn.prod.website-files.com/689989c2270f878736e77534/68a07c6aeaa832d6e630e0ef_Vibrant%20Sports%20Jersey-p-2000.webp 2000w, https://cdn.prod.website-files.com/689989c2270f878736e77534/68a07c6aeaa832d6e630e0ef_Vibrant%20Sports%20Jersey.webp 2400w"
+                                            class="work-image-thumb" /></div>
+                                </div>
+                                <div class="image-works-wrapper-02">
+                                    <div style="opacity:0" class="work-blur-overlay"></div>
+                                    <div style="opacity:0" class="work-blur-overlay"></div>
+                                    <div style="opacity:0" class="work-blur-overlay"></div>
+                                    <div style="opacity:0" class="work-blur-overlay"></div>
+                                    <div style="opacity:0" class="work-blur-overlay"></div>
+                                    <div style="opacity:0" class="work-blur-overlay"></div>
+                                    <div style="opacity:0" class="work-blur-overlay"></div>
+                                    <div style="opacity:0" class="work-blur-overlay"></div>
+                                    <div style="opacity:0" class="work-blur-overlay"></div>
+                                    <div style="opacity:0" class="work-blur-overlay"></div><img loading="lazy"
+                                        src="https://cdn.prod.website-files.com/689989c2270f878736e77534/68a07c6aeaa832d6e630e0ef_Vibrant%20Sports%20Jersey.webp"
+                                        alt=""
+                                        sizes="(max-width: 767px) 100vw, (max-width: 991px) 727.4140625px, 939.9375px"
+                                        srcset="https://cdn.prod.website-files.com/689989c2270f878736e77534/68a07c6aeaa832d6e630e0ef_Vibrant%20Sports%20Jersey-p-500.webp 500w, https://cdn.prod.website-files.com/689989c2270f878736e77534/68a07c6aeaa832d6e630e0ef_Vibrant%20Sports%20Jersey-p-800.webp 800w, https://cdn.prod.website-files.com/689989c2270f878736e77534/68a07c6aeaa832d6e630e0ef_Vibrant%20Sports%20Jersey-p-1080.webp 1080w, https://cdn.prod.website-files.com/689989c2270f878736e77534/68a07c6aeaa832d6e630e0ef_Vibrant%20Sports%20Jersey-p-1600.webp 1600w, https://cdn.prod.website-files.com/689989c2270f878736e77534/68a07c6aeaa832d6e630e0ef_Vibrant%20Sports%20Jersey-p-2000.webp 2000w, https://cdn.prod.website-files.com/689989c2270f878736e77534/68a07c6aeaa832d6e630e0ef_Vibrant%20Sports%20Jersey.webp 2400w"
+                                        class="work-image _01" />
+                                </div>
+                            </a>
+                            <div data-w-id="eb42e4a9-2704-5b6e-03f8-8a936e16cfb8" class="works-text-block">
+                                <div style="-webkit-transform:translate3d(0, 8rem, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(0, 8rem, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(0, 8rem, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(0, 8rem, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)"
+                                    class="works-tags">
+                                    <p class="normal">Branding</p>
+                                    <p class="normal">•</p>
+                                    <p class="normal">2024</p>
+                                </div>
+                                <h4 style="-webkit-transform:translate3d(0, 8rem, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(0, 8rem, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(0, 8rem, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(0, 8rem, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)"
+                                    class="works-title">Vibrant</h4>
+                            </div>
+                        </div>
+                        <div data-w-id="eb42e4a9-2704-5b6e-03f8-8a936e16cfa7" role="listitem" class="w-dyn-item"><a
+                                data-w-id="eb42e4a9-2704-5b6e-03f8-8a936e16cfa8" href="/works/texture"
+                                class="works-link-wrapper-02 w-inline-block">
+                                <div class="works-thumb">
+                                    <div class="works-card"><img style="opacity:0" loading="lazy" alt=""
+                                            src="https://cdn.prod.website-files.com/689989c2270f878736e77534/68a07c8e09898fa9493b1bbc_Modern%20Elegance%20Tech%20%26%20Texture.webp"
+                                            sizes="(max-width: 767px) 100vw, (max-width: 991px) 727.4140625px, 939.9375px"
+                                            srcset="https://cdn.prod.website-files.com/689989c2270f878736e77534/68a07c8e09898fa9493b1bbc_Modern%20Elegance%20Tech%20%26%20Texture-p-500.webp 500w, https://cdn.prod.website-files.com/689989c2270f878736e77534/68a07c8e09898fa9493b1bbc_Modern%20Elegance%20Tech%20%26%20Texture-p-800.webp 800w, https://cdn.prod.website-files.com/689989c2270f878736e77534/68a07c8e09898fa9493b1bbc_Modern%20Elegance%20Tech%20%26%20Texture-p-1080.webp 1080w, https://cdn.prod.website-files.com/689989c2270f878736e77534/68a07c8e09898fa9493b1bbc_Modern%20Elegance%20Tech%20%26%20Texture.webp 1600w"
+                                            class="work-image-thumb" /></div>
+                                </div>
+                                <div class="image-works-wrapper-02">
+                                    <div style="opacity:0" class="work-blur-overlay"></div>
+                                    <div style="opacity:0" class="work-blur-overlay"></div>
+                                    <div style="opacity:0" class="work-blur-overlay"></div>
+                                    <div style="opacity:0" class="work-blur-overlay"></div>
+                                    <div style="opacity:0" class="work-blur-overlay"></div>
+                                    <div style="opacity:0" class="work-blur-overlay"></div>
+                                    <div style="opacity:0" class="work-blur-overlay"></div>
+                                    <div style="opacity:0" class="work-blur-overlay"></div>
+                                    <div style="opacity:0" class="work-blur-overlay"></div>
+                                    <div style="opacity:0" class="work-blur-overlay"></div><img loading="lazy"
+                                        src="https://cdn.prod.website-files.com/689989c2270f878736e77534/68a07c8e09898fa9493b1bbc_Modern%20Elegance%20Tech%20%26%20Texture.webp"
+                                        alt=""
+                                        sizes="(max-width: 767px) 100vw, (max-width: 991px) 727.4140625px, 939.9375px"
+                                        srcset="https://cdn.prod.website-files.com/689989c2270f878736e77534/68a07c8e09898fa9493b1bbc_Modern%20Elegance%20Tech%20%26%20Texture-p-500.webp 500w, https://cdn.prod.website-files.com/689989c2270f878736e77534/68a07c8e09898fa9493b1bbc_Modern%20Elegance%20Tech%20%26%20Texture-p-800.webp 800w, https://cdn.prod.website-files.com/689989c2270f878736e77534/68a07c8e09898fa9493b1bbc_Modern%20Elegance%20Tech%20%26%20Texture-p-1080.webp 1080w, https://cdn.prod.website-files.com/689989c2270f878736e77534/68a07c8e09898fa9493b1bbc_Modern%20Elegance%20Tech%20%26%20Texture.webp 1600w"
+                                        class="work-image _01" />
+                                </div>
+                            </a>
+                            <div data-w-id="eb42e4a9-2704-5b6e-03f8-8a936e16cfb8" class="works-text-block">
+                                <div style="-webkit-transform:translate3d(0, 8rem, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(0, 8rem, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(0, 8rem, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(0, 8rem, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)"
+                                    class="works-tags">
+                                    <p class="normal">Design</p>
+                                    <p class="normal">•</p>
+                                    <p class="normal">2024</p>
+                                </div>
+                                <h4 style="-webkit-transform:translate3d(0, 8rem, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(0, 8rem, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(0, 8rem, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(0, 8rem, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)"
+                                    class="works-title">Texture</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="section">
+        <div class="space-large"></div>
+        <div class="w-layout-blockcontainer container-full padding-4-5rem w-container">
+            <div class="works-title-block">
+                <h3 ScrollTitleStagger="" class="section-title">Services We&#x27;re Passionate About.</h3>
+            </div>
+            <div class="space"></div>
+        </div>
+    </section>
+    <section class="section">
+        <div class="w-layout-blockcontainer container-full no-overflow w-container">
+            <div data-w-id="09035391-2b53-f0fd-4d29-72ab8e8c8ad2" class="flex-grid-features">
+                <div class="feature-block">
+                    <div class="w-dyn-list">
+                        <div role="list" class="w-dyn-items">
+                            <div role="listitem" class="features-flex w-dyn-item">
+                                <div class="feature-images-wrapper _01"><img loading="eager"
+                                        src="https://cdn.prod.website-files.com/689989c2270f878736e77534/68a2d10d0123c0be15052ede_Glossy%20Tote%20Bags%20on%20Vibrant%20Background.webp"
+                                        alt=""
+                                        sizes="(max-width: 767px) 100vw, (max-width: 991px) 727.4140625px, 939.9375px"
+                                        srcset="https://cdn.prod.website-files.com/689989c2270f878736e77534/68a2d10d0123c0be15052ede_Glossy%20Tote%20Bags%20on%20Vibrant%20Background-p-500.webp 500w, https://cdn.prod.website-files.com/689989c2270f878736e77534/68a2d10d0123c0be15052ede_Glossy%20Tote%20Bags%20on%20Vibrant%20Background-p-800.webp 800w, https://cdn.prod.website-files.com/689989c2270f878736e77534/68a2d10d0123c0be15052ede_Glossy%20Tote%20Bags%20on%20Vibrant%20Background.webp 960w"
+                                        class="feature-image" /></div>
+                                <div class="feature-item-content _01">
+                                    <div class="w-layout-hflex subheading">
+                                        <h6>•</h6>
+                                        <h6>Website</h6>
+                                    </div>
+                                    <h4>Design</h4>
+                                    <p class="about-description">Driven by a deep passion for design, we craft
+                                        meaningful visuals that spark emotion and leave a powerful, lasting impression
+                                        on your audience.</p><a href="/services/design"
+                                        data-w-id="34a723e7-6853-d46d-e857-9ec075fdd6b1"
+                                        class="button-with-circle-icon w-inline-block">
+                                        <div class="button-arrow-wrapper"><img width="Auto" height="Auto" alt=""
+                                                src="https://cdn.prod.website-files.com/689989c2270f878736e77521/689989c2270f878736e7760d_navigation.svg"
+                                                loading="eager" class="arrow" /></div>
+                                        <div>Learn More</div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="w-dyn-list">
+                        <div role="list" class="w-dyn-items">
+                            <div role="listitem" class="features-flex w-dyn-item">
+                                <div class="feature-images-wrapper _02"><img loading="eager"
+                                        src="https://cdn.prod.website-files.com/689989c2270f878736e77534/68a2d1498f8548f8568bc6f7_Pastel%20Sneakers%20Display.webp"
+                                        alt=""
+                                        sizes="(max-width: 767px) 100vw, (max-width: 991px) 727.4140625px, 939.9375px"
+                                        srcset="https://cdn.prod.website-files.com/689989c2270f878736e77534/68a2d1498f8548f8568bc6f7_Pastel%20Sneakers%20Display-p-500.webp 500w, https://cdn.prod.website-files.com/689989c2270f878736e77534/68a2d1498f8548f8568bc6f7_Pastel%20Sneakers%20Display-p-800.webp 800w, https://cdn.prod.website-files.com/689989c2270f878736e77534/68a2d1498f8548f8568bc6f7_Pastel%20Sneakers%20Display.webp 967w"
+                                        class="feature-image _02" /></div>
+                                <div class="feature-item-content _02">
+                                    <div class="w-layout-hflex subheading">
+                                        <h6>•</h6>
+                                        <h6>SEO</h6>
+                                    </div>
+                                    <h4>Marketing</h4>
+                                    <p class="about-description">We utilize a diverse blend of strategic channels and
+                                        tailored tactics, each carefully selected and refined to effectively reach your
+                                        goals.</p><a href="/services/marketing"
+                                        data-w-id="34a723e7-6853-d46d-e857-9ec075fdd6b1"
+                                        class="button-with-circle-icon w-inline-block">
+                                        <div class="button-arrow-wrapper"><img width="Auto" height="Auto" alt=""
+                                                src="https://cdn.prod.website-files.com/689989c2270f878736e77521/689989c2270f878736e7760d_navigation.svg"
+                                                loading="eager" class="arrow" /></div>
+                                        <div>Learn More</div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="w-dyn-list">
+                        <div role="list" class="w-dyn-items">
+                            <div role="listitem" class="features-flex w-dyn-item">
+                                <div class="feature-images-wrapper _03"><img loading="eager"
+                                        src="https://cdn.prod.website-files.com/689989c2270f878736e77534/68a2d16b259fd242a0ee6c1e_Modern%20Device%20Close-Up.webp"
+                                        alt=""
+                                        sizes="(max-width: 767px) 100vw, (max-width: 991px) 727.4140625px, 939.9375px"
+                                        srcset="https://cdn.prod.website-files.com/689989c2270f878736e77534/68a2d16b259fd242a0ee6c1e_Modern%20Device%20Close-Up-p-500.webp 500w, https://cdn.prod.website-files.com/689989c2270f878736e77534/68a2d16b259fd242a0ee6c1e_Modern%20Device%20Close-Up-p-800.webp 800w, https://cdn.prod.website-files.com/689989c2270f878736e77534/68a2d16b259fd242a0ee6c1e_Modern%20Device%20Close-Up.webp 992w"
+                                        class="feature-image _03" /></div>
+                                <div class="feature-item-content _03">
+                                    <div class="w-layout-hflex subheading">
+                                        <h6>•</h6>
+                                        <h6>Front-end</h6>
+                                    </div>
+                                    <h4>Prototype</h4>
+                                    <p class="about-description">Highlighting the essential features, interactive
+                                        elements, and practical functionalities that bring your idea to life.</p><a
+                                        href="/services/prototype" data-w-id="34a723e7-6853-d46d-e857-9ec075fdd6b1"
+                                        class="button-with-circle-icon w-inline-block">
+                                        <div class="button-arrow-wrapper"><img width="Auto" height="Auto" alt=""
+                                                src="https://cdn.prod.website-files.com/689989c2270f878736e77521/689989c2270f878736e7760d_navigation.svg"
+                                                loading="eager" class="arrow" /></div>
+                                        <div>Learn More</div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="w-dyn-list">
+                        <div role="list" class="w-dyn-items">
+                            <div role="listitem" class="features-flex w-dyn-item">
+                                <div class="feature-images-wrapper _04"><img loading="eager"
+                                        src="https://cdn.prod.website-files.com/689989c2270f878736e77534/68a2d19782c018e44a110307_Modern%20Elegance_%20Tech%20%26%20Texture.webp"
+                                        alt=""
+                                        sizes="(max-width: 767px) 100vw, (max-width: 991px) 727.4140625px, 939.9375px"
+                                        srcset="https://cdn.prod.website-files.com/689989c2270f878736e77534/68a2d19782c018e44a110307_Modern%20Elegance_%20Tech%20%26%20Texture-p-500.webp 500w, https://cdn.prod.website-files.com/689989c2270f878736e77534/68a2d19782c018e44a110307_Modern%20Elegance_%20Tech%20%26%20Texture-p-800.webp 800w, https://cdn.prod.website-files.com/689989c2270f878736e77534/68a2d19782c018e44a110307_Modern%20Elegance_%20Tech%20%26%20Texture-p-1080.webp 1080w, https://cdn.prod.website-files.com/689989c2270f878736e77534/68a2d19782c018e44a110307_Modern%20Elegance_%20Tech%20%26%20Texture.webp 1200w"
+                                        class="feature-image _04" /></div>
+                                <div class="feature-item-content _04">
+                                    <div class="w-layout-hflex subheading">
+                                        <h6>•</h6>
+                                        <h6>Business</h6>
+                                    </div>
+                                    <h4>Branding</h4>
+                                    <p class="about-description">A thoughtful craft rooted in storytelling and
+                                        design—shaping perceptions, stirring emotions, and curating meaningful
+                                        experiences.</p><a href="/services/branding"
+                                        data-w-id="34a723e7-6853-d46d-e857-9ec075fdd6b1"
+                                        class="button-with-circle-icon w-inline-block">
+                                        <div class="button-arrow-wrapper"><img width="Auto" height="Auto" alt=""
+                                                src="https://cdn.prod.website-files.com/689989c2270f878736e77521/689989c2270f878736e7760d_navigation.svg"
+                                                loading="eager" class="arrow" /></div>
+                                        <div>Learn More</div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="section">
+        <div class="w-layout-blockcontainer container-full padding-4-5rem overflow w-container">
+            <div class="space-large"></div>
+            <div class="metrics-block">
+                <h4 ScrollTextStagger="" class="metrics-title">We are always striving to bring cutting-edge ideas to
+                    life.</h4>
+                <div data-w-id="0179a9ad-08b1-d412-f27d-f04edbaff096" class="relative-trigger">
+                    <div class="metrics-image-wrapper"><img sizes="100vw"
+                            srcset="https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66a437c887f81eeb0e3_Modern%20Keyboard%20Close-Up-p-500.webp 500w, https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66a437c887f81eeb0e3_Modern%20Keyboard%20Close-Up-p-800.webp 800w, https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66a437c887f81eeb0e3_Modern%20Keyboard%20Close-Up.webp 992w"
+                            alt="Modern Keyboard Close-Up"
+                            src="https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66a437c887f81eeb0e3_Modern%20Keyboard%20Close-Up.webp"
+                            loading="lazy" class="metrics-image-01" /><img sizes="100vw"
+                            srcset="https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66a70c7da6d8e84b00d_Modern%20Pastel%20Chair-p-500.webp 500w, https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66a70c7da6d8e84b00d_Modern%20Pastel%20Chair.webp 800w"
+                            alt="Modern Pastel Chair"
+                            src="https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66a70c7da6d8e84b00d_Modern%20Pastel%20Chair.webp"
+                            loading="lazy" class="metrics-image-02" /><img
+                            sizes="(max-width: 767px) 100vw, (max-width: 991px) 727.9921875px, 939.9921875px"
+                            srcset="https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66b451619260e657a43_Pristine%20White%20Sneakers%20on%20Light%20Blue%20Background-p-500.webp 500w, https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66b451619260e657a43_Pristine%20White%20Sneakers%20on%20Light%20Blue%20Background-p-800.webp 800w, https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66b451619260e657a43_Pristine%20White%20Sneakers%20on%20Light%20Blue%20Background-p-1080.webp 1080w, https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66b451619260e657a43_Pristine%20White%20Sneakers%20on%20Light%20Blue%20Background.webp 1200w"
+                            alt="Pristine White Sneakers on Light Blue Background"
+                            src="https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66b451619260e657a43_Pristine%20White%20Sneakers%20on%20Light%20Blue%20Background.webp"
+                            loading="lazy" class="metrics-image-03" /><img sizes="100vw"
+                            srcset="https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66aaf9aa1041b8b3d8b_Minimalist%20Fashion%20Pose-p-500.webp 500w, https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66aaf9aa1041b8b3d8b_Minimalist%20Fashion%20Pose-p-800.webp 800w, https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66aaf9aa1041b8b3d8b_Minimalist%20Fashion%20Pose.webp 967w"
+                            alt="Minimalist Fashion Pose"
+                            src="https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66aaf9aa1041b8b3d8b_Minimalist%20Fashion%20Pose.webp"
+                            loading="lazy" class="metrics-image-04" /><img
+                            sizes="(max-width: 767px) 100vw, (max-width: 991px) 727.9921875px, 904px"
+                            srcset="https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66abfc1a54c6beb56e8_Stylish%20Woman%20Portrait-p-500.webp 500w, https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66abfc1a54c6beb56e8_Stylish%20Woman%20Portrait-p-800.webp 800w, https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66abfc1a54c6beb56e8_Stylish%20Woman%20Portrait.webp 904w"
+                            alt="Stylish Woman Portrait"
+                            src="https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66abfc1a54c6beb56e8_Stylish%20Woman%20Portrait.webp"
+                            loading="lazy" class="metrics-image-05" /><img sizes="100vw"
+                            srcset="https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66a260387e191729798_Modern%20Gaming%20Controller-p-500.webp 500w, https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66a260387e191729798_Modern%20Gaming%20Controller-p-800.webp 800w, https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66a260387e191729798_Modern%20Gaming%20Controller.webp 992w"
+                            alt="Modern Gaming Controller"
+                            src="https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66a260387e191729798_Modern%20Gaming%20Controller.webp"
+                            loading="lazy" class="metrics-image-06" /><img sizes="100vw"
+                            srcset="https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66a95b7b1338ffaefc6_Urban%20Chic%20in%20Pink%20and%20Teal-p-500.webp 500w, https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66a95b7b1338ffaefc6_Urban%20Chic%20in%20Pink%20and%20Teal.webp 800w"
+                            alt="Urban Chic in Pink and Teal"
+                            src="https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66a95b7b1338ffaefc6_Urban%20Chic%20in%20Pink%20and%20Teal.webp"
+                            loading="lazy" class="metrics-image-07" /><img
+                            sizes="(max-width: 767px) 100vw, (max-width: 991px) 728px, 940px"
+                            srcset="https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66bdce0b19c84f285d2_Colorful%20Tote%20Bag%20on%20Turquoise%20Background-p-500.webp 500w, https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66bdce0b19c84f285d2_Colorful%20Tote%20Bag%20on%20Turquoise%20Background-p-800.webp 800w, https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66bdce0b19c84f285d2_Colorful%20Tote%20Bag%20on%20Turquoise%20Background.webp 960w"
+                            alt="Colorful Tote Bag on Turquoise Background"
+                            src="https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66bdce0b19c84f285d2_Colorful%20Tote%20Bag%20on%20Turquoise%20Background.webp"
+                            loading="lazy" class="metrics-image-08" /></div>
+                    <div class="metrics-wrapper">
+                        <div data-w-id="0179a9ad-08b1-d412-f27d-f04edbaff0a1" class="metrics-text-wrapper">
+                            <div data-w-id="0179a9ad-08b1-d412-f27d-f04edbaff0a2" class="numbers-wrapper">
+                                <div class="numbers _01">
+                                    <h2 class="metrics-text">-</h2>
+                                    <h2 class="metrics-text">1</h2>
+                                    <h2 class="metrics-text">2</h2>
+                                    <h2 class="metrics-text">3</h2>
+                                    <h2 class="metrics-text">4</h2>
+                                    <h2 class="metrics-text">5</h2>
+                                    <h2 class="metrics-text">6</h2>
+                                    <h2 class="metrics-text">7</h2>
+                                    <h2 class="metrics-text">8</h2>
+                                    <h2 class="metrics-text">9</h2>
+                                </div>
+                                <div class="numbers _02">
+                                    <h2 class="metrics-text">0</h2>
+                                    <h2 class="metrics-text">1</h2>
+                                    <h2 class="metrics-text">2</h2>
+                                    <h2 class="metrics-text">3</h2>
+                                    <h2 class="metrics-text">4</h2>
+                                    <h2 class="metrics-text">5</h2>
+                                    <h2 class="metrics-text">6</h2>
+                                    <h2 class="metrics-text">7</h2>
+                                    <h2 class="metrics-text">8</h2>
+                                    <h2 class="metrics-text">9</h2>
+                                </div>
+                            </div>
+                            <div class="metrics-line"></div>
+                            <h5>Clients</h5>
+                        </div>
+                        <div data-w-id="0179a9ad-08b1-d412-f27d-f04edbaff0d0" class="metrics-text-wrapper">
+                            <div data-w-id="0179a9ad-08b1-d412-f27d-f04edbaff0d1" class="numbers-wrapper">
+                                <div class="numbers _01">
+                                    <h2 class="metrics-text">-</h2>
+                                    <h2 class="metrics-text">1</h2>
+                                    <h2 class="metrics-text">2</h2>
+                                    <h2 class="metrics-text">3</h2>
+                                    <h2 class="metrics-text">4</h2>
+                                    <h2 class="metrics-text">5</h2>
+                                    <h2 class="metrics-text">6</h2>
+                                    <h2 class="metrics-text">7</h2>
+                                    <h2 class="metrics-text">8</h2>
+                                    <h2 class="metrics-text">9</h2>
+                                </div>
+                                <div class="numbers _02">
+                                    <h2 class="metrics-text">0</h2>
+                                    <h2 class="metrics-text">1</h2>
+                                    <h2 class="metrics-text">2</h2>
+                                    <h2 class="metrics-text">3</h2>
+                                    <h2 class="metrics-text">4</h2>
+                                    <h2 class="metrics-text">5</h2>
+                                    <h2 class="metrics-text">6</h2>
+                                    <h2 class="metrics-text">7</h2>
+                                    <h2 class="metrics-text">8</h2>
+                                    <h2 class="metrics-text">9</h2>
+                                </div>
+                            </div>
+                            <div class="metrics-line"></div>
+                            <h5>Projects</h5>
+                        </div>
+                        <div data-w-id="0179a9ad-08b1-d412-f27d-f04edbaff0ff" class="metrics-text-wrapper">
+                            <div data-w-id="0179a9ad-08b1-d412-f27d-f04edbaff100" class="numbers-wrapper">
+                                <div class="numbers _01">
+                                    <h2 class="metrics-text">-</h2>
+                                    <h2 class="metrics-text">1</h2>
+                                    <h2 class="metrics-text">2</h2>
+                                    <h2 class="metrics-text">3</h2>
+                                    <h2 class="metrics-text">4</h2>
+                                    <h2 class="metrics-text">5</h2>
+                                    <h2 class="metrics-text">6</h2>
+                                    <h2 class="metrics-text">7</h2>
+                                    <h2 class="metrics-text">8</h2>
+                                    <h2 class="metrics-text">9</h2>
+                                </div>
+                                <div class="numbers _02">
+                                    <h2 class="metrics-text">0</h2>
+                                    <h2 class="metrics-text">1</h2>
+                                    <h2 class="metrics-text">2</h2>
+                                    <h2 class="metrics-text">3</h2>
+                                    <h2 class="metrics-text">4</h2>
+                                    <h2 class="metrics-text">5</h2>
+                                    <h2 class="metrics-text">6</h2>
+                                    <h2 class="metrics-text">7</h2>
+                                    <h2 class="metrics-text">8</h2>
+                                    <h2 class="metrics-text">9</h2>
+                                </div>
+                            </div>
+                            <div class="metrics-line"></div>
+                            <h5>Developers</h5>
+                        </div>
+                        <div data-w-id="0179a9ad-08b1-d412-f27d-f04edbaff12e" class="metrics-text-wrapper">
+                            <div data-w-id="0179a9ad-08b1-d412-f27d-f04edbaff12f" class="numbers-wrapper">
+                                <div class="numbers _01">
+                                    <h2 class="metrics-text">-</h2>
+                                    <h2 class="metrics-text">1</h2>
+                                    <h2 class="metrics-text">2</h2>
+                                    <h2 class="metrics-text">3</h2>
+                                    <h2 class="metrics-text">4</h2>
+                                    <h2 class="metrics-text">5</h2>
+                                    <h2 class="metrics-text">6</h2>
+                                    <h2 class="metrics-text">7</h2>
+                                    <h2 class="metrics-text">8</h2>
+                                    <h2 class="metrics-text">9</h2>
+                                </div>
+                                <div class="numbers _02">
+                                    <h2 class="metrics-text">0</h2>
+                                    <h2 class="metrics-text">1</h2>
+                                    <h2 class="metrics-text">2</h2>
+                                    <h2 class="metrics-text">3</h2>
+                                    <h2 class="metrics-text">4</h2>
+                                    <h2 class="metrics-text">5</h2>
+                                    <h2 class="metrics-text">6</h2>
+                                    <h2 class="metrics-text">7</h2>
+                                    <h2 class="metrics-text">8</h2>
+                                    <h2 class="metrics-text">9</h2>
+                                </div>
+                            </div>
+                            <div class="metrics-line"></div>
+                            <h5>AI Engineers</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="space-large"></div>
+        </div>
+    </section>
+    <section class="section black-card">
+        <div class="w-layout-blockcontainer container-full padding-4-5rem w-container">
+            <div class="space-large"></div>
+            <div class="brands-wrapper">
+                <h5 class="brands-text slide-up-from-bottom-animation">We worked with brands across the globe.</h5>
+                <div data-w-id="ae53bc1a-63dc-b8cf-5152-e39471f7247a"
+                    style="-webkit-transform:translate3d(0%, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(0%, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(0%, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(0%, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)"
+                    class="brands-grid">
+                    <div class="image-brand-wrapper"><img loading="eager"
+                            src="https://cdn.prod.website-files.com/689989c2270f878736e77521/689989c2270f878736e778c2_TerraLight.svg"
+                            alt="brands icon" class="image-brand smaller" /></div>
+                    <div class="image-brand-wrapper"><img width="Auto" height="Auto" alt="brands icon"
+                            src="https://cdn.prod.website-files.com/689989c2270f878736e77521/689989c2270f878736e778c4_ProLineLight.svg"
+                            loading="eager" class="image-brand" /></div>
+                    <div class="image-brand-wrapper"><img width="Auto" height="Auto" alt="brands icon"
+                            src="https://cdn.prod.website-files.com/689989c2270f878736e77521/689989c2270f878736e778c3_PentaLight.svg"
+                            loading="eager" class="image-brand smaller" /></div>
+                    <div class="image-brand-wrapper"><img width="Auto" height="Auto" alt="brands icon"
+                            src="https://cdn.prod.website-files.com/689989c2270f878736e77521/689989c2270f878736e778db_PinpointLight.svg"
+                            loading="eager" class="image-brand" /></div>
+                    <div class="image-brand-wrapper"><img loading="eager"
+                            src="https://cdn.prod.website-files.com/689989c2270f878736e77521/689989c2270f878736e778dc_InvertLight.svg"
+                            alt="brands icon" class="image-brand" /></div>
+                    <div class="image-brand-wrapper"><img width="Auto" height="Auto" alt="brands icon"
+                            src="https://cdn.prod.website-files.com/689989c2270f878736e77521/689989c2270f878736e778da_HitechLight.svg"
+                            loading="eager" class="image-brand" /></div>
+                    <div class="image-brand-wrapper"><img loading="eager"
+                            src="https://cdn.prod.website-files.com/689989c2270f878736e77521/689989c2270f878736e778c1_Iceberglight.svg"
+                            alt="brands icon" class="image-brand" /></div>
+                    <div class="image-brand-wrapper"><img width="Auto" height="Auto" alt="brands icon"
+                            src="https://cdn.prod.website-files.com/689989c2270f878736e77521/689989c2270f878736e778c0_DuneLight.svg"
+                            loading="eager" class="image-brand" /></div>
+                    <div class="image-brand-wrapper"><img loading="eager"
+                            src="https://cdn.prod.website-files.com/689989c2270f878736e77521/689989c2270f878736e778c2_TerraLight.svg"
+                            alt="brands icon" class="image-brand smaller" /></div>
+                    <div class="image-brand-wrapper"><img width="Auto" height="Auto" alt="brands icon"
+                            src="https://cdn.prod.website-files.com/689989c2270f878736e77521/689989c2270f878736e778c4_ProLineLight.svg"
+                            loading="eager" class="image-brand" /></div>
+                    <div class="image-brand-wrapper"><img width="Auto" height="Auto" alt="brands icon"
+                            src="https://cdn.prod.website-files.com/689989c2270f878736e77521/689989c2270f878736e778c3_PentaLight.svg"
+                            loading="eager" class="image-brand smaller" /></div>
+                    <div class="image-brand-wrapper"><img width="Auto" height="Auto" alt="brands icon"
+                            src="https://cdn.prod.website-files.com/689989c2270f878736e77521/689989c2270f878736e778db_PinpointLight.svg"
+                            loading="eager" class="image-brand" /></div>
+                    <div class="image-brand-wrapper"><img loading="eager"
+                            src="https://cdn.prod.website-files.com/689989c2270f878736e77521/689989c2270f878736e778dc_InvertLight.svg"
+                            alt="brands icon" class="image-brand" /></div>
+                    <div class="image-brand-wrapper"><img width="Auto" height="Auto" alt="brands icon"
+                            src="https://cdn.prod.website-files.com/689989c2270f878736e77521/689989c2270f878736e778da_HitechLight.svg"
+                            loading="eager" class="image-brand" /></div>
+                    <div class="image-brand-wrapper"><img loading="eager"
+                            src="https://cdn.prod.website-files.com/689989c2270f878736e77521/689989c2270f878736e778c1_Iceberglight.svg"
+                            alt="brands icon" class="image-brand" /></div>
+                    <div class="image-brand-wrapper"><img width="Auto" height="Auto" alt="brands icon"
+                            src="https://cdn.prod.website-files.com/689989c2270f878736e77521/689989c2270f878736e778c0_DuneLight.svg"
+                            loading="eager" class="image-brand" /></div>
+                </div>
+            </div>
+            <div class="space-large"></div>
+        </div>
+    </section>
+    <section class="section">
+        <div class="w-layout-blockcontainer container-full overflow w-container">
+            <div class="grid-images-main-wrapper">
+                <div class="flex-wrapper-images">
+                    <div class="grid-images-wrapper">
+                        <div id="w-node-_7cc1ad9a-2ff2-281c-c132-2552005b379e-ac001e55" class="grid-images-left">
+                            <div class="grid-image big-image-02"><img
+                                    sizes="(max-width: 767px) 100vw, (max-width: 991px) 727.9921875px, 906px"
+                                    srcset="https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66baf162b757a39b091_Tennis%20Net%20Close-Up-p-500.webp 500w, https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66baf162b757a39b091_Tennis%20Net%20Close-Up-p-800.webp 800w, https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66baf162b757a39b091_Tennis%20Net%20Close-Up.webp 906w"
+                                    alt="Tennis Net Close-Up"
+                                    src="https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66baf162b757a39b091_Tennis%20Net%20Close-Up.webp"
+                                    loading="eager" class="mid-image" /></div>
+                            <div id="w-node-_7cc1ad9a-2ff2-281c-c132-2552005b37a1-ac001e55"
+                                class="block-images-wrapper">
+                                <div class="grid-image image-02"><img
+                                        sizes="(max-width: 767px) 100vw, (max-width: 991px) 728px, 940px"
+                                        srcset="https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66bbac017f6a400b614_Stylized%20Graffiti-Inspired%20Robot-p-500.webp 500w, https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66bbac017f6a400b614_Stylized%20Graffiti-Inspired%20Robot-p-800.webp 800w, https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66bbac017f6a400b614_Stylized%20Graffiti-Inspired%20Robot.webp 960w"
+                                        alt="Stylized Graffiti-Inspired Robot"
+                                        src="https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66bbac017f6a400b614_Stylized%20Graffiti-Inspired%20Robot.webp"
+                                        loading="eager" class="small-image-01" /></div>
+                                <div class="grid-image small-image-02"><img
+                                        sizes="(max-width: 767px) 100vw, (max-width: 991px) 727.9921875px, 904px"
+                                        srcset="https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66bdd829a2fb5a6dc35_Fashion%20Portrait%20with%20Vibrant%20Hat-p-500.webp 500w, https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66bdd829a2fb5a6dc35_Fashion%20Portrait%20with%20Vibrant%20Hat-p-800.webp 800w, https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66bdd829a2fb5a6dc35_Fashion%20Portrait%20with%20Vibrant%20Hat.webp 904w"
+                                        alt="Fashion Portrait with Vibrant Hat"
+                                        src="https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66bdd829a2fb5a6dc35_Fashion%20Portrait%20with%20Vibrant%20Hat.webp"
+                                        loading="eager" class="small-image-02" /></div>
+                            </div>
+                        </div>
+                        <div class="grid-image big-image-03">
+                            <div class="cta-overlay"></div>
+                            <div class="cta-title-wrapper">
+                                <h3 class="cta-title">Let&#x27;s Work Together!</h3>
+                                <div class="space-semi"></div><a href="/contact"
+                                    data-w-id="34a723e7-6853-d46d-e857-9ec075fdd6b1"
+                                    class="button-with-circle-icon w-inline-block">
+                                    <div class="button-arrow-wrapper"><img width="Auto" height="Auto" alt=""
+                                            src="https://cdn.prod.website-files.com/689989c2270f878736e77521/689989c2270f878736e7760d_navigation.svg"
+                                            loading="eager" class="arrow" /></div>
+                                    <div>Contact</div>
+                                </a>
+                            </div><img sizes="(max-width: 767px) 100vw, (max-width: 991px) 728px, 940px"
+                                srcset="https://cdn.prod.website-files.com/689989c2270f878736e77521/68a061f4c6476b52f101c546_Tennis%20Court%20Smiley-p-500.webp 500w, https://cdn.prod.website-files.com/689989c2270f878736e77521/68a061f4c6476b52f101c546_Tennis%20Court%20Smiley-p-800.webp 800w, https://cdn.prod.website-files.com/689989c2270f878736e77521/68a061f4c6476b52f101c546_Tennis%20Court%20Smiley-p-1080.webp 1080w, https://cdn.prod.website-files.com/689989c2270f878736e77521/68a061f4c6476b52f101c546_Tennis%20Court%20Smiley.webp 1600w"
+                                alt="Tennis Court Smiley"
+                                src="https://cdn.prod.website-files.com/689989c2270f878736e77521/68a061f4c6476b52f101c546_Tennis%20Court%20Smiley.webp"
+                                loading="eager" class="big-image-03" />
+                        </div>
+                        <div id="w-node-_7cc1ad9a-2ff2-281c-c132-2552005b37a8-ac001e55" class="grid-images-right">
+                            <div id="w-node-_7cc1ad9a-2ff2-281c-c132-2552005b37a9-ac001e55" class="grid-image image-01">
+                                <img sizes="(max-width: 767px) 100vw, (max-width: 991px) 728px, 940px"
+                                    srcset="https://cdn.prod.website-files.com/689989c2270f878736e77521/68a06273d7ac585cdfd38aff_Striking%20Fashion%20Portrait-p-500.webp 500w, https://cdn.prod.website-files.com/689989c2270f878736e77521/68a06273d7ac585cdfd38aff_Striking%20Fashion%20Portrait-p-800.webp 800w, https://cdn.prod.website-files.com/689989c2270f878736e77521/68a06273d7ac585cdfd38aff_Striking%20Fashion%20Portrait-p-1080.webp 1080w, https://cdn.prod.website-files.com/689989c2270f878736e77521/68a06273d7ac585cdfd38aff_Striking%20Fashion%20Portrait-p-1600.webp 1600w, https://cdn.prod.website-files.com/689989c2270f878736e77521/68a06273d7ac585cdfd38aff_Striking%20Fashion%20Portrait-p-2000.webp 2000w, https://cdn.prod.website-files.com/689989c2270f878736e77521/68a06273d7ac585cdfd38aff_Striking%20Fashion%20Portrait.webp 2400w"
+                                    alt="Striking Fashion Portrait"
+                                    src="https://cdn.prod.website-files.com/689989c2270f878736e77521/68a06273d7ac585cdfd38aff_Striking%20Fashion%20Portrait.webp"
+                                    loading="eager" class="big-image-01" /></div>
+                            <div class="grid-image small-image-02"><img
+                                    sizes="(max-width: 767px) 100vw, (max-width: 991px) 728px, 940px"
+                                    srcset="https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66c64dc19cb7248b949_Color%20Block%20Tote%20Bag-p-500.webp 500w, https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66c64dc19cb7248b949_Color%20Block%20Tote%20Bag-p-800.webp 800w, https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66c64dc19cb7248b949_Color%20Block%20Tote%20Bag.webp 960w"
+                                    alt="Color Block Tote Bag"
+                                    src="https://cdn.prod.website-files.com/689989c2270f878736e77521/6899f66c64dc19cb7248b949_Color%20Block%20Tote%20Bag.webp"
+                                    loading="eager" class="small-image-02" /></div>
+                        </div>
+                    </div>
+                </div>
+                <div data-w-id="7cc1ad9a-2ff2-281c-c132-2552005b37ad" class="grid-images-trigger"></div>
+            </div>
+        </div>
+    </section>
+    <section class="section">
+        <div class="w-layout-blockcontainer container-full w-container">
+            <div class="space"></div>
+            <div class="footer-grid">
+                <div id="w-node-d1c2fa93-6d0c-0c55-fec3-f2ecb098e12e-652fe2cd" class="footer-info-wrapper">
+                    <h5 class="color-white slide-up-from-bottom-animation">Styler.</h5>
+                    <p id="w-node-d1c2fa93-6d0c-0c55-fec3-f2ecb098e131-652fe2cd"
+                        class="footer-paragraph slide-up-from-bottom-animation">A dynamic agency dedicated to bringing
+                        your ideas to life. Where creativity meets purpose.</p>
+                    <div class="footer-socials"><a data-w-id="ff98ab2e-4ae9-d307-bac3-e970b1a55b30"
+                            href="https://x.com/home?lang=en" target="_blank"
+                            class="social-link-small w-inline-block"><img
+                                data-w-id="ff98ab2e-4ae9-d307-bac3-e970b1a55b31" loading="eager"
+                                alt="twitter X icon black"
+                                src="https://cdn.prod.website-files.com/689989c2270f878736e77521/689989c2270f878736e77560_twitter.png"
+                                class="social-small-icon" /></a><a data-w-id="ff98ab2e-4ae9-d307-bac3-e970b1a55b32"
+                            href="https://www.instagram.com/" target="_blank"
+                            class="social-link-small w-inline-block"><img
+                                data-w-id="ff98ab2e-4ae9-d307-bac3-e970b1a55b33" loading="eager"
+                                alt="Instagram Icon Image Black"
+                                src="https://cdn.prod.website-files.com/689989c2270f878736e77521/689989c2270f878736e77624_instagram-black.webp"
+                                class="social-small-icon" /></a><a data-w-id="ff98ab2e-4ae9-d307-bac3-e970b1a55b34"
+                            href="https://www.facebook.com/" target="_blank"
+                            class="social-link-small w-inline-block"><img
+                                data-w-id="ff98ab2e-4ae9-d307-bac3-e970b1a55b35" loading="eager"
+                                alt="facebook icon black"
+                                src="https://cdn.prod.website-files.com/689989c2270f878736e77521/689989c2270f878736e7761d_facebook-black.webp"
+                                class="social-small-icon" /></a></div>
+                </div>
+                <div id="w-node-d1c2fa93-6d0c-0c55-fec3-f2ecb098e133-652fe2cd"
+                    class="footer-link-wrapper slide-up-from-bottom-animation">
+                    <h6 class="color-gray">Explore</h6><a href="/" aria-current="page"
+                        class="footer-links w-inline-block w--current">
+                        <p StaggerText="" class="footer-link-text">Home</p>
+                    </a><a href="/about-us" class="footer-links w-inline-block">
+                        <p StaggerText="" class="footer-link-text">About</p>
+                    </a><a href="/works" class="footer-links w-inline-block">
+                        <p StaggerText="" class="footer-link-text">Works</p>
+                    </a><a href="/services" class="footer-links w-inline-block">
+                        <p StaggerText="" class="footer-link-text">Services</p>
+                    </a><a href="/blog" class="footer-links w-inline-block">
+                        <p StaggerText="" class="footer-link-text">Blog</p>
+                    </a>
+                </div>
+                
+                <div id="w-node-d1c2fa93-6d0c-0c55-fec3-f2ecb098e138-652fe2cd"
+                    class="footer-link-wrapper slide-up-from-bottom-animation">
+                    <h6 class="color-gray">Contacts</h6>
+                    <p class="footer-text">Netherlands</p>
+                    <p class="footer-text">chassidydoest1@gmail.com<br /></p>
+                </div>
+                <h2 ScrollTitleStagger="" id="w-node-_4f0b6602-d12f-ac9c-437c-56a85e2aab18-652fe2cd"
+                    class="footer-large-title">Design is Our Passion.</h2>
+                <div id="w-node-_7511f9df-060d-cd6f-8f86-c153652fe2fb-652fe2cd"
+                    data-w-id="7511f9df-060d-cd6f-8f86-c153652fe2fb" class="credits-flex">
+                    <div class="w-layout-hflex footer-flex-block">
+                        <p class="color-gray no-wrap">Built by </p><a
+                            href="https://webflow.com/templates/designers/yves-adrales" target="_blank"
+                            class="w-inline-block">
+                            <p class="footer-bottom-links">CHAS</p>
+                        </a>
+                    </div>
+                    <div class="w-layout-hflex footer-flex-block">
+                        <p class="color-gray no-wrap">Powered by </p><a href="https://webflow.com/" target="_blank"
+                            class="w-inline-block">
+                            <p class="footer-bottom-links">CHAS</p>
+                        </a>
+                    </div>
+                </div>
+                <p id="w-node-cce18a14-6439-c2cc-e221-618b9b330287-652fe2cd"
+                    data-w-id="cce18a14-6439-c2cc-e221-618b9b330287" class="color-gray">© 2025 Styler. All Rights
+                    Reserved.</p>
+            </div>
+            <div class="space"></div>
+        </div>
+    </section>
+    <script src="https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=689989c2270f878736e77521"
+        type="text/javascript" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.prod.website-files.com/689989c2270f878736e77521/js/webflow.schunk.ef125cc813189513.js"
+        type="text/javascript"></script>
+    <script src="https://cdn.prod.website-files.com/689989c2270f878736e77521/js/webflow.schunk.0c1991e47557facc.js"
+        type="text/javascript"></script>
+    <script src="https://cdn.prod.website-files.com/689989c2270f878736e77521/js/webflow.0c65adcc.887759e37fb0bf27.js"
+        type="text/javascript"></script>
+    <script src="https://cdn.prod.website-files.com/gsap/3.13.0/gsap.min.js" type="text/javascript"></script>
+    <script src="https://cdn.prod.website-files.com/gsap/3.13.0/SplitText.min.js" type="text/javascript"></script>
+    <script src="https://cdn.prod.website-files.com/gsap/3.13.0/ScrollTrigger.min.js" type="text/javascript"></script>
 </body>
+
 </html>
