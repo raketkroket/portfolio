@@ -720,7 +720,9 @@
             font-style: normal;
         }
 
-        ;
+        body {
+                scroll-behavior: auto !important;
+            }
 
         @media (prefers-reduced-motion: reduce) {
 
@@ -729,10 +731,24 @@
                 animation: none !important;
                 transform: none !important;
             }
+
+            body {
+                scroll-behavior: auto !important;
+            }
         }
 
-
-
+.section-home-projects {
+    background: linear-gradient(to bottom,
+                    rgba(19, 19, 19) 10%,
+                    /* black at top */
+                    rgba(7, 7, 7) 25%,
+                    /* fade into blue */
+                    rgba(228, 192, 145, 0.651) 75%,
+                    /* solid blue middle */
+                    rgba(7, 7, 7) 100%
+                    /* fade back to black at bottom */
+                );
+}
     </style>
 
     <script></script>
