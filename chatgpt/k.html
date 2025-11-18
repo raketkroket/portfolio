@@ -1,0 +1,1328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CHAS - Visual Designer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter+Tight:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        * {
+          cursor: none;
+        }
+
+        body {
+          font-family: 'Inter Tight', sans-serif;
+          overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+          font-family: 'Anton', sans-serif;
+          text-transform: uppercase;
+          letter-spacing: -0.02em;
+        }
+
+        .custom-cursor {
+          width: 40px;
+          height: 40px;
+          border: 2px solid rgba(250, 204, 21, 0.5);
+          border-radius: 50%;
+          position: fixed;
+          pointer-events: none;
+          z-index: 9999;
+          transition: all 0.15s ease;
+          transition-property: transform, width, height, border-color;
+          mix-blend-mode: difference;
+        }
+
+        .custom-cursor-dot {
+          width: 8px;
+          height: 8px;
+          background-color: #facc15;
+          border-radius: 50%;
+          position: fixed;
+          pointer-events: none;
+          z-index: 10000;
+          transition: transform 0.05s ease;
+        }
+
+        button:hover ~ .custom-cursor,
+        a:hover ~ .custom-cursor {
+          width: 60px;
+          height: 60px;
+          border-color: #facc15;
+        }
+
+        .hero-section {
+          position: relative;
+        }
+
+        .hero-bg-gradient,
+        .hero-bg-gradient-2 {
+          position: absolute;
+          width: 600px;
+          height: 600px;
+          border-radius: 50%;
+          filter: blur(120px);
+          opacity: 0.2;
+          pointer-events: none;
+        }
+
+        .hero-bg-gradient {
+          background: radial-gradient(circle, rgba(250, 204, 21, 0.3) 0%, transparent 70%);
+          top: 20%;
+          left: 10%;
+          animation: float-slow 20s ease-in-out infinite;
+        }
+
+        .hero-bg-gradient-2 {
+          background: radial-gradient(circle, rgba(250, 204, 21, 0.2) 0%, transparent 70%);
+          bottom: 20%;
+          right: 10%;
+          animation: float-slow 25s ease-in-out infinite reverse;
+        }
+
+        @keyframes float-slow {
+          0%, 100% {
+            transform: translate(0, 0) scale(1);
+          }
+          33% {
+            transform: translate(50px, -50px) scale(1.1);
+          }
+          66% {
+            transform: translate(-50px, 50px) scale(0.9);
+          }
+        }
+
+        .hero-word {
+          opacity: 0;
+          transform: translateY(120px) rotateX(-20deg);
+          animation: fadeInUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+          transform-origin: center bottom;
+          perspective: 1000px;
+        }
+
+        .hero-word:nth-child(1) {
+          animation-delay: 0.3s;
+        }
+
+        .hero-word:nth-child(2) {
+          animation-delay: 0.5s;
+        }
+
+        @keyframes fadeInUp {
+          to {
+            opacity: 1;
+            transform: translateY(0) rotateX(0);
+          }
+        }
+
+        .hero-badge {
+          animation: scaleIn 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+          animation-delay: 0.8s;
+          opacity: 0;
+          transform: scale(0);
+        }
+
+        @keyframes scaleIn {
+          to {
+            opacity: 1;
+            transform: scale(1);
+          }
+        }
+
+        .hero-cta,
+        .magnetic-btn {
+          background-color: transparent;
+          color: #000000;
+          padding: 1rem 2rem;
+          border-radius: 9999px;
+          display: inline-flex;
+          align-items: center;
+          font-size: 0.875rem;
+          font-weight: 500;
+          transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+          border: none;
+          cursor: pointer;
+          position: relative;
+          overflow: hidden;
+        }
+
+        .hero-cta::before,
+        .magnetic-btn::before {
+          content: '';
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          width: 0;
+          height: 0;
+          border-radius: 50%;
+          background: #facc151d;
+          transition: width 0.6s ease, height 0.6s ease, top 0.6s ease, left 0.6s ease;
+          transform: translate(-50%, -50%);
+          z-index: -1;
+        }
+
+        .hero-cta:hover::before,
+        .magnetic-btn:hover::before {
+          width: 300%;
+          height: 300%;
+        }
+
+        .hero-cta:hover,
+        .magnetic-btn:hover {
+          transform: scale(1.05) translateY(-2px);
+          box-shadow: 0 20px 40px rgba(250, 204, 21, 0.3);
+        }
+
+        .hero-cta:active,
+        .magnetic-btn:active {
+          transform: scale(0.98);
+        }
+
+        .hero-image {
+          position: absolute;
+          width: 300px;
+          height: 220px;
+          border-radius: 1rem;
+          overflow: hidden;
+          border: 4px solid #000;
+          box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+          transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .hero-image-1 {
+          top: 0;
+          left: 0;
+          animation: slideInLeft 1s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+          animation-delay: 0.5s;
+          opacity: 0;
+        }
+
+        .hero-image-2 {
+          bottom: 0;
+          right: 0;
+          animation: slideInRight 1s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+          animation-delay: 0.7s;
+          opacity: 0;
+        }
+
+        @keyframes slideInLeft {
+          from {
+            opacity: 0;
+            transform: translateX(-100px) rotate(-15deg);
+          }
+          to {
+            opacity: 1;
+            transform: translateX(0) rotate(-5deg);
+          }
+        }
+
+        @keyframes slideInRight {
+          from {
+            opacity: 0;
+            transform: translateX(100px) rotate(15deg);
+          }
+          to {
+            opacity: 1;
+            transform: translateX(0) rotate(5deg);
+          }
+        }
+
+        .hero-image:hover {
+          transform: scale(1.05) rotate(0deg) !important;
+          z-index: 10;
+          box-shadow: 0 30px 80px rgba(250, 204, 21, 0.4);
+        }
+
+        .hero-image img {
+          transition: transform 0.6s ease;
+        }
+
+        .hero-image:hover img {
+          transform: scale(1.1);
+        }
+
+        /* Logo Marquee */
+        /* Logo Marquee */
+        .logo-marquee {
+          border-top: 1px solid #1f2937;
+          border-bottom: 1px solid #1f2937;
+          padding: 2rem 0; /* py-8 */
+          overflow: hidden;
+        }
+
+        .marquee-content {
+          display: flex;
+          gap: 4rem; /* gap-16 */
+          white-space: nowrap;
+          animation: marquee 20s linear infinite;
+        }
+
+        .marquee-set {
+          display: flex;
+          gap: 4rem;
+          align-items: center;
+        }
+
+        .logo {
+          height: 2rem; /* h-8 */
+          width: 8rem; /* w-32 */
+          opacity: 0.6;
+          transition: all 0.3s;
+          filter: grayscale(100%);
+          object-fit: contain;
+        }
+
+              .logo img {
+                height: 120px;
+              }
+
+        .logo:hover {
+          opacity: 1;
+          filter: grayscale(0);
+        }
+
+        @keyframes marquee {
+          0% { transform: translateX(0); }
+          100% { transform: translateX(-33.333%); }
+        }
+
+
+        .animate-on-scroll {
+          opacity: 0;
+          transform: translateY(60px);
+          transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .animate-on-scroll.animate-in {
+          opacity: 1;
+          transform: translateY(0);
+        }
+
+        .bio-word {
+          display: inline-block;
+          transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+          color: #4b5563;
+        }
+
+        .bio-word:hover {
+          color: #facc15;
+          transform: scale(1.05) translateY(-5px);
+        }
+
+        .bio-cta {
+          background: transparent;
+          color: #ffffff;
+          padding: 0;
+          transition: all 0.3s ease;
+        }
+
+        .bio-cta:hover {
+          color: #facc15;
+          transform: translateX(10px);
+        }
+
+        .services-list {
+          display: flex;
+          flex-direction: column;
+          gap: 2rem;
+        }
+
+        .service-item {
+          display: flex;
+          gap: 3rem;
+          border-top: 1px solid #1f2937;
+          padding: 2rem 0;
+          transition: all 0.4s ease;
+          border-left: 2px solid transparent;
+          cursor: pointer;
+        }
+
+        .service-item:hover {
+          padding-left: 1.5rem;
+          border-left-color: #facc15;
+          background: linear-gradient(90deg, rgba(250, 204, 21, 0.05) 0%, transparent 100%);
+        }
+
+        .service-number {
+          font-size: 4.5rem;
+          font-family: 'Anton', sans-serif;
+          color: #1f2937;
+          width: 8rem;
+          flex-shrink: 0;
+          transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .service-item:hover .service-number {
+          color: #facc15;
+          transform: scale(1.1) translateX(10px);
+        }
+
+        .service-content {
+          flex: 1;
+          display: flex;
+          justify-content: space-between;
+          gap: 3rem;
+        }
+
+        .service-title {
+          font-size: 3rem;
+          color: #9ca3af;
+          transition: all 0.4s ease;
+        }
+
+        .service-item:hover .service-title {
+          color: #facc15;
+          transform: translateX(10px);
+        }
+
+        .service-description {
+          font-size: 1rem;
+          color: #6b7280;
+          max-width: 28rem;
+          line-height: 1.6;
+          transition: all 0.4s ease;
+        }
+
+        .service-item:hover .service-description {
+          color: #d1d5db;
+        }
+
+        .design-process {
+          background: linear-gradient(to bottom, #000000, #0a0a0a);
+        }
+
+        .design-bg {
+          position: absolute;
+          inset: 0;
+          opacity: 0.15;
+          background: radial-gradient(circle at 50% 50%, rgba(250, 204, 21, 0.3), transparent 60%);
+          filter: blur(100px);
+          pointer-events: none;
+        }
+
+        .review-btn {
+          width: 3rem;
+          height: 3rem;
+          border-radius: 50%;
+          background-color: #111827;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: #ffffff;
+          border: 1px solid #374151;
+          transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+          cursor: pointer;
+        }
+
+        .review-btn:hover {
+          background-color: #facc15;
+          color: #000000;
+          transform: scale(1.1);
+          border-color: #facc15;
+        }
+
+        .review-card {
+          background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+          padding: 2rem;
+          border-radius: 1rem;
+          transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+          cursor: pointer;
+          border: 1px solid #1e293b;
+        }
+
+        .review-card:hover {
+          transform: translateY(-10px) scale(1.02);
+          background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+          border-color: #facc15;
+          box-shadow: 0 20px 60px rgba(250, 204, 21, 0.2);
+        }
+
+        .connect-section {
+          position: relative;
+        }
+
+        .connect-bg {
+          position: absolute;
+          inset: 0;
+          opacity: 0.2;
+          background: radial-gradient(circle at 50% 50%, rgba(250, 204, 21, 0.3), transparent 60%);
+          filter: blur(100px);
+          pointer-events: none;
+        }
+
+        .connect-text {
+          font-size: 8vw;
+          font-family: 'Anton', sans-serif;
+          line-height: 1;
+          text-align: center;
+          opacity: 0.08;
+          pointer-events: none;
+          margin-bottom: 3rem;
+        }
+
+        .connect-cta {
+          margin: 0 auto;
+          font-size: 1.125rem;
+          padding: 1.25rem 2.5rem;
+        }
+
+        .stats-card {
+          background: linear-gradient(135deg, #facc15 0%, #eab308 100%);
+          color: #000000;
+          padding: 3rem;
+          border-radius: 1.5rem;
+          transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+          cursor: pointer;
+          position: relative;
+          overflow: hidden;
+        }
+
+        .stats-card::before {
+          content: '';
+          position: absolute;
+          top: -50%;
+          left: -50%;
+          width: 200%;
+          height: 200%;
+          background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%);
+          transform: rotate(45deg);
+          transition: all 0.6s ease;
+        }
+
+        .stats-card:hover::before {
+          left: 100%;
+        }
+
+        .stats-card:hover {
+          transform: translateY(-10px) scale(1.02);
+          box-shadow: 0 30px 80px rgba(250, 204, 21, 0.4);
+        }
+
+        .footer-link {
+          color: #9ca3af;
+          font-size: 0.875rem;
+          text-decoration: none;
+          transition: all 0.3s ease;
+          display: inline-block;
+        }
+
+        .footer-link:hover {
+          color: #facc15;
+          transform: translateX(5px);
+        }
+
+        .social-icon {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.5rem;
+          padding: 0.75rem 1.5rem;
+          background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+          border-radius: 9999px;
+          color: #ffffff;
+          text-decoration: none;
+          font-size: 0.875rem;
+          font-weight: 500;
+          transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+          border: 1px solid #374151;
+          position: relative;
+          overflow: hidden;
+        }
+
+        .social-icon::before {
+          content: '';
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          width: 0;
+          height: 0;
+          border-radius: 50%;
+          background: #facc15;
+          transition: width 0.6s ease, height 0.6s ease, top 0.6s ease, left 0.6s ease;
+          transform: translate(-50%, -50%);
+          z-index: 0;
+        }
+
+        .social-icon:hover::before {
+          width: 300%;
+          height: 300%;
+        }
+
+        .social-icon:hover {
+          transform: translateY(-3px) scale(1.05);
+          border-color: #facc15;
+          color: #000000;
+          box-shadow: 0 10px 30px rgba(250, 204, 21, 0.3);
+        }
+
+        .social-icon svg,
+        .social-icon span {
+          position: relative;
+          z-index: 1;
+          transition: color 0.3s ease;
+        }
+
+        .social-icon:hover svg,
+        .social-icon:hover span {
+          color: #000000;
+        }
+
+        .nav-link {
+          position: relative;
+          color: #ffffff;
+          font-size: 0.875rem;
+          font-weight: 500;
+          text-decoration: none;
+          padding: 0.5rem 0;
+          overflow: hidden;
+          transition: color 0.3s ease;
+        }
+
+        .nav-link::after {
+          content: attr(href);
+          position: absolute;
+          top: 100%;
+          left: 0;
+          color: #facc15;
+          transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .nav-link:hover {
+          color: #facc15;
+        }
+
+        .nav-link:hover::after {
+          transform: translateY(-100%);
+        }
+
+        .header-scrolled {
+          bg-black/80 backdrop-blur-xl;
+        }
+
+        @media (max-width: 768px) {
+          .custom-cursor,
+          .custom-cursor-dot {
+            display: none;
+          }
+
+          * {
+            cursor: auto !important;
+          }
+
+          .hero-images {
+            max-width: 300px;
+            height: 200px;
+          }
+
+          .hero-image {
+            width: 200px;
+            height: 150px;
+          }
+
+          .service-item {
+            flex-direction: column;
+            gap: 1rem;
+          }
+
+          .service-number {
+            font-size: 3rem;
+            width: auto;
+          }
+
+          .service-content {
+            flex-direction: column;
+            gap: 1rem;
+          }
+
+          .service-title {
+            font-size: 2rem;
+          }
+
+          .mobile-menu.active .nav-link {
+            font-size: 1.5rem;
+          }
+        }
+
+        /* Integrated styles from first code */
+        * {
+          scroll-behavior: smooth;
+        }
+
+        body {
+          -webkit-font-smoothing: antialiased;
+          -moz-osx-font-smoothing: grayscale;
+          overflow-x: hidden;
+          font-family: 'Inter Tight', sans-serif;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+          font-family: 'Anton', sans-serif;
+        }
+
+        @keyframes fadeIn {
+          from {
+            opacity: 0;
+            transform: translateY(20px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        @keyframes fadeInUp {
+          from {
+            opacity: 0;
+            transform: translateY(30px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        .animate-fade-in {
+          animation: fadeIn 1s ease-out forwards;
+        }
+
+        .animate-fade-in-delay {
+          animation: fadeIn 1s ease-out 0.3s forwards;
+          opacity: 0;
+        }
+
+        .animate-fade-in-up {
+          animation: fadeInUp 0.7s ease-out forwards;
+          opacity: 0;
+        }
+
+        .nav-link {
+          position: relative;
+        }
+
+        .nav-link::after {
+          content: '';
+          position: absolute;
+          bottom: -4px;
+          left: 0;
+          width: 0;
+          height: 1px;
+          background-color: #facc15;
+          transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+          width: 100%;
+        }
+
+        .nav-link-active::after {
+          content: '';
+          position: absolute;
+          bottom: -4px;
+          left: 0;
+          width: 100%;
+          height: 1px;
+          background-color: #facc15;
+        }
+        
+.contact-btn-vlak, 
+.connect-cta-btn magnetic-btn animate-on-scroll{
+
+  color: #facc1554;
+}
+
+        .project-card {
+          will-change: transform;
+        }
+
+        @media (hover: hover) {
+          .project-card:hover {
+            transform: translateY(-4px);
+          }
+        }
+
+        @media (max-width: 768px) {
+          .project-card:active {
+            transform: scale(0.98);
+          }
+        }
+
+        /* Cursor Spotlight Effect */
+        .cursor-spotlight {
+          position: fixed;
+          width: 400px;
+          height: 400px;
+          border-radius: 50%;
+          background: radial-gradient(circle, rgba(250, 204, 21, 0.08) 0%, transparent 70%);
+          pointer-events: none;
+          transform: translate(-50%, -50%);
+          transition: opacity 0.3s ease;
+          z-index: 1;
+          mix-blend-mode: screen;
+        }
+
+        /* Magnetic Button Effect */
+        .magnetic-btn {
+          position: relative;
+          transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        @media (hover: hover) {
+          .magnetic-btn:hover {
+            transform: translateY(-2px);
+          }
+          .magnetic-btn:active {
+            transform: translateY(0px);
+          }
+        }
+
+        @media (max-width: 768px) {
+          .magnetic-btn:active {
+            transform: scale(0.95);
+          }
+        }
+       
+        .logo-text {
+          font-family: 'Anton', sans-serif;
+          font-size: 1.5rem; /* text-2xl */
+          letter-spacing: -0.02em;
+          transition: all 0.3s;
+        }
+
+        .logo:hover .logo-text {
+          transform: scale(1.1);
+          color: #facc15; /* yellow-400 */
+        }
+
+        .logo {
+          height: 2rem; /* h-8 */
+          width: 8rem; /* w-32 */
+          opacity: 0.6;
+          transition: all 0.3s;
+          filter: grayscale(100%);
+          object-fit: contain;
+        }
+
+            .logo img {
+              height: 120px;
+              margin-left: -40px;
+              margin-top: -40px;
+            }
+
+        .logo:hover {
+          opacity: 1;
+          filter: grayscale(0);
+        }
+
+        .logo-footer img {
+                height: 120px;
+                margin-left: -40px;
+                margin-top: -40px;
+              }
+
+        @media (min-width: 640px) {
+          .logo {
+            height: 2.25rem;
+          }
+        }
+    
+    </style>
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="bg-black text-white min-h-screen relative overflow-x-hidden app-container">
+    <!-- Custom Cursor -->
+    <div class="custom-cursor"></div>
+    <div class="custom-cursor-dot"></div>
+
+    <!-- Cursor Spotlight - Desktop Only -->
+    <div id="cursor-spotlight" class="cursor-spotlight hidden lg:block"></div>
+
+    <!-- Scroll Progress Bar -->
+    <div class="fixed top-0 left-0 right-0 h-1 bg-gray-900 z-[60] scroll-progress-container">
+      <div id="progress-bar" class="h-full bg-gradient-to-r from-yellow-400 via-yellow-500 to-orange-500 transition-all duration-150"></div>
+    </div>
+
+    <!-- Back to Top Button -->
+    <button id="back-to-top" class="magnetic-btn fixed bottom-8 right-8 z-50 p-4 bg-yellow-400 text-black rounded-full shadow-2xl hover:scale-110 transition-all duration-300 hover:shadow-yellow-400/50 group hidden back-to-top-btn" aria-label="Back to top">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6 group-hover:-translate-y-1 transition-transform duration-300 arrow-up-icon"><path d="m18 15-6-6-6 6"/></svg>
+    </button>
+
+    <!-- Navbar -->
+    <header id="navbar" class="fixed top-0 left-0 right-0 z-50 px-4 sm:px-6 py-4 sm:py-6 transition-all duration-500 navbar-header" style="margin-top: 4px;">
+      <div class="max-w-7xl mx-auto flex justify-between items-center navbar-container">
+        <a href="/" class="flex items-center transition-transform duration-300 hover:scale-110 logo-link">
+          <div class="logo">
+            <img src="ch.png" alt="Logo">
+          </div>
+        </a>
+        <button id="menu-toggle" class="md:hidden text-white z-50 relative w-10 h-10 flex items-center justify-center menu-toggle-btn" aria-label="Toggle menu">
+          <svg id="menu-icon" xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="menu-icon"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+          <svg id="close-icon" xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="hidden close-icon"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+        </button>
+        <nav class="hidden md:flex gap-8 desktop-nav">
+          <a href="" class="nav-link text-sm font-medium text-yellow-400 transition-all duration-300 home-link">
+            Home
+          </a>
+          <a href="" class="nav-link text-sm font-medium text-white hover:text-yellow-400 transition-all duration-300 about-link">
+            About
+          </a>
+          <a href="" class="nav-link text-sm font-medium text-white hover:text-yellow-400 transition-all duration-300 projects-link">
+            Projects
+          </a>
+          <a href="contact.html" class="nav-link text-sm font-medium text-white hover:text-yellow-400 transition-all duration-300 contact-link">
+            Contact
+          </a>
+          
+        </nav>
+      </div>
+    </header>
+
+    <!-- Mobile Menu - Full Screen -->
+    <div id="mobile-menu" class="fixed inset-0 z-40 transition-all duration-500 ease-out opacity-0 invisible mobile-menu">
+      <div class="absolute inset-0 bg-black menu-overlay" style="background: linear-gradient(135deg, rgba(0,0,0,0.98) 0%, rgba(20,20,30,0.98) 100%);" id="menu-overlay"></div>
+      <div id="menu-content" class="relative h-full flex flex-col items-center justify-center gap-8 sm:gap-12 transition-all duration-700 translate-y-8 opacity-0 menu-content">
+        <a href="/" class="text-4xl sm:text-5xl md:text-6xl font-black text-yellow-400 transition-all duration-300 scale-110 mobile-home-link" style="font-family: 'Anton', sans-serif;">
+          HOME
+        </a>
+        <a href="/about" class="text-4xl sm:text-5xl md:text-6xl font-black text-white hover:text-yellow-400 transition-all duration-300 hover:scale-110 mobile-about-link" style="font-family: 'Anton', sans-serif;">
+          ABOUT
+        </a>
+        <a href="/projects" class="text-4xl sm:text-5xl md:text-6xl font-black text-white hover:text-yellow-400 transition-all duration-300 hover:scale-110 mobile-projects-link" style="font-family: 'Anton', sans-serif;">
+          PROJECTS
+        </a>
+        <a href="/contact" class="text-4xl sm:text-5xl md:text-6xl font-black text-white hover:text-yellow-400 transition-all duration-300 hover:scale-110 mobile-contact-link" style="font-family: 'Anton', sans-serif;">
+          CONTACT
+        </a>
+        <div class="mt-8 flex gap-6 social-links-container">
+          <a href="https://www.instagram.com/ch4ssiidy" target="_blank" rel="noopener noreferrer" class="p-3 bg-white/10 rounded-full hover:bg-yellow-400 hover:scale-110 transition-all duration-300 instagram-link">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="instagram-icon"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+          </a>
+          <a href="https://www.tiktok.com/@eerlijkste1" target="_blank" rel="noopener noreferrer" class="p-3 bg-white/10 rounded-full hover:bg-yellow-400 hover:scale-110 transition-all duration-300 tiktok-link">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="tiktok-icon"><path d="m7 15 5 5 5-5"/><path d="m7 9 5-5 5 5"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero-section min-h-screen flex items-center px-6 py-32 relative overflow-hidden transition-all duration-700 hero-section">
+        <div id="hero-bg-gradient" class="hero-bg-gradient"></div>
+        <div id="hero-bg-gradient-2" class="hero-bg-gradient-2"></div>
+
+        <div class="max-w-7xl mx-auto w-full flex flex-col md:flex-row justify-between gap-12 relative z-10">
+            <div class="hero-main flex-1 animate-on-scroll">
+                <h1 class="hero-title text-[15vw] md:text-[12vw] leading-[0.85] font-bold mb-12">
+                    <span class="hero-word inline-block">VISUAL</span><br />
+                    <span class="hero-word inline-block">DESIGNER</span>
+                </h1>
+                <div class="hero-badge flex items-center gap-3 mb-8 animate-on-scroll">
+                    <div class="w-10 h-10 bg-yellow-400 rounded-full flex items-center justify-center text-black text-xl">
+                        ★
+                    </div>
+                    <span class="text-sm font-medium uppercase tracking-wider text-yellow-400">
+                        Designer of Europe — 2025
+                    </span>
+                </div>
+            </div>
+
+            <div class="hero-sidebar flex flex-col items-end gap-8 pt-0 md:pt-32 animate-on-scroll">
+                <button class="hero-cta magnetic-btn">
+                    Let's Contact <i data-lucide="arrow-right" class="ml-2" size="18"></i>
+                </button>
+                <div class="hero-images relative w-full max-w-[450px] h-[320px]">
+                    <div id="hero-image-1" class="hero-image hero-image-1">
+                        <img
+                            src="https://img.freepik.com/premium-photo/yellow-square-line-black-background_609989-3264.jpg"
+                            alt="Designer Portrait 1"
+                            class="w-full h-full object-cover"
+                        />
+                    </div>
+                    <div id="hero-image-2" class="hero-image hero-image-2">
+                        <img
+                            src="https://img.freepik.com/premium-photo/yellow-square-line-black-background_609989-3264.jpg"
+                            alt="Designer Portrait 2"
+                            class="w-full h-full object-cover"
+                        />
+                    </div>
+                </div>
+                <p class="text-sm text-gray-400 text-right max-w-[180px] leading-relaxed">
+                    Multidisciplinary designer<br />
+                    with 2+ years of experience<br />
+                    creating compelling digital<br />
+                    experiences.
+                </p>
+            </div>
+        </div>
+    </section>
+
+  
+  <!-- Logo Marquee -->
+  <section id="logo-marquee" class="logo-marquee">
+    <div class="marquee-content">
+      <div class="marquee-set">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg" alt="Google Logo" class="logo">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg" alt="Amazon Logo" class="logo">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg" alt="Microsoft Logo" class="logo">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg" alt="Apple Logo" class="logo">
+      </div>
+      <div class="marquee-set">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg" alt="Google Logo" class="logo">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg" alt="Amazon Logo" class="logo">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg" alt="Microsoft Logo" class="logo">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg" alt="Apple Logo" class="logo">
+      </div>
+      <div class="marquee-set">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg" alt="Google Logo" class="logo">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg" alt="Amazon Logo" class="logo">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg" alt="Microsoft Logo" class="logo">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg" alt="Apple Logo" class="logo">
+      </div>
+    </div>
+
+    
+  </section>
+
+    <!-- Bio Section -->
+    <section class="py-32 px-6 animate-on-scroll">
+        <div class="max-w-7xl mx-auto">
+            <p class="text-xs text-gray-400 uppercase tracking-widest mb-8">Creative Lead</p>
+            <div class="flex flex-col md:flex-row justify-between gap-12">
+                <h2 class="text-6xl md:text-8xl font-bold leading-tight max-w-4xl">
+                    <span class="bio-word">SHORT,</span><br />
+                    <span class="bio-word">HUMAN-</span><br />
+                    <span class="bio-word">CENTRIC BIO FOCUSING</span><br />
+                    <span class="bio-word">ON PASSION</span>
+                </h2>
+                <button class="bio-cta magnetic-btn">
+                    Let's Contact <i data-lucide="arrow-right" class="ml-2" size="18"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="py-32 px-6">
+        <div class="max-w-7xl mx-auto">
+            <p class="text-xs text-gray-400 uppercase tracking-widest mb-8">Service</p>
+            <div class="services-list">
+                <div class="service-item animate-on-scroll">
+                    <div class="service-number">01</div>
+                    <div class="service-content">
+                        <h3 class="service-title">UI/UX DESIGN</h3>
+                        <p class="service-description">Designing responsive, aesthetically pleasing websites and mobile apps that align with user goals.</p>
+                    </div>
+                </div>
+                <div class="service-item animate-on-scroll">
+                    <div class="service-number">02</div>
+                    <div class="service-content">
+                        <h3 class="service-title">BRAND IDENTITY</h3>
+                        <p class="service-description">We specialise in creating branding experiences that are both strategic and engaging.</p>
+                    </div>
+                </div>
+                <div class="service-item animate-on-scroll">
+                    <div class="service-number">03</div>
+                    <div class="service-content">
+                        <h3 class="service-title">WEB DESIGN</h3>
+                        <p class="service-description">Designing responsive, aesthetically pleasing websites and mobile apps that align with user goals.</p>
+                    </div>
+                </div>
+                <div class="service-item animate-on-scroll">
+                    <div class="service-number">04</div>
+                    <div class="service-content">
+                        <h3 class="service-title">PHOTO MOTION</h3>
+                        <p class="service-description">Producing engaging animated visuals and graphics for videos, ads, and social content to bring stories.</p>
+                    </div>
+                </div>
+                <div class="service-item animate-on-scroll">
+                    <div class="service-number">05</div>
+                    <div class="service-content">
+                        <h3 class="service-title">ILLUSTRATION</h3>
+                        <p class="service-description">Custom illustrations that bring personality, charm, and uniqueness to brands, websites, products.</p>
+                    </div>
+                </div>
+                <div class="service-item animate-on-scroll">
+                    <div class="service-number">06</div>
+                    <div class="service-content">
+                        <h3 class="service-title">CREATIVES GFX</h3>
+                        <p class="service-description">Combining design thinking with brand goals to develop concepts that resonate with audiences.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Design Process -->
+    <section class="design-process py-32 px-6 relative overflow-hidden animate-on-scroll">
+        <div class="design-bg"></div>
+        <div class="max-w-7xl mx-auto relative z-10">
+            <p class="text-xs text-gray-400 uppercase tracking-widest mb-8">Creative Lead</p>
+            <h2 class="text-6xl md:text-8xl font-bold mb-12">DESIGN PROCESS</h2>
+            <button class="magnetic-btn">
+                Let's Contact <i data-lucide="arrow-right" class="ml-2" size="18"></i>
+            </button>
+        </div>
+    </section>
+
+    <!-- Reviews -->
+    <section class="py-32 px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-16 animate-on-scroll">
+                <h2 class="text-6xl md:text-8xl font-bold mb-4 md:mb-0">REVIEW</h2>
+                <div class="flex gap-4">
+                    <button class="review-btn">←</button>
+                    <button class="review-btn">→</button>
+                </div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="review-card animate-on-scroll">
+                    <div class="text-4xl text-gray-700 mb-4">"</div>
+                    <p class="text-sm text-gray-300 mb-8 leading-relaxed">She asked thoughtful, strategic questions that helped us clarify our message and visual identity. The result was a digital presence that feels alive, intuitive, and deeply aligned with our values.</p>
+                    <div class="border-t border-gray-800 pt-6">
+                        <div class="font-bold text-sm mb-1">CODEX</div>
+                        <div class="text-sm text-gray-400">Lena Morales</div>
+                        <div class="text-xs text-gray-500">Co-Founder</div>
+                    </div>
+                </div>
+                <div class="review-card animate-on-scroll">
+                    <div class="text-4xl text-gray-700 mb-4">"</div>
+                    <p class="text-sm text-gray-300 mb-8 leading-relaxed">Her grasp of UI/UX principles is sophisticated, and she approaches every project with equal parts logic and imagination.</p>
+                    <div class="border-t border-gray-800 pt-6">
+                        <div class="font-bold text-sm mb-1">HERMS</div>
+                        <div class="text-sm text-gray-400">Jasper Kwon</div>
+                        <div class="text-xs text-gray-500">Creative Director</div>
+                    </div>
+                </div>
+                <div class="review-card animate-on-scroll">
+                    <div class="text-4xl text-gray-700 mb-4">"</div>
+                    <p class="text-sm text-gray-300 mb-8 leading-relaxed">Chas brings ideas to life with clarity and creativity.</p>
+                    <div class="border-t border-gray-800 pt-6">
+                        <div class="font-bold text-sm mb-1">AgentLab</div>
+                        <div class="text-sm text-gray-400">D. Robins</div>
+                        <div class="text-xs text-gray-500">Head of Marketing</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Connect Section -->
+    <section class="connect-section py-32 px-6 relative overflow-hidden">
+        <div class="connect-bg"></div>
+        <div class="max-w-7xl mx-auto text-center relative z-10">
+            <h2 class="connect-text animate-on-scroll">
+                LET'S CONNECT AND<br />LET'S CONNECT
+            </h2>
+            <button class="connect-cta magnetic-btn animate-on-scroll">
+                Let's Contact <i data-lucide="arrow-right" class="contact-btn-vlak" size="20"></i>
+            </button>
+        </div>
+    </section>
+
+    <!-- Stats -->
+    <section class="py-32 px-6 animate-on-scroll">
+        <div class="max-w-7xl mx-auto">
+            <div class="stats-card">
+                <div class="text-6xl md:text-7xl font-bold leading-tight mb-2">
+                    Software Developer +
+                </div>
+                <div class="text-xl font-medium">Designer</div>
+            </div>
+        </div>
+    </section>
+
+<!-- Footer -->
+      <footer class="bg-gradient-to-b from-gray-900 to-black border-t border-gray-800 py-12 sm:py-16 px-4 sm:px-6 footer-section">
+        <div class="max-w-7xl mx-auto footer-container">
+          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 sm:gap-12 mb-8 sm:mb-12 footer-grid">
+            <div class="footer-brand-section">
+              <div class="logo-footer">
+        <img src="ch.png" alt="Logo">
+    </div>
+              <p class="text-xs sm:text-sm text-gray-400 leading-relaxed mb-4 sm:mb-6 brand-description">
+                Visual designer crafting compelling digital experiences with passion and precision.
+              </p>
+              <div class="contact-info">
+                <p class="text-xs text-gray-500 mb-2 contact-label">Contact</p>
+                <a href="mailto:chassidydoest1@gmail.com" class="magnetic-btn text-xs sm:text-sm text-gray-300 hover:text-yellow-400 transition-colors duration-300 break-all inline-block contact-email">
+                  chassidydoest1@gmail.com
+                </a>
+              </div>
+            </div>
+            <div class="footer-links-section">
+              <h3 class="text-sm font-semibold mb-4 sm:mb-6 text-white quick-links-title">Quick Links</h3>
+              <ul class="space-y-3 quick-links-list">
+                <li class="quick-link-item">
+                  <a href="/" class="magnetic-btn text-xs sm:text-sm text-gray-400 hover:text-yellow-400 transition-all duration-300 inline-block hover:translate-x-1 quick-home-link">
+                    Home
+                  </a>
+                </li>
+                <li class="quick-link-item">
+                  <a href="/about" class="magnetic-btn text-xs sm:text-sm text-gray-400 hover:text-yellow-400 transition-all duration-300 inline-block hover:translate-x-1 quick-about-link">
+                    About
+                  </a>
+                </li>
+                <li class="quick-link-item">
+                  <a href="/projects" class="magnetic-btn text-xs sm:text-sm text-gray-400 hover:text-yellow-400 transition-all duration-300 inline-block hover:translate-x-1 quick-projects-link">
+                    Projects
+                  </a>
+                </li>
+                <li class="quick-link-item">
+                  <a href="/contact" class="magnetic-btn text-xs sm:text-sm text-gray-400 hover:text-yellow-400 transition-all duration-300 inline-block hover:translate-x-1 quick-contact-link">
+                    Contact
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <div class="footer-connect-section">
+              <h3 class="text-sm font-semibold mb-4 sm:mb-6 text-white connect-title">Connect</h3>
+              <div class="flex flex-col gap-3 sm:gap-4 connect-links">
+                <a href="https://www.instagram.com/ch4ssiidy" target="_blank" rel="noopener noreferrer" class="magnetic-btn group inline-flex items-center gap-3 px-4 sm:px-6 py-2.5 sm:py-3 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full text-white text-xs sm:text-sm font-medium transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-pink-500/50 connect-instagram">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 sm:w-5 sm:h-5 group-hover:rotate-12 transition-transform duration-300 instagram-icon"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+                  <span>Instagram</span>
+                </a>
+                <a href="https://www.tiktok.com/@eerlijkste1" target="_blank" rel="noopener noreferrer" class="magnetic-btn group inline-flex items-center gap-3 px-4 sm:px-6 py-2.5 sm:py-3 bg-gradient-to-r from-gray-800 to-gray-900 border border-gray-700 rounded-full text-white text-xs sm:text-sm font-medium transition-all duration-300 hover:scale-105 hover:border-yellow-400 hover:shadow-lg hover:shadow-yellow-400/30 connect-tiktok">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform duration-300 tiktok-icon"><path d="m7 15 5 5 5-5"/><path d="m7 9 5-5 5 5"/></svg>
+                  <span>TikTok</span>
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="flex flex-col sm:flex-row justify-between items-center pt-6 sm:pt-8 border-t border-gray-800 gap-3 sm:gap-4 footer-bottom">
+            <p class="text-xs text-gray-500 copyright-text">© 2025 CHAS. All rights reserved.</p>
+            <p class="text-xs text-gray-500 made-in-text">Made with passion in Europe</p>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <script>
+        // Lucide icons
+        lucide.createIcons();
+
+        // Integrated script elements from first code
+        // States
+        let isMenuOpen = false;
+        let scrollY = 0;
+        let mousePos = { x: 0, y: 0 };
+
+        // Elements
+        const cursorSpotlight = document.getElementById('cursor-spotlight');
+        const progressBar = document.getElementById('progress-bar');
+        const backToTop = document.getElementById('back-to-top');
+        const navbar = document.getElementById('navbar');
+        const menuToggle = document.getElementById('menu-toggle');
+        const menuIcon = document.getElementById('menu-icon');
+        const closeIcon = document.getElementById('close-icon');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const menuOverlay = document.getElementById('menu-overlay');
+        const menuContent = document.getElementById('menu-content');
+
+        // Functions
+        const updateScroll = () => {
+          scrollY = window.scrollY;
+          const navbarOpacity = Math.min(scrollY / 100, 0.95);
+          const scrollProgress = (scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+          navbar.style.backgroundColor = `rgba(0, 0, 0, ${navbarOpacity})`;
+          navbar.style.backdropFilter = navbarOpacity > 0.5 ? 'blur(20px)' : 'none';
+          progressBar.style.width = `${scrollProgress}%`;
+          if (scrollY > 400) {
+            backToTop.classList.remove('hidden');
+          } else {
+            backToTop.classList.add('hidden');
+          }
+        };
+
+        const updateMouse = (e) => {
+          mousePos = { x: e.clientX, y: e.clientY };
+          cursorSpotlight.style.left = `${mousePos.x}px`;
+          cursorSpotlight.style.top = `${mousePos.y}px`;
+        };
+
+        const toggleMenu = () => {
+          isMenuOpen = !isMenuOpen;
+          if (isMenuOpen) {
+            mobileMenu.classList.add('opacity-100', 'visible');
+            mobileMenu.classList.remove('opacity-0', 'invisible');
+            menuContent.classList.add('translate-y-0', 'opacity-100');
+            menuContent.classList.remove('translate-y-8', 'opacity-0');
+            document.body.style.overflow = 'hidden';
+            menuIcon.classList.add('hidden');
+            closeIcon.classList.remove('hidden');
+          } else {
+            mobileMenu.classList.add('opacity-0', 'invisible');
+            mobileMenu.classList.remove('opacity-100', 'visible');
+            menuContent.classList.add('translate-y-8', 'opacity-0');
+            menuContent.classList.remove('translate-y-0', 'opacity-100');
+            document.body.style.overflow = 'unset';
+            menuIcon.classList.remove('hidden');
+            closeIcon.classList.add('hidden');
+          }
+        };
+
+        const scrollToTop = () => {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        };
+
+        // Event listeners from first code
+        window.addEventListener('scroll', updateScroll);
+        window.addEventListener('mousemove', updateMouse);
+        menuToggle.addEventListener('click', toggleMenu);
+        menuOverlay.addEventListener('click', toggleMenu);
+        backToTop.addEventListener('click', scrollToTop);
+
+        // Mobile menu links close menu
+        menuContent.querySelectorAll('a').forEach(a => {
+          a.addEventListener('click', () => {
+            if (isMenuOpen) toggleMenu();
+          });
+        });
+
+        // Initial
+        updateScroll();
+
+        // Original second code scripts
+        // Mobile menu toggle (overridden by integrated one above)
+        // Scroll handling (partially integrated)
+        window.addEventListener('scroll', () => {
+            // Parallax for hero backgrounds
+            const heroBg1 = document.getElementById('hero-bg-gradient');
+            const heroBg2 = document.getElementById('hero-bg-gradient-2');
+            if (heroBg1) heroBg1.style.transform = `translateY(${scrollY * 0.5}px)`;
+            if (heroBg2) heroBg2.style.transform = `translateY(${scrollY * -0.3}px)`;
+
+            // Parallax for hero images
+            const heroImg1 = document.getElementById('hero-image-1');
+            const heroImg2 = document.getElementById('hero-image-2');
+            if (heroImg1) heroImg1.style.transform = `translateY(${scrollY * 0.1}px) rotate(-5deg)`;
+            if (heroImg2) heroImg2.style.transform = `translateY(${scrollY * -0.1}px) rotate(5deg)`;
+        });
+
+        // Custom cursor
+        const cursorRef = document.querySelector('.custom-cursor');
+        const cursorDotRef = document.querySelector('.custom-cursor-dot');
+        window.addEventListener('mousemove', (e) => {
+            if (cursorRef && cursorDotRef) {
+                cursorRef.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
+                cursorDotRef.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
+            }
+        });
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px',
+        };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-in');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.animate-on-scroll').forEach((el) => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
