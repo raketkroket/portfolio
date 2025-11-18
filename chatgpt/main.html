@@ -697,7 +697,8 @@
         }
 
         .navbar.scrolled {
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.324);
+            box-shadow: 0 4px 20px rgb(0, 0, 0);
+            background-color: #0000008b;
             /* Subtle shadow when scrolled */
         }
 
@@ -1733,7 +1734,20 @@
                 }, { threshold: 0.2 });
                 document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
             </script>
-
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const navLinks = document.querySelectorAll('.w-nav-menu a'); // All nav links
+  const menuButton = document.querySelector('.w-nav-button'); // Hamburger button
+  
+  navLinks.forEach(link => {
+    link.addEventListener('click', function() {
+      if (menuButton.classList.contains('w--open')) { // Only close if menu is open
+        menuButton.click(); // Simulate click to toggle close
+      }
+    });
+  });
+});
+</script>
 
             <div id="w-node-_1cec8f9f-6c8e-a090-00ab-89cc3b1f1277-16e3d359" class="testimonial-line"></div><a
                 id="w-node-_5222fe2b-493f-5599-c3ee-b7141a51917f-16e3d359"
@@ -1930,6 +1944,8 @@
 
                                     requestAnimationFrame(animation);
                                 }
+
+                                
                                 // Handle nav link clicks
                                 document.querySelectorAll('.nav-link').forEach(link => {
                                     link.addEventListener('click', (e) => {
@@ -1951,6 +1967,8 @@
                                     });
                                 });
                             });
+
+                            
                         </script>
 </body>
 
