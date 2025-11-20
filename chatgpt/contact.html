@@ -293,6 +293,17 @@
       opacity: 0;
       will-change: transform;
     }
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+  }
+  .button {
+  padding: 14px 22px;
+  border-radius: 14px;
+  font-size: 16px;
+}
+
+}
 
     .paper-plane {
       position: fixed;
@@ -373,6 +384,8 @@
                 /* Offset for fixed nav height (adjust if needed) */
             }
         }
+h1 { font-size: clamp(24px, 5vw, 48px); }
+p { font-size: clamp(14px, 3.5vw, 20px); }
 
 /* Optional: Custom easing for smoother feel */
 @media (prefers-reduced-motion: no-preference) {
