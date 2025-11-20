@@ -314,7 +314,7 @@
 
     .title {
       position: absolute;
-      top: 20%;
+      top: 10%;
       font-family: 'Anton', sans-serif;
       font-size: clamp(2rem, 6vw, 5rem);
       letter-spacing: 0.4em;
@@ -384,6 +384,9 @@
 </head>
 
 <body>
+  <audio id="whoosh" src="https://assets.mixkit.co/sfx/preview/mixkit-fast-swoosh-1487.mp3"></audio>
+<audio id="send" src="https://assets.mixkit.co/sfx/preview/mixkit-paper-fast-swoosh-1463.mp3"></audio>
+
   <div class="page-wrapper">
         <div id="top" data-animation="default" data-collapse="medium" data-duration="0" data-easing="ease"
             data-easing2="ease" role="banner" class="navbar w-nav">
@@ -463,7 +466,7 @@
     <h1 class="title">Contact Me</h1>
     <div class="envelope-wrapper">
       <div class="envelope">
-        <form class="contact-form" action="https://formspree.io/f/mldbvdlp" method="POST">
+        <form class="contact-form" action="https://formspree.io/f/xjklgyrp" method="POST">
           <div class="form-group">
             <input type="text" name="name" placeholder=" " required />
             <label>Name</label>
@@ -487,7 +490,7 @@
       </div>
     </div>
   </div>
-  <div class="paper-plane">
+ <div class="paper-plane">
     <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
       <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" />
     </svg>
@@ -680,7 +683,7 @@ window.addEventListener('scroll', () => {
       thankYou = document.querySelector('.thank-you');
       wrapper = document.querySelector('.envelope-wrapper');
       plane = document.querySelector('.paper-plane');
-      header = document.querySelector('header');
+      header = document.querySelector('.navbar');
       title = document.querySelector('.title');
       flyInEnvelope();
       // 3D hover tilt (throttled for performance)
@@ -700,6 +703,7 @@ window.addEventListener('scroll', () => {
       wrapper.addEventListener('mouseleave', () => {
         gsap.to(wrapper, { rotationY: 0, rotationX: 6, duration: 0.9, ease: "power2.out" });
       });
+      
       // Form submit
       document.querySelector('.contact-form').addEventListener('submit', async (e) => {
         e.preventDefault();
@@ -720,6 +724,8 @@ window.addEventListener('scroll', () => {
         }
       });
     });
+
+    
   </script>
 </body>
 
